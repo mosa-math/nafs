@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>تدريب اختبار نافس - الأسبوع (10)</title>
+  <title>تدريب نافس - الصف السادس</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-  <!-- Hero -->
+  <!-- Header / Hero -->
   <header class="hero">
     <div class="hero-inner">
       <div class="hero-card">
@@ -20,29 +20,31 @@
               <div class="school-sub">الإدارة العامة بمنطقة نجران</div>
             </div>
           </div>
+
           <div class="chip">⭐ تدريب تفاعلي</div>
         </div>
 
-        <h1 class="hero-title">تدريب اختبار نافس رياضيات - الأسبوع (10)</h1>
+        <h1 class="hero-title">تدريب اختبار نافس رياضيات ‏الصف السادس الابتدائي - الأسبوع (10)</h1>
         <p class="hero-subtitle">حل الأسئلة بسهولة، شاهد نتيجتك فورًا، واحفظ شهادة إنجاز جميلة 🎉</p>
 
         <div class="badges">
           <div class="badge">🧠 أسئلة ممتعة</div>
-          <div class="badge">⏱ وقت منظم</div>
+          <div class="badge">⏱️ وقت منظم</div>
           <div class="badge">🏆 شهادة إنجاز</div>
         </div>
       </div>
     </div>
+
     <div class="hero-waves" aria-hidden="true"></div>
   </header>
 
   <main class="wrap">
-    <!-- Start -->
+    <!-- شاشة البداية -->
     <section id="screenStart" class="card">
       <div class="welcome">
         <div class="welcome-icon">👋</div>
         <div>
-          <h2 class="welcome-title">أهلًا وسهلًا يا بطل!</h2>
+          <h2 class="welcome-title">أهلاً وسهلاً يا بطل!</h2>
           <p class="welcome-sub">اكتب بياناتك ثم اضغط <b>ابدأ الاختبار</b> 🚀</p>
         </div>
       </div>
@@ -52,32 +54,31 @@
           <input id="studentName" placeholder="اسم الطالب" />
         </div>
         <div>
-          <input id="studentClass" placeholder="الفصل" />
+          <input id="studentClass" placeholder=" ‏الفصل" />
         </div>
       </div>
 
-     <div class="start-row">
-  <div class="start-info">
-    <span>📌 عدد الأسئلة: 10</span>
-    <span>⏱️ المدة: 10 دقائق</span>
-  </div>
+      <!-- ✅ صف متناسق: معلومات + زر -->
+      <div class="start-row">
+        <div class="start-info">
+          <span>📌 عدد الأسئلة: <b id="qCount">—</b></span>
+          <span>⏱️ المدة: <b id="duration">—</b> دقائق</span>
+        </div>
 
-  <button class="start-btn">
-    🚀 ابدأ الاختبار
-  </button>
-</div>
+        <button id="btnStart" class="start-btn">🚀 ابدأ الاختبار</button>
+      </div>
 
       <p class="note">ملاحظة: بياناتك تبقى داخل جهازك ولا يتم رفعها.</p>
     </section>
 
-    <!-- Quiz -->
+    <!-- شاشة الاختبار -->
     <section id="screenQuiz" class="card hidden">
       <div class="quizTop">
         <div class="meta">
           <div class="pill">🧩 السؤال <span id="qIndex">١</span> / <span id="qTotal">١</span></div>
           <div class="pill">⏳ الوقت: <span id="timer">—</span></div>
         </div>
-        <button id="btnExit" class="btn">خروج</button>
+        <button id="btnExit" class="btn ghost">خروج</button>
       </div>
 
       <h2 id="qText" class="qText">—</h2>
@@ -89,7 +90,7 @@
       </div>
     </section>
 
-    <!-- Result -->
+    <!-- شاشة النتيجة -->
     <section id="screenResult" class="card hidden">
       <h2 class="result-title">🎉 النتيجة</h2>
 
@@ -106,8 +107,8 @@
       </div>
 
       <div class="actions">
-        <button id="btnCert" class="btn primary">🏆 حفظ الشهادة</button>
-        <button id="btnRetry" class="btn">🔁 إعادة الاختبار</button>
+        <button id="btnCert" class="btn primary">حفظ الشهادة 🏆</button>
+        <button id="btnRetry" class="btn">إعادة الاختبار 🔁</button>
       </div>
 
       <details class="details">
@@ -119,9 +120,9 @@
     </section>
   </main>
 
-<footer class="foot text-center">
-    إعداد: موسى الصبحي
-</footer>
+  <footer class="foot">
+    ‏إعداد: موسى الصبحي 
+  </footer>
 
   <script src="questions.js"></script>
   <script src="app.js"></script>
