@@ -229,3 +229,43 @@ input:focus{
   0%,100%{transform: translateY(0)}
   50%{transform: translateY(-2px)}
 }
+/* زر ابدأ الاختبار */
+.start-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  padding: 14px 28px;
+  border-radius: 16px;
+  border: none;
+
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffffff;
+
+  background: linear-gradient(135deg, #6a5cff, #38bdf8);
+  box-shadow: 0 10px 20px rgba(56, 189, 248, 0.35);
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* عند المرور */
+.start-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 14px 28px rgba(56, 189, 248, 0.45);
+}
+
+/* عند الضغط */
+.start-btn:active {
+  transform: scale(0.96);
+}
+
+/* للأجهزة الصغيرة (الجوال) */
+@media (max-width: 600px) {
+  .start-btn {
+    width: 100%;
+    font-size: 17px;
+  }
+}
