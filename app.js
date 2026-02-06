@@ -15,18 +15,18 @@ const qText = $("qText");
 const choicesBox = $("choices");
 
 const btnStart = $("btnStart");
-const btnExit  = $("btnExit");
-const btnPrev  = $("btnPrev");
-const btnNext  = $("btnNext");
+const btnExit = $("btnExit");
+const btnPrev = $("btnPrev");
+const btnNext = $("btnNext");
 
-const scoreBig   = $("scoreBig");
+const scoreBig = $("scoreBig");
 const percentBig = $("percentBig");
-const btnRetry   = $("btnRetry");
-const btnCert    = $("btnCert");
-const reviewBox  = $("review");
+const btnRetry = $("btnRetry");
+const btnCert = $("btnCert");
+const reviewBox = $("review");
 
 const certCanvas = $("certCanvas");
-const timerEl    = $("timer");
+const timerEl = $("timer");
 const durationEl = $("duration");
 
 const QUIZ_MINUTES = 10;
@@ -94,15 +94,18 @@ function renderQuestion(){
       <input type="radio" name="choice" ${answers[idx]===i ? "checked":""} />
       <div class="txt">${txt}</div>
     `;
+
+    // ✅ بدون أصوات
     wrap.addEventListener("click", () => {
-      answers[idx] = i;     // ✅ بدون صوت
+      answers[idx] = i;
       renderQuestion();
     });
+
     choicesBox.appendChild(wrap);
   });
 
   btnPrev.disabled = idx === 0;
-  btnNext.textContent = (idx === QUESTIONS.length-1) ? "إنهاء" : "التالي ➡️";
+  btnNext.textContent = (idx === QUESTIONS.length-1) ? "إنهاء" : "التالي";
 }
 
 function validateStart(){
@@ -117,7 +120,6 @@ btnStart.addEventListener("click", () => {
   idx = 0;
   answers = new Array(QUESTIONS.length).fill(null);
   remainingSeconds = QUIZ_MINUTES * 60;
-
   show(screenQuiz);
   renderQuestion();
   startTimer();
@@ -142,12 +144,8 @@ btnNext.addEventListener("click", () => {
 
 btnRetry.addEventListener("click", () => show(screenStart));
 
-btnCert.addEventListener("click", async () => {
-  try{
-    await downloadCertificate();
-  }catch(e){
-    alert("تعذر حفظ الشهادة. جرّب مرة ثانية.");
-  }
+btnCert.addEventListener("click", () => {
+  downloadCertificate().catch(() => alert("تعذر حفظ الشهادة. جرّب مرة ثانية."));
 });
 
 function finishQuiz(){
@@ -194,7 +192,7 @@ async function downloadCertificate(){
     grade: studentGrade.value.trim(),
     className: studentClass.value.trim() || "—",
     score: `${correct} / ${total}`,
-    percent: `${percent}٪`,
+    percent: `${percent}%`,
   });
 
   const blob = await new Promise((resolve) => certCanvas.toBlob(resolve, "image/png"));
@@ -202,18 +200,18 @@ async function downloadCertificate(){
 
   const file = new File([blob], "certificate.png", { type: "image/png" });
 
-  // مشاركة في الجوال إن أمكن
   if (navigator.canShare && navigator.canShare({ files: [file] })) {
     try {
       await navigator.share({ files: [file], title: "الشهادة", text: "شهادة إنجاز" });
       return;
-    } catch {}
+    } catch (e) {}
   }
 
-  // fallback: فتح الصورة في تبويب
   const url = URL.createObjectURL(blob);
   const w = window.open(url, "_blank");
-  if (!w) alert("تم منع فتح نافذة جديدة. فعّل السماح بالنوافذ المنبثقة ثم جرّب.");
+  if (!w) {
+    alert("تم منع فتح نافذة جديدة. فعّل السماح بالنوافذ المنبثقة ثم جرّب.");
+  }
 }
 
 function drawCertificate({name, grade, className, score, percent}){
@@ -231,7 +229,9 @@ function drawCertificate({name, grade, className, score, percent}){
   ctx.strokeStyle = "#d6d7e2";
   ctx.strokeRect(90,90,certCanvas.width-180,certCanvas.height-180);
 
-  if (schoolLogo.complete) ctx.drawImage(schoolLogo, 120, 120, 140, 140);
+  if (schoolLogo.complete) {
+    ctx.drawImage(schoolLogo, 120, 120, 140, 140);
+  }
 
   ctx.textAlign = "center";
   ctx.fillStyle = "#111";
@@ -248,12 +248,21 @@ function drawCertificate({name, grade, className, score, percent}){
 
   ctx.font = "36px Arial";
   ctx.fillStyle = "#333";
-  ctx.fillText(`الصف: ${grade || "—"} — الشعبة: ${className || "—"}`, certCanvas.width/2, 520);
-  ctx.fillText(`الدرجة: ${score} — النسبة: ${percent}`, certCanvas.width/2, 590);
+  ctx.fillText(`الصف: ${grade || "—"}  —  الشعبة: ${className || "—"}`, certCanvas.width/2, 520);
+  ctx.fillText(`الدرجة: ${score}  —  النسبة: ${percent.replace("%","٪")}`, certCanvas.width/2, 590);
+
+  ctx.font = "bold 30px Arial";
+  ctx.fillStyle = "#111";
+  ctx.fillText("ملاحظات:", certCanvas.width/2, 690);
 
   ctx.font = "28px Arial";
-  ctx.fillStyle = "#555";
+  ctx.fillStyle = "#333";
+  ctx.fillText("استمر يا بطل ⭐ — تدريباتك تصنع الفرق 💪", certCanvas.width/2, 740);
+  ctx.fillText("أحسنت… واصل التميز 👏", certCanvas.width/2, 785);
+
   ctx.textAlign = "right";
+  ctx.font = "28px Arial";
+  ctx.fillStyle = "#555";
   ctx.fillText("تنفيذ: موسى الصبحي", certCanvas.width-140, certCanvas.height-250);
   ctx.fillText("مدرسة علي بن أبي طالب الابتدائية", certCanvas.width-140, certCanvas.height-210);
   ctx.fillText("الإدارة العامة بمنطقة نجران", certCanvas.width-140, certCanvas.height-170);
