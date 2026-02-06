@@ -229,43 +229,72 @@ input:focus{
   0%,100%{transform: translateY(0)}
   50%{transform: translateY(-2px)}
 }
+/* صف زر البداية */
+.start-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+/* معلومات قبل الزر */
+.start-info {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.start-info span {
+  background: #f1f5f9;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+}
+
 /* زر ابدأ الاختبار */
 .start-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
 
-  padding: 14px 28px;
-  border-radius: 16px;
+  padding: 12px 22px;   /* ⬅️ صغرناه شوي */
+  border-radius: 14px;
   border: none;
 
-  font-size: 18px;
+  font-size: 16px;     /* ⬅️ متناسق مع النص */
   font-weight: bold;
   color: #ffffff;
 
   background: linear-gradient(135deg, #6a5cff, #38bdf8);
-  box-shadow: 0 10px 20px rgba(56, 189, 248, 0.35);
+  box-shadow: 0 8px 18px rgba(56, 189, 248, 0.35);
 
   cursor: pointer;
   transition: all 0.25s ease;
 }
 
-/* عند المرور */
+/* hover */
 .start-btn:hover {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 14px 28px rgba(56, 189, 248, 0.45);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 22px rgba(56, 189, 248, 0.45);
 }
 
-/* عند الضغط */
+/* active */
 .start-btn:active {
-  transform: scale(0.96);
+  transform: scale(0.97);
 }
 
-/* للأجهزة الصغيرة (الجوال) */
+/* جوال */
 @media (max-width: 600px) {
+  .start-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
   .start-btn {
     width: 100%;
-    font-size: 17px;
   }
 }
