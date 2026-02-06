@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>تدريب اختبار نافس - الأسبوع (10)</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-card">
+        <div class="hero-top">
+          <div class="school">
+            <img class="school-logo" src="school-logo.png" alt="شعار المدرسة" />
+            <div class="school-text">
+              <div class="school-name">مدرسة علي بن أبي طالب الابتدائية</div>
+              <div class="school-sub">الإدارة العامة بمنطقة نجران</div>
+            </div>
+          </div>
+          <div class="chip">⭐ تدريب تفاعلي</div>
+        </div>
+
+        <h1 class="hero-title">تدريب اختبار نافس - الأسبوع (10)</h1>
+        <p class="hero-subtitle">حل الأسئلة بسهولة، شاهد نتيجتك فورًا، واحفظ شهادة إنجاز جميلة 🎉</p>
+
+        <div class="badges">
+          <div class="badge">🧠 أسئلة ممتعة</div>
+          <div class="badge">⏱ وقت منظم</div>
+          <div class="badge">🏆 شهادة إنجاز</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-waves" aria-hidden="true"></div>
+  </header>
+
+  <main class="wrap">
+    <!-- Start -->
+    <section id="screenStart" class="card">
+      <div class="welcome">
+        <div class="welcome-icon">👋</div>
+        <div>
+          <h2 class="welcome-title">أهلًا وسهلًا يا بطل!</h2>
+          <p class="welcome-sub">اكتب بياناتك ثم اضغط <b>ابدأ الاختبار</b> 🚀</p>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div>
+          <label>اسم الطالب</label>
+          <input id="studentName" placeholder="مثال: عبدالله محمد" />
+        </div>
+        <div>
+          <label>الصف</label>
+          <input id="studentGrade" placeholder="مثال: سادس" />
+        </div>
+        <div>
+          <label>الفصل</label>
+          <input id="studentClass" placeholder="مثال: (أ)" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="pill">📌 عدد الأسئلة: <span id="qCount">—</span></div>
+        <div class="pill">⏱️ المدة: <span id="duration">—</span> دقائق</div>
+      </div>
+
+      <button id="btnStart" class="btn primary bounce">🚀 ابدأ الاختبار</button>
+
+      <p class="note">ملاحظة: بياناتك تبقى داخل جهازك ولا يتم رفعها.</p>
+    </section>
+
+    <!-- Quiz -->
+    <section id="screenQuiz" class="card hidden">
+      <div class="quizTop">
+        <div class="meta">
+          <div class="pill">🧩 السؤال <span id="qIndex">١</span> / <span id="qTotal">١</span></div>
+          <div class="pill">⏳ الوقت: <span id="timer">—</span></div>
+        </div>
+        <button id="btnExit" class="btn">خروج</button>
+      </div>
+
+      <h2 id="qText" class="qText">—</h2>
+      <div id="choices" class="choices"></div>
+
+      <div class="quizNav">
+        <button id="btnPrev" class="btn">⬅️ السابق</button>
+        <button id="btnNext" class="btn primary">التالي ➡️</button>
+      </div>
+    </section>
+
+    <!-- Result -->
+    <section id="screenResult" class="card hidden">
+      <h2 class="result-title">🎉 النتيجة</h2>
+
+      <div class="resultBox">
+        <div>
+          <div class="big" id="scoreBig">—</div>
+          <div class="small">درجتك ✅</div>
+        </div>
+        <div class="vline"></div>
+        <div>
+          <div class="big" id="percentBig">—</div>
+          <div class="small">النسبة ⭐</div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="btnCert" class="btn primary">🏆 حفظ الشهادة</button>
+        <button id="btnRetry" class="btn">🔁 إعادة الاختبار</button>
+      </div>
+
+      <details class="details">
+        <summary>📚 عرض الإجابات</summary>
+        <div id="review"></div>
+      </details>
+
+      <canvas id="certCanvas" width="1600" height="1130" class="hidden"></canvas>
+    </section>
+  </main>
+
+  <footer class="foot">
+    تنفيذ: موسى الصبحي — مدرسة علي بن أبي طالب الابتدائية — الإدارة العامة بمنطقة نجران — مدير المدرسة: نواف آل جافلة
+  </footer>
+
+  <script src="questions.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
