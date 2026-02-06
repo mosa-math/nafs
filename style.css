@@ -314,3 +314,19 @@ input:focus{
   font-size: 14px;
   color: #475569;
 }
+.page-title{
+  text-align: center;
+  margin: 24px 0 20px;
+  font-size: 26px;
+  font-weight: 1000;
+  color: #0f172a;
+  line-height: 1.6;
+}
+
+.page-title span{
+  display: block;
+  margin-top: 8px;
+  font-size: 18px;
+  font-weight: 800;
+  color: #475569;
+}
