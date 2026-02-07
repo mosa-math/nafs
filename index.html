@@ -270,22 +270,6 @@
         document.getElementById('certDateVal').innerText = dateStr;
     }
 
-    <script>
-  function printCert() {
-    // أظهر الشهادة قبل الطباعة (مهم للجوال)
-    const area = document.getElementById("printArea");
-    area.classList.remove("hidden");
-
-    // نفّذ الطباعة
-    setTimeout(() => {
-      window.print();
-
-      // بعد الطباعة رجّعها مخفية (اختياري)
-      setTimeout(() => {
-        area.classList.add("hidden");
-      }, 500);
-    }, 150);
-  }
 </script>
 </body>
 </html>
