@@ -24,18 +24,81 @@
         .progress-bar { height: 8px; background: #e2e8f0; border-radius: 10px; overflow: hidden; margin-top: 10px; }
         .progress-fill { height: 100%; background: #1e3a8a; transition: width 0.3s; }
 
-        /* شاشة الطباعة */
-        @media print {
-            @page { size: landscape; margin: 10mm; }
-            body * { visibility: hidden; }
-            #printArea, #printArea * { visibility: visible; }
-            #printArea { position: fixed; left: 0; top: 0; width: 100vw; height: 100vh; display: flex !important; justify-content: center; align-items: center; background: white; }
-        }
+        /* ===== طباعة الشهادة فقط - A4 أفقي - صفحة واحدة ===== */
+@media print {
+
+  /* حاول إلغاء الهوامش (بعض الطابعات تفرض هامش بسيط) */
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+
+  html, body{
+    width: 100%;
+    height: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+    overflow: hidden !important;
+  }
+
+  /* اخفِ كل شيء */
+  body *{
+    visibility: hidden !important;
+  }
+
+  /* أظهر منطقة الشهادة فقط */
+  #printArea, #printArea *{
+    visibility: visible !important;
+  }
+
+  /* مهم جدًا: كلاس hidden يجعل display:none — لازم نكسره هنا */
+  #printArea{
+    position: fixed !important;
+    inset: 0 !important;
+    display: flex !important;      /* ← يكسر hidden */
+    align-items: stretch !important;
+    justify-content: stretch !important;
+    background: #fff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* اطبع الشهادة بمقاس A4 الحقيقي */
+  .cert-box{
+    width: 297mm !important;
+    height: 210mm !important;
+    box-sizing: border-box !important;
+
+    /* بدل الهوامش الخارجية نخلي مساحة آمنة داخلية */
+    padding: 14mm !important;
+
+    border: 6mm double #1e3a8a !important;
+    background: #fff !important;
+    text-align: center !important;
+    direction: rtl !important;
+
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}
 
         #feedback-toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999; padding: 1.5rem 3rem; border-radius: 1.5rem; display: none; text-align: center; color: white; font-weight: 900; font-size: 1.5rem; animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         @keyframes pop { 0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; } 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; } }
         
-        .cert-box { width: 297mm; height: 210mm; box-sizing: border-box; padding: 40px; border: 15px double #1e3a8a; background: #fff; text-align: center; direction: rtl; }
+        .cert-box{
+  width: 297mm;
+  height: 210mm;
+  box-sizing: border-box;
+  padding: 14mm;
+  border: 6mm double #1e3a8a;
+  background: #fff;
+  text-align: center;
+  direction: rtl;
+}
     </style>
 </head>
 <body class="bg-slate-100 p-4">
