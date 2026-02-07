@@ -1,60 +1,36 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>تدريب نافس - صفحة التدريب</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مقياس نفس - اختبار الشخصية المتقدم</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-  <main class="page">
-    <!-- شريط علوي مثل الصورة -->
-    <section class="topbar">
-      <div class="topbar__row">
-        <div class="topbar__left">
-          <div class="meta">
-            <span id="qIndexText">السؤال 1</span>
-            <span class="dot">•</span>
-            <span id="qTotalText">من 10</span>
-          </div>
+    <div class="container">
+        <header>
+            <h1>مقياس تحليل الشخصية</h1>
+            <div id="timer-display">الوقت المتبقي: <span id="time">15</span></div>
+        </header>
 
-          <div class="progress">
-            <div id="progressFill" class="progress__fill" style="width:0%"></div>
-          </div>
-
-          <div class="submeta" id="subMeta">
-            الرياضيات - السادس الابتدائي
-          </div>
+        <div id="quiz-container">
+            <h2 id="question-text">جاري تحميل السؤال...</h2>
+            <div id="options-container" class="options-grid"></div>
+            <div class="progress-wrapper">
+                <div id="progress"></div>
+            </div>
         </div>
 
-        <div class="topbar__right">
-          <div class="student">
-            <span id="studentNameTop">عبدالله</span>
-            <span class="student__icon">👤</span>
-          </div>
+        <div id="result-container" class="hidden">
+            <div class="result-card">
+                <h2>النتيجة النهائية</h2>
+                <div id="result-content"></div>
+                <button class="retry-btn" onclick="location.reload()">إعادة الاختبار</button>
+            </div>
         </div>
-      </div>
-    </section>
+    </div>
 
-    <!-- بطاقة السؤال -->
-    <section class="card">
-      <h2 id="qText" class="qtitle">السؤال يظهر هنا…</h2>
-
-      <div id="choices" class="choices">
-        <!-- الخيارات تُبنى من JS -->
-      </div>
-    </section>
-
-    <!-- شريط زر التالي مثل الصورة -->
-    <section class="bottombar">
-      <button id="nextBtn" class="nextbtn" disabled>
-        <span class="nextbtn__icon">⬅</span>
-        <span>السؤال التالي</span>
-      </button>
-    </section>
-  </main>
-
-  <script src="app.js"></script>
+    <script src="questions.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
