@@ -1,515 +1,164 @@
 <!doctype html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" class="h-full">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>تدريب اختبار نافس في مادة الرياضيات للصف السادس الابتدائي – الأسبوع العاشر</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة تدريب نافس - الأستاذ موسى الصبحي</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Tajawal', sans-serif; }
+        body { background-color: #e2e8f0; min-height: 100vh; display: flex; flex-direction: column; }
+        
+        /* تنسيق منطقة السؤال كما في الصورة */
+        .quiz-container { background: white; border-radius: 2rem; box-shadow: 0 10px 25px rgba(0,0,0,0.05); width: 100%; max-width: 800px; padding: 2.5rem; position: relative; }
+        .pill-container { display: flex; gap: 8px; position: absolute; top: -20px; left: 40px; }
+        .pill-item { background: #dbeafe; color: #1e40af; padding: 8px 20px; border-radius: 1.5rem; font-weight: 800; font-size: 0.9rem; display: flex; align-items: center; gap: 5px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        
+        /* خيارات الإجابة العريضة */
+        .option-card { width: 100%; padding: 1.2rem 2rem; background: #f8fafc; border: 2px solid #f1f5f9; border-radius: 1.2rem; display: flex; justify-content: space-between; align-items: center; font-weight: 700; color: #334155; transition: all 0.2s; cursor: pointer; }
+        .option-card:hover { border-color: #3b82f6; background: #eff6ff; }
+        .option-card.correct { background: #22c55e !important; color: white !important; border-color: #16a34a !important; }
+        .option-card.wrong { background: #ef4444 !important; color: white !important; border-color: #dc2626 !important; }
 
-  <style>
-    :root{
-      --bg1:#eaf2ff;
-      --bg2:#f3edff;
-      --card:#ffffffcc;
-      --card2:#ffffff;
-      --ink:#0f172a;
-      --muted:#64748b;
-      --brand1:#6d28d9;
-      --brand2:#0ea5e9;
-      --ok:#16a34a;
-      --bad:#dc2626;
-      --line:#e2e8f0;
-      --shadow: 0 18px 45px rgba(2,6,23,.12);
-      --r:22px;
-    }
+        /* شريط التقدم */
+        .progress-bar { height: 8px; background: #e2e8f0; border-radius: 10px; overflow: hidden; margin-top: 10px; }
+        .progress-fill { height: 100%; background: #1e3a8a; transition: width 0.3s; }
 
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, "Segoe UI", Tahoma, Arial;
-      color:var(--ink);
-      background: radial-gradient(1200px 600px at 20% 10%, var(--bg2), transparent 60%),
-                  radial-gradient(1000px 700px at 80% 0%, var(--bg1), transparent 60%),
-                  linear-gradient(180deg, #f7fbff 0%, #eef4ff 55%, #eef6ff 100%);
-      min-height:100vh;
-    }
+        /* شاشة النتيجة النهائية (مطابقة للصورة) */
+        .result-card { background: #f8fafc; padding: 1.5rem; border-radius: 1.5rem; border: 1px solid #e2e8f0; }
 
-    .wrap{max-width:1080px;margin:28px auto 60px;padding:0 18px}
+        /* حل مشكلة الطباعة العرضية */
+        @media print {
+            @page { size: landscape; margin: 0; }
+            body * { visibility: hidden; }
+            #printArea, #printArea * { visibility: visible; }
+            #printArea { position: absolute; left: 0; top: 0; width: 100vw; height: 100vh; display: block !important; }
+        }
 
-    /* HERO */
-    .hero{
-      border-radius: 28px;
-      padding: 22px 26px;
-      background: linear-gradient(135deg, rgba(109,40,217,.95), rgba(14,165,233,.92));
-      color:#fff;
-      box-shadow: var(--shadow);
-      position:relative;
-      overflow:hidden;
-    }
-    .hero:before{
-      content:"";
-      position:absolute; inset:-120px -160px auto auto;
-      width:320px;height:320px;border-radius:50%;
-      background: rgba(255,255,255,.12);
-      filter: blur(0px);
-    }
-    .heroTop{
-      display:flex; align-items:flex-start; justify-content:space-between; gap:14px;
-      flex-wrap:wrap;
-    }
-    .chip{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:10px 14px;
-      border-radius:999px;
-      background: rgba(255,255,255,.18);
-      border:1px solid rgba(255,255,255,.25);
-      font-weight:700;
-    }
-    .schoolBox{
-      display:flex; align-items:center; gap:12px;
-      background: rgba(255,255,255,.12);
-      border:1px solid rgba(255,255,255,.22);
-      padding:10px 12px;
-      border-radius:16px;
-      max-width: 420px;
-    }
-    .logo{
-      width:46px;height:46px;border-radius:14px;
-      background:#fff;
-      display:grid;place-items:center;
-      overflow:hidden;
-      flex: 0 0 auto;
-    }
-    .logo img{width:100%;height:100%;object-fit:cover}
-    .schoolText{line-height:1.35}
-    .schoolText .n{font-weight:800}
-    .schoolText .s{opacity:.9;font-size:12.5px}
-
-    .heroH1{
-      margin:14px 0 6px;
-      font-size: 28px;
-      font-weight: 900;
-      letter-spacing:.2px;
-      text-align:center;
-    }
-    .heroSub{
-      margin:0 0 14px;
-      text-align:center;
-      font-weight:700;
-      opacity:.95;
-    }
-    .badges{
-      display:flex; justify-content:center; gap:10px; flex-wrap:wrap;
-      margin-top:8px;
-    }
-    .badge{
-      display:inline-flex; align-items:center; gap:8px;
-      background:#fff;
-      color:#0b1220;
-      padding:10px 14px;
-      border-radius:999px;
-      box-shadow: 0 10px 20px rgba(2,6,23,.12);
-      font-weight:800;
-    }
-
-    /* CARD */
-    .card{
-      margin-top:18px;
-      background: var(--card);
-      border:1px solid rgba(226,232,240,.9);
-      border-radius: var(--r);
-      box-shadow: 0 14px 35px rgba(2,6,23,.08);
-      overflow:hidden;
-    }
-    .cardInner{padding:18px}
-
-    .welcomeRow{
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      flex-wrap:wrap;
-    }
-    .welcomeTitle{
-      display:flex; align-items:center; gap:10px;
-      font-weight:900;
-      font-size:20px;
-    }
-    .wave{
-      width:44px;height:44px;border-radius:14px;
-      display:grid;place-items:center;
-      background: #f8fafc;
-      border:1px solid var(--line);
-      animation: bounce 2.4s infinite;
-    }
-    @keyframes bounce{
-      0%,100%{transform:translateY(0)}
-      50%{transform:translateY(-4px)}
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-      margin-top:14px;
-    }
-    .field{
-      background:var(--card2);
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:12px 12px;
-      display:flex; align-items:center; gap:10px;
-    }
-    .field input{
-      border:0; outline:0; width:100%;
-      font-size:15px;
-      background:transparent;
-      text-align:right;
-    }
-
-    .metaRow{
-      display:flex; gap:10px; flex-wrap:wrap;
-      align-items:center; justify-content:flex-end;
-      margin-top:12px;
-    }
-    .pill{
-      background:#f8fafc;
-      border:1px solid var(--line);
-      padding:10px 12px;
-      border-radius:999px;
-      font-weight:800;
-      color:#0b1220;
-      display:inline-flex; align-items:center; gap:8px;
-      min-height:40px;
-    }
-
-    .weeksBox{
-      margin-top:12px;
-      background: #ffffff;
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:14px;
-    }
-    .weeksTitle{
-      font-weight:900;
-      margin:0 0 10px;
-      text-align:center;
-    }
-    .weeksGrid{
-      display:grid;
-      grid-template-columns: repeat(5, minmax(0,1fr));
-      gap:10px;
-    }
-    .weekBtn{
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:10px 10px;
-      cursor:pointer;
-      font-weight:900;
-      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
-      min-height:54px;
-      display:flex; flex-direction:column; justify-content:center; gap:4px;
-    }
-    .weekBtn small{font-weight:700;color:var(--muted)}
-    .weekBtn:hover{transform: translateY(-1px); box-shadow: 0 10px 18px rgba(2,6,23,.08)}
-    .weekBtn.active{
-      border-color: rgba(109,40,217,.65);
-      box-shadow: 0 0 0 4px rgba(109,40,217,.12);
-    }
-
-    .startRow{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:12px; flex-wrap:wrap;
-      margin-top:12px;
-    }
-
-    .btn{
-      border:0;
-      border-radius:16px;
-      padding:12px 16px;
-      font-weight:900;
-      cursor:pointer;
-      transition: transform .12s ease, filter .12s ease;
-      min-height:46px;
-      display:inline-flex; align-items:center; justify-content:center; gap:10px;
-      white-space:nowrap;
-    }
-    .btn:active{transform: translateY(1px)}
-    .btnPrimary{
-      color:#fff;
-      background: linear-gradient(135deg, var(--brand1), var(--brand2));
-      box-shadow: 0 14px 28px rgba(109,40,217,.22);
-      min-width: 170px;
-    }
-    .btnGhost{
-      background:#fff;
-      border:1px solid var(--line);
-      color:#0b1220;
-      min-width: 170px;
-    }
-
-    .note{
-      margin-top:10px;
-      color:var(--muted);
-      font-weight:700;
-      text-align:right;
-      font-size:13px;
-    }
-
-    /* QUIZ TOP BAR */
-    .quizTop{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:12px; flex-wrap:wrap;
-      padding:14px 16px;
-      border-bottom:1px solid var(--line);
-      background: rgba(255,255,255,.8);
-    }
-    .qtLeft, .qtRight{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
-    .studentTag{
-      display:inline-flex; align-items:center; gap:8px;
-      font-weight:900;
-      padding:10px 12px;
-      border-radius:999px;
-      background:#fff;
-      border:1px solid var(--line);
-    }
-    .progress{
-      width:240px; height:10px; border-radius:999px;
-      background:#e9efff; overflow:hidden;
-      border:1px solid #dbe6ff;
-    }
-    .bar{height:100%; width:0%; background: linear-gradient(90deg, var(--brand1), var(--brand2)); border-radius:999px}
-
-    /* QUESTION */
-    .qCard{padding:18px}
-    .qTitle{
-      font-size:22px;
-      font-weight:900;
-      margin:6px 0 14px;
-      text-align:center;
-    }
-    .options{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      margin-top:10px;
-    }
-    .opt{
-      border:1px solid #dbe6ff;
-      background:#f2f7ff;
-      padding:14px 16px;
-      border-radius:18px;
-      cursor:pointer;
-      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
-      display:flex; align-items:center; justify-content:space-between;
-      font-weight:900;
-      min-height:56px;
-    }
-    .opt:hover{transform: translateY(-1px); box-shadow: 0 10px 18px rgba(2,6,23,.06)}
-    .opt .v{font-weight:900}
-    .opt.selected{
-      border-color: rgba(109,40,217,.7);
-      box-shadow: 0 0 0 4px rgba(109,40,217,.12);
-      background:#f7f3ff;
-    }
-    .opt.correct{
-      border-color: rgba(22,163,74,.75);
-      box-shadow: 0 0 0 4px rgba(22,163,74,.14);
-      background:#effcf3;
-    }
-    .opt.wrong{
-      border-color: rgba(220,38,38,.7);
-      box-shadow: 0 0 0 4px rgba(220,38,38,.12);
-      background:#fff1f2;
-    }
-
-    .navRow{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:10px; flex-wrap:wrap;
-      padding:14px 16px 18px;
-    }
-    .btnWide{
-      width:100%;
-      border-radius:16px;
-      padding:14px 16px;
-      font-weight:900;
-      background:#94a3b8;
-      color:#fff;
-      border:0;
-      opacity:.95;
-    }
-    .btnWide.enabled{
-      background: linear-gradient(135deg, var(--brand1), var(--brand2));
-      cursor:pointer;
-      box-shadow: 0 14px 26px rgba(109,40,217,.18);
-    }
-
-    /* RESULT */
-    .resultBox{
-      padding:18px;
-      text-align:center;
-    }
-    .resultTitle{font-size:22px;font-weight:900;margin:6px 0 6px}
-    .score{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:12px 16px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:#fff;
-      font-weight:900;
-      margin:10px 0;
-    }
-    .details{
-      margin:12px auto 0;
-      max-width:720px;
-      text-align:right;
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:14px;
-      color:#0b1220;
-    }
-    .details h4{margin:0 0 8px;font-weight:900}
-    .details ul{margin:0;padding:0 18px;line-height:1.9;font-weight:700;color:#334155}
-
-    /* FOOTER */
-    .foot{
-      margin-top:18px;
-      text-align:center; /* المطلوب */
-      color:#64748b;
-      font-weight:800;
-    }
-
-    /* HIDE/SHOW */
-    .hidden{display:none !important}
-
-    @media (max-width: 840px){
-      .heroH1{font-size:22px}
-      .grid{grid-template-columns:1fr}
-      .weeksGrid{grid-template-columns: repeat(3, minmax(0,1fr))}
-      .progress{width:170px}
-    }
-  </style>
+        #feedback-toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999; padding: 1.5rem 3rem; border-radius: 1.5rem; display: none; text-align: center; color: white; font-weight: 900; font-size: 1.5rem; animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        @keyframes pop { 0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; } 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; } }
+    </style>
 </head>
+<body class="p-4 md:p-8">
 
-<body>
-  <div class="wrap">
+<div id="app" class="flex-grow flex items-center justify-center">
+    
+    <div id="mainContainer" class="w-full max-w-5xl bg-white rounded-3xl shadow-2xl overflow-hidden grid md:grid-cols-2">
+        <section id="heroSection" class="p-10 bg-slate-50 flex flex-col justify-center items-center text-center border-l border-slate-100">
+            <img src="https://iconape.com/wp-content/files/zz/389912/svg/389912.svg" class="w-24 mb-4">
+            <p class="text-slate-500 font-bold text-xs uppercase">الإدارة العامة للتعليم بنجران</p>
+            <p class="text-green-800 font-bold text-sm mb-6">مدرسة علي بن أبي طالب الابتدائية</p>
+            <h1 class="text-2xl font-black text-slate-800 mb-1">منصة تدريب اختبار نافس</h1>
+            <p class="text-slate-400 font-bold text-xs">مادة الرياضيات للصف السادس الابتدائي</p>
+        </section>
 
-    <!-- HERO (مثل الصورة 1) -->
-    <section class="hero">
-      <div class="heroTop">
-        <div class="chip">⭐ تدريب تفاعلي</div>
+        <div id="interactiveSection" class="p-10 flex flex-col justify-center">
+            <div id="startScreen" class="space-y-6">
+                <div class="welcomeTitle"><span class="wave">👋</span> أهلًا وسهلًا يا بطل!</div>
+                <input id="studentName" type="text" placeholder="اكتب اسمك هنا..." class="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500">
+                <div class="grid grid-cols-2 gap-3">
+                    <select id="gradeSelect" class="px-4 py-3 rounded-xl border border-slate-200 font-bold">
+                        <option value="">اختر الصف</option>
+                        <option value="سادس ( أ )">سادس ( أ )</option>
+                        <option value="سادس ( ب )">سادس ( ب )</option>
+                    </select>
+                    <select id="weekSelect" class="px-4 py-3 rounded-xl border border-slate-200 font-bold">
+                        <option value="">اختر الأسبوع</option>
+                            <option value="1">الأسبوع 1</option>
+                            <option value="2">الأسبوع 2</option>
+                            <option value="3">الأسبوع 3</option>
+                            <option value="4">الأسبوع 4</option>
+                            <option value="5">الأسبوع 5</option>
+                            <option value="6">الأسبوع 6</option>
+                            <option value="7">الأسبوع 7</option>
+                            <option value="8">الأسبوع 8</option>
+                            <option value="9">الأسبوع 9</option>
+                            <option value="10">الأسبوع 10</option>
+                    </select>
+                </div>
+                <button onclick="startTraining()" class="w-full py-4 bg-blue-600 text-white font-black rounded-xl text-lg shadow-lg">ابدأ التدريب 🚀</button>
+            </div>
+        </div>
+    </div>
 
-        <div class="logo-box">
-  <img src="nafss.png" alt="شعار نافس" style="max-width: 140px; height: auto;">
+    <div id="quizScreen" class="hidden w-full flex flex-col items-center">
+        <div class="w-full max-w-3xl mb-8">
+            <div class="flex justify-between items-center mb-2">
+                <div class="flex items-center gap-2 font-bold text-slate-700">
+                    <span class="bg-slate-200 p-2 rounded-full">👤</span> <span id="displayStudentName"></span>
+                </div>
+                <div class="font-bold text-slate-500" id="topQIndicator"></div>
+            </div>
+            <div class="progress-bar"><div id="progressFill" class="progress-fill" style="width: 0%"></div></div>
+        </div>
+
+        <div class="quiz-container">
+            <div class="pill-container">
+                <div class="pill-item"><span>السؤال</span> <span id="currQNum">1</span> من <span id="totalQNum">0</span></div>
+                <div class="pill-item">⏱️ الوقت: <span id="timer">10:00</span></div>
+            </div>
+            <h2 id="questionText" class="text-2xl font-extrabold text-slate-800 text-center my-8"></h2>
+            <div id="optionsGrid" class="space-y-4"></div>
+            <button id="nextBtn" onclick="nextQuestion()" class="hidden w-full py-4 bg-slate-800 text-white font-black rounded-xl mt-8 text-lg">السؤال التالي ⬅️</button>
+        </div>
+    </div>
+
+    <div id="resultScreen" class="hidden w-full max-w-md flex flex-col items-center text-center">
+        <div class="text-6xl mb-4">📚</div>
+        <h2 id="resStudentName" class="text-3xl font-black text-blue-900 mb-6"></h2>
+        
+        <div class="bg-white w-full rounded-3xl p-8 shadow-xl space-y-6">
+            <p class="font-bold text-slate-500">لقد أكملت مسابقة الرياضيات</p>
+            <div class="text-6xl font-black text-slate-800" id="resScoreText"></div>
+            <div class="text-2xl font-black text-blue-600" id="resPercent"></div>
+            <div class="text-xl font-bold text-slate-700">التقدير: <span id="resGrade"></span></div>
+            <div class="bg-amber-50 p-3 rounded-xl text-amber-700 font-bold" id="resMsg"></div>
+        </div>
+
+        <div class="result-card w-full mt-6 grid grid-cols-1 gap-2 text-right shadow-sm bg-white">
+            <div class="text-slate-600 font-bold">📚 المادة: الرياضيات</div>
+            <div class="text-slate-600 font-bold">🎓 الصف: <span id="resClass"></span></div>
+            <div class="text-slate-600 font-bold">📅 التاريخ: <span id="resDate"></span></div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3 w-full mt-8">
+            <button onclick="window.print()" class="bg-green-600 text-white p-3 rounded-xl font-bold text-sm">🖨️ طباعة الشهادة</button>
+            <button onclick="location.reload()" class="bg-blue-600 text-white p-3 rounded-xl font-bold text-sm">🔄 إعادة المحاولة</button>
+            <button onclick="location.reload()" class="bg-slate-800 text-white p-3 rounded-xl font-bold text-sm">🏠 الرئيسية</button>
+        </div>
+    </div>
 </div>
 
+<footer id="pageFooter" class="p-6 text-center text-slate-400 font-bold">
+    إعداد المعلم: <span class="text-blue-900">موسى الصبحي</span>
+</footer>
 
-      <h1 class="heroH1">تدريب اختبار نافس في مادة الرياضيات للصف السادس الابتدائي</h1>
-      <p class="heroSub">اختر الأسبوع، أدخل بياناتك، وابدأ التدريب بكل سهولة 🎉</p>
+<div id="feedback-toast"></div>
 
-      <div class="badges">
-        <span class="badge">🧠 أسئلة ممتعة</span>
-        <span class="badge">⏱️ وقت منظم</span>
-        <span class="badge">🏆 شهادة إنجاز</span>
-      </div>
-    </section>
-
-    <!-- START SCREEN (واجهة مثل 1 + بيانات مثل 2) -->
-    <section id="startScreen" class="card">
-      <div class="cardInner">
-        <div class="welcomeRow">
-          <div>
-            <div class="welcomeTitle"><span class="wave">👋</span> أهلًا وسهلًا يا بطل!</div>
-            <div style="color:var(--muted);font-weight:800;margin-top:6px">اكتب بياناتك ثم اختر الأسبوع واضغط ابدأ التدريب 🚀</div>
-          </div>
+<div id="printArea" class="hidden">
+    <div style="width: 1100px; height: 780px; margin: auto; padding: 50px; border: 20px double #1e3a8a; background: white; text-align: center; direction: rtl; box-sizing: border-box;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <img src="https://iconape.com/wp-content/files/zz/389912/svg/389912.svg" style="width: 120px;">
+            <h1 style="font-size: 55px; color: #1e3a8a; font-weight: 900;">شهادة شكر وتقدير</h1>
+            <img src="مدرسة.png" style="width: 140px;">
         </div>
 
-        <div class="grid">
-          <div class="field"><input id="studentName" type="text" placeholder="اسم الطالب" /></div>
-          <div class="field"><input id="studentClass" type="text" placeholder="الفصل (مثال: سادس/أ)" /></div>
+        <p style="font-size: 30px; margin-top: 50px;">يتقدم معلم الرياضيات بمدرسة علي بن أبي طالب بخالص الشكر للطالب:</p>
+        <h2 id="certName" style="font-size: 60px; color: #000; border-bottom: 5px solid #d4af37; display: inline-block; padding: 0 80px; margin: 20px 0;"></h2>
+        <p style="font-size: 28px;">بالصف: <span id="certClass" style="font-weight: bold;"></span></p>
+        <p style="font-size: 26px; color: #059669; font-weight: 900;">لاجتيازه تدريبات نافس بنسبة إنجاز: <span id="certPercent"></span></p>
+        <div style="margin-top: 40px; font-weight: bold;">بتاريخ: <span id="certDateVal"></span> هـ</div>
+        <div style="margin-top: 80px; display: flex; justify-content: space-between; padding: 0 100px;">
+            <div><p>معلم المادة</p><b>أ/ موسى الصبحي</b></div>
+            <div><p>مدير المدرسة</p><b>أ/ نواف آل جعره</b></div>
         </div>
+    </div>
+</div>
 
-        <div class="metaRow">
-          <div class="pill">📌 عدد الأسئلة: <span id="metaCount">—</span></div>
-          <div class="pill">⏳ المدة: <span id="metaTime">10</span> دقائق</div>
-          <div class="pill">🗓️ الأسبوع المختار: <span id="metaWeek">—</span></div>
-        </div>
-
-        <div class="weeksBox">
-          <div class="weeksTitle">اختر الأسبوع</div>
-          <div id="weeksGrid" class="weeksGrid"></div>
-          <div class="note" style="text-align:center;margin-top:10px">بعد اختيار الأسبوع اضغط ابدأ التدريب.</div>
-        </div>
-
-        <div class="startRow">
-          <button id="resetBtn" class="btn btnGhost" type="button">↩️ إعادة اختيار</button>
-          <button id="startBtn" class="btn btnPrimary" type="button">🚀 ابدأ التدريب</button>
-        </div>
-
-        <div class="note">ملاحظة: بياناتك تبقى داخل جهازك ولا يتم رفعها.</div>
-        <footer class="foot">إعداد: موسى الصبحي</footer>
-      </div>
-    </section>
-
-    <!-- QUIZ SCREEN (مثل الصورة 3 + صح/خطأ 4/5) -->
-    <section id="quizScreen" class="card hidden">
-      <div class="quizTop">
-        <div class="qtRight">
-          <div class="studentTag">👤 <span id="topStudent">—</span></div>
-          <div class="progress" aria-label="شريط التقدم"><div id="bar" class="bar"></div></div>
-        </div>
-        <div class="qtLeft">
-          <div class="pill">السؤال <b id="qIndex">1</b> من <b id="qTotal">0</b></div>
-          <div class="pill">⏱️ الوقت المتبقي: <b id="timer">10:00</b></div>
-        </div>
-      </div>
-
-      <div class="qCard">
-        <div class="note" style="text-align:center;margin:6px 0 10px">الرياضيات – السادس الابتدائي</div>
-        <div id="questionText" class="qTitle">—</div>
-
-        <div id="options" class="options"></div>
-      </div>
-
-      <div class="navRow">
-        <button id="prevBtn" class="btn btnGhost" type="button">↩️ السابق</button>
-        <button id="nextBtn" class="btnWide" type="button" disabled>⬅️ السؤال التالي</button>
-      </div>
-
-      <footer class="foot">إعداد: موسى الصبحي</footer>
-    </section>
-
-    <!-- RESULT SCREEN (مثل 6 + 7) -->
-    <section id="resultScreen" class="card hidden">
-      <div class="resultBox">
-        <div class="resultTitle">✅ انتهى الاختبار</div>
-        <div style="font-weight:800;color:var(--muted)">شاهد نتيجتك واطبع/حمّل شهادة الإنجاز</div>
-
-        <div class="score">🏁 النتيجة: <span id="scoreText">0 / 0</span></div>
-
-        <div class="details">
-          <h4>تفاصيل</h4>
-          <ul id="detailsList"></ul>
-        </div>
-
-        <div class="startRow" style="justify-content:center;margin-top:14px">
-          <button id="downloadCert" class="btn btnPrimary" type="button">⬇️ تحميل الشهادة (PNG)</button>
-          <button id="printCert" class="btn btnGhost" type="button">🖨️ طباعة الشهادة</button>
-          <button id="backHome" class="btn btnGhost" type="button">🏠 العودة للواجهة</button>
-        </div>
-
-        <canvas id="certCanvas" width="1400" height="900" class="hidden"></canvas>
-        <footer class="foot">إعداد: موسى الصبحي</footer>
-      </div>
-    </section>
-
-  </div>
-
-  <script>
-    /**************
-     *  البيانات: أسئلة الأسابيع (1 إلى 10)
-     *  عدّل هنا كل أسبوع بسهولة
-     **************/
-    window.WEEKS = {
-      10: [
+<script>
+    const WEEKS_DATA = {
+        10: [
         { q: "أوجد ناتج: ٣٦٢ × ٢٥", c: ["٧٢٥٠", "٨٠٥٠", "٩٠٥٠", "٦٢٥٠"], correct: 0 },
         { q: "أوجد ناتج: ٦٨٧٣٥٩٤ − ٣٧٦١٤٥٢", c: ["٣١١٢١٤٢", "٣٠١٢١٤٢", "٣٢١١١٤٢", "٣١١١٢٤٢"], correct: 0 },
       ],
@@ -547,364 +196,113 @@
       ],
     };
 
-    /**************
-     *  عناصر الصفحة
-     **************/
-    const startScreen = document.getElementById("startScreen");
-    const quizScreen  = document.getElementById("quizScreen");
-    const resultScreen= document.getElementById("resultScreen");
+    let currentQuestions = [], currentIdx = 0, score = 0, timeLeft = 600, timerId, studentData = {};
 
-    const studentName = document.getElementById("studentName");
-    const studentClass= document.getElementById("studentClass");
+    function startTraining() {
+        const name = document.getElementById('studentName').value.trim();
+        const grade = document.getElementById('gradeSelect').value;
+        const week = document.getElementById('weekSelect').value;
 
-    const weeksGrid   = document.getElementById("weeksGrid");
-    const metaCount   = document.getElementById("metaCount");
-    const metaWeek    = document.getElementById("metaWeek");
-    const metaTime    = document.getElementById("metaTime");
+        if(!name || !grade || !week) { alert("أكمل البيانات أولاً يا بطل!"); return; }
 
-    const startBtn    = document.getElementById("startBtn");
-    const resetBtn    = document.getElementById("resetBtn");
+        studentData = { name, grade, week };
+        currentQuestions = WEEKS_DATA[week];
+        
+        document.getElementById('mainContainer').classList.add('hidden');
+        document.getElementById('pageFooter').classList.add('hidden');
+        document.getElementById('quizScreen').classList.remove('hidden');
+        document.getElementById('displayStudentName').innerText = name;
+        
+        startTimer();
+        loadQuestion();
+    }
 
-    const topStudent  = document.getElementById("topStudent");
-    const qIndexEl    = document.getElementById("qIndex");
-    const qTotalEl    = document.getElementById("qTotal");
-    const timerEl     = document.getElementById("timer");
-    const barEl       = document.getElementById("bar");
+    function startTimer() {
+        timerId = setInterval(() => {
+            timeLeft--;
+            let mins = Math.floor(timeLeft / 60);
+            let secs = timeLeft % 60;
+            document.getElementById('timer').innerText = `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+            if(timeLeft <= 0) endQuiz();
+        }, 1000);
+    }
 
-    const questionText= document.getElementById("questionText");
-    const optionsBox  = document.getElementById("options");
-    const prevBtn     = document.getElementById("prevBtn");
-    const nextBtn     = document.getElementById("nextBtn");
-
-    const scoreText   = document.getElementById("scoreText");
-    const detailsList = document.getElementById("detailsList");
-
-    const downloadCert= document.getElementById("downloadCert");
-    const printCert   = document.getElementById("printCert");
-    const backHome    = document.getElementById("backHome");
-
-    const certCanvas  = document.getElementById("certCanvas");
-    const ctx         = certCanvas.getContext("2d");
-
-    /**************
-     *  حالة الاختبار
-     **************/
-    let selectedWeek = null;
-    let QUESTIONS = [];
-    let current = 0;
-    let answers = []; // {selectedIndex, correctIndex}
-    let locked  = false;
-    let timeLeft = 10 * 60; // 10 دقائق افتراضي
-    let tHandle = null;
-
-    // بناء أزرار الأسابيع
-    function buildWeeks(){
-      weeksGrid.innerHTML = "";
-      const weeks = Object.keys(window.WEEKS).map(Number).sort((a,b)=>a-b);
-      weeks.forEach(w=>{
-        const btn = document.createElement("button");
-        btn.type="button";
-        btn.className="weekBtn";
-        btn.innerHTML = `<div>الأسبوع ${w}</div><small>اضغط للاختيار</small>`;
-        btn.addEventListener("click", ()=>{
-          document.querySelectorAll(".weekBtn").forEach(x=>x.classList.remove("active"));
-          btn.classList.add("active");
-          selectedWeek = w;
-          QUESTIONS = (window.WEEKS[w] || []).slice();
-          metaWeek.textContent = w;
-          metaCount.textContent = QUESTIONS.length ? QUESTIONS.length : "—";
+    function loadQuestion() {
+        const q = currentQuestions[currentIdx];
+        document.getElementById('currQNum').innerText = currentIdx + 1;
+        document.getElementById('totalQNum').innerText = currentQuestions.length;
+        document.getElementById('topQIndicator').innerText = `السؤال ${currentIdx + 1} من ${currentQuestions.length}`;
+        document.getElementById('questionText').innerText = q.q;
+        document.getElementById('progressFill').style.width = `${((currentIdx + 1) / currentQuestions.length) * 100}%`;
+        
+        const grid = document.getElementById('optionsGrid');
+        grid.innerHTML = "";
+        
+        const letters = ['أ', 'ب', 'ج', 'د'];
+        q.c.forEach((choice, i) => {
+            const card = document.createElement('div');
+            card.className = "option-card";
+            card.innerHTML = `<span>${choice}</span><span class="text-slate-300">${letters[i]}</span>`;
+            card.onclick = () => checkAnswer(i, card);
+            grid.appendChild(card);
         });
-        weeksGrid.appendChild(btn);
-      });
+        document.getElementById('nextBtn').classList.add('hidden');
     }
 
-    // وقت mm:ss
-    function fmtTime(sec){
-      const m = Math.floor(sec/60);
-      const s = sec%60;
-      return String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
-    }
-
-    function validateStart(){
-      const n = studentName.value.trim();
-      const c = studentClass.value.trim();
-      if(!n || !c){
-        alert("اكتب اسم الطالب والفصل عشان يبدأ التدريب.");
-        return false;
-      }
-      if(!selectedWeek){
-        alert("اختر الأسبوع أولًا.");
-        return false;
-      }
-      // استبدال التحقق بطلبك:
-      if (!QUESTIONS.length){
-        alert("لا توجد أسئلة لهذا الأسبوع.");
-        return false;
-      }
-      return true;
-    }
-
-    function show(el){
-      [startScreen, quizScreen, resultScreen].forEach(x=>x.classList.add("hidden"));
-      el.classList.remove("hidden");
-      window.scrollTo({top:0, behavior:"smooth"});
-    }
-
-    function startQuiz(){
-      if(!validateStart()) return;
-
-      // تهيئة
-      current = 0;
-      answers = Array(QUESTIONS.length).fill(null);
-      locked = false;
-
-      topStudent.textContent = studentName.value.trim();
-      qTotalEl.textContent = QUESTIONS.length;
-
-      timeLeft = Number(metaTime.textContent || "10") * 60;
-      timerEl.textContent = fmtTime(timeLeft);
-
-      if(tHandle) clearInterval(tHandle);
-      tHandle = setInterval(()=>{
-        timeLeft--;
-        timerEl.textContent = fmtTime(Math.max(0,timeLeft));
-        if(timeLeft<=0){
-          clearInterval(tHandle);
-          finishQuiz();
+    function checkAnswer(idx, card) {
+        const q = currentQuestions[currentIdx];
+        const toast = document.getElementById('feedback-toast');
+        
+        if(idx === q.correct) {
+            score++;
+            card.classList.add('correct');
+            toast.innerHTML = "ممتاز! إجابة صحيحة 🥳";
+            toast.style.background = "#22c55e";
+        } else {
+            card.classList.add('wrong');
+            toast.innerHTML = "للأسف! إجابة خاطئة 💔";
+            toast.style.background = "#ef4444";
         }
-      }, 1000);
-
-      show(quizScreen);
-      renderQuestion();
+        
+        toast.style.display = "block";
+        setTimeout(() => toast.style.display = "none", 1000);
+        
+        document.querySelectorAll('.option-card').forEach(c => c.style.pointerEvents = "none");
+        document.getElementById('nextBtn').classList.remove('hidden');
     }
 
-    function renderQuestion(){
-      const q = QUESTIONS[current];
-      qIndexEl.textContent = current+1;
-
-      const pct = ((current)/Math.max(1,QUESTIONS.length))*100;
-      barEl.style.width = pct + "%";
-
-      questionText.textContent = q?.q || "—";
-      optionsBox.innerHTML = "";
-      locked = false;
-
-      const saved = answers[current]; // قد يكون null
-      q.c.forEach((choice, idx)=>{
-        const opt = document.createElement("div");
-        opt.className = "opt";
-        opt.innerHTML = `<span></span><span class="v">${choice}</span>`;
-        if(saved && saved.selectedIndex === idx) opt.classList.add("selected");
-
-        opt.addEventListener("click", ()=>{
-          if(locked) return;
-
-          // تمييز اختيار
-          optionsBox.querySelectorAll(".opt").forEach(x=>x.classList.remove("selected"));
-          opt.classList.add("selected");
-
-          // حفظ
-          answers[current] = { selectedIndex: idx, correctIndex: q.correct };
-
-          // إتاحة التالي
-          nextBtn.disabled = false;
-          nextBtn.classList.add("enabled");
-        });
-
-        optionsBox.appendChild(opt);
-      });
-
-      // أزرار التنقل
-      prevBtn.disabled = current===0;
-      prevBtn.style.opacity = current===0 ? .6 : 1;
-
-      // زر التالي: لا يعمل إلا بعد اختيار
-      const has = !!answers[current];
-      nextBtn.disabled = !has;
-      nextBtn.classList.toggle("enabled", has);
-      nextBtn.textContent = (current === QUESTIONS.length-1) ? "✅ إنهاء الاختبار" : "⬅️ السؤال التالي";
+    function nextQuestion() {
+        currentIdx++;
+        if(currentIdx < currentQuestions.length) loadQuestion();
+        else endQuiz();
     }
 
-    function markAnswer(){
-      // تلوين صح/خطأ (4/5)
-      const q = QUESTIONS[current];
-      const a = answers[current];
-      if(!a) return;
+    function endQuiz() {
+        clearInterval(timerId);
+        document.getElementById('quizScreen').classList.add('hidden');
+        document.getElementById('resultScreen').classList.remove('hidden');
+        
+        const percent = Math.round((score / currentQuestions.length) * 100);
+        document.getElementById('resStudentName').innerText = studentData.name;
+        document.getElementById('resScoreText').innerText = `${currentQuestions.length} / ${score}`;
+        document.getElementById('resPercent').innerText = `${percent}%`;
+        document.getElementById('resClass').innerText = studentData.grade;
+        document.getElementById('resDate').innerText = new Date().toLocaleDateString('ar-SA');
+        
+        let grade = "يحتاج تحسين", msg = "نشجعك على المحاولة مرة أخرى لتحسين نتيجتك! 💪";
+        if(percent >= 90) { grade = "ممتاز"; msg = "أنت بطل حقيقي! استمر في هذا الإبداع 🌟"; }
+        else if(percent >= 75) { grade = "جيد جداً"; msg = "عمل رائع! يمكنك الوصول للمثالية في المرة القادمة 👍"; }
+        
+        document.getElementById('resGrade').innerText = grade;
+        document.getElementById('resMsg').innerText = msg;
 
-      const opts = Array.from(optionsBox.querySelectorAll(".opt"));
-      opts.forEach((el, idx)=>{
-        el.classList.remove("correct","wrong");
-        if(idx === q.correct) el.classList.add("correct");
-        if(idx === a.selectedIndex && a.selectedIndex !== q.correct) el.classList.add("wrong");
-      });
-      locked = true;
+        // تجهيز الشهادة
+        document.getElementById('certName').innerText = studentData.name;
+        document.getElementById('certClass').innerText = studentData.grade;
+        document.getElementById('certPercent').innerText = percent + "%";
+        document.getElementById('certDateVal').innerText = new Date().toLocaleDateString('ar-SA');
     }
-
-    function next(){
-      if(!answers[current]){
-        alert("اختر إجابة أولًا.");
-        return;
-      }
-
-      // إظهار صح/خطأ لحظة بسيطة
-      markAnswer();
-      setTimeout(()=>{
-        if(current === QUESTIONS.length-1){
-          finishQuiz();
-          return;
-        }
-        current++;
-        renderQuestion();
-      }, 450);
-    }
-
-    function prev(){
-      if(current===0) return;
-      current--;
-      renderQuestion();
-    }
-
-    function finishQuiz(){
-      if(tHandle) clearInterval(tHandle);
-
-      // حساب النتيجة
-      let correct = 0;
-      detailsList.innerHTML = "";
-
-      QUESTIONS.forEach((q, i)=>{
-        const a = answers[i];
-        const ok = a && a.selectedIndex === q.correct;
-        if(ok) correct++;
-
-        const li = document.createElement("li");
-        li.textContent = `س${i+1}: ${ok ? "إجابة صحيحة ✅" : "إجابة غير صحيحة ❌"}`;
-        detailsList.appendChild(li);
-      });
-
-      scoreText.textContent = `${correct} / ${QUESTIONS.length}`;
-      show(resultScreen);
-      barEl.style.width = "100%";
-    }
-
-    function drawCertificate(){
-      const w = certCanvas.width, h = certCanvas.height;
-
-      // خلفية
-      const g = ctx.createLinearGradient(0,0,w,h);
-      g.addColorStop(0,"#6d28d9");
-      g.addColorStop(.55,"#0ea5e9");
-      g.addColorStop(1,"#eaf2ff");
-      ctx.fillStyle = g;
-      ctx.fillRect(0,0,w,h);
-
-      // طبقة بيضاء
-      ctx.fillStyle = "rgba(255,255,255,.92)";
-      roundRect(90,120,w-180,h-240,34,true);
-
-      // عنوان
-      ctx.fillStyle = "#0f172a";
-      ctx.font = "bold 52px system-ui, -apple-system, Segoe UI, Tahoma";
-      ctx.textAlign = "center";
-      ctx.fillText("شهادة إنجاز", w/2, 220);
-
-      ctx.font = "bold 28px system-ui";
-      ctx.fillStyle = "#334155";
-      ctx.fillText("تدريب اختبار نافس - رياضيات الصف السادس الابتدائي", w/2, 275);
-
-      const name = studentName.value.trim();
-      const cls  = studentClass.value.trim();
-      const week = selectedWeek;
-
-      ctx.font = "bold 40px system-ui";
-      ctx.fillStyle = "#0b1220";
-      ctx.fillText(`الطالب: ${name}`, w/2, 380);
-
-      ctx.font = "bold 30px system-ui";
-      ctx.fillStyle = "#334155";
-      ctx.fillText(`الفصل: ${cls}  •  الأسبوع: ${week}`, w/2, 435);
-
-      ctx.font = "bold 34px system-ui";
-      ctx.fillStyle = "#0f172a";
-      ctx.fillText(`النتيجة: ${scoreText.textContent}`, w/2, 520);
-
-      // معلومات المدرسة
-      ctx.font = "bold 24px system-ui";
-      ctx.fillStyle = "#475569";
-      ctx.fillText("مدرسة علي بن أبي طالب الابتدائية - الإدارة العامة للتعليم بمنطقة نجران", w/2, 625);
-      ctx.fillText("مدير المدرسة: نواف آل جافلة", w/2, 665);
-      ctx.fillText("إعداد: موسى الصبحي", w/2, 705);
-
-      // شعار (إن وجد)
-      return new Promise((resolve)=>{
-        const img = new Image();
-        img.onload = ()=>{
-          ctx.save();
-          roundRect(120,160,120,120,26,true);
-          ctx.clip();
-          ctx.drawImage(img,120,160,120,120);
-          ctx.restore();
-          resolve();
-        };
-        img.onerror = ()=>resolve();
-        img.src = "school-logo.png";
-      });
-    }
-
-    function roundRect(x,y,w,h,r,fill){
-      ctx.beginPath();
-      ctx.moveTo(x+r,y);
-      ctx.arcTo(x+w,y,x+w,y+h,r);
-      ctx.arcTo(x+w,y+h,x,y+h,r);
-      ctx.arcTo(x,y+h,x,y,r);
-      ctx.arcTo(x,y,x+w,y,r);
-      ctx.closePath();
-      if(fill) ctx.fill();
-    }
-
-    async function downloadCertificate(){
-      await drawCertificate();
-      const a = document.createElement("a");
-      a.download = "شهادة-إنجاز.png";
-      a.href = certCanvas.toDataURL("image/png");
-      a.click();
-    }
-
-    async function printCertificate(){
-      await drawCertificate();
-      const dataUrl = certCanvas.toDataURL("image/png");
-      const w = window.open("");
-      w.document.write(`<img src="${dataUrl}" style="width:100%;height:auto" />`);
-      w.document.close();
-      w.focus();
-      w.print();
-    }
-
-    // أحداث
-    startBtn.addEventListener("click", startQuiz);
-    resetBtn.addEventListener("click", ()=>{
-      selectedWeek = null;
-      QUESTIONS = [];
-      metaWeek.textContent="—";
-      metaCount.textContent="—";
-      document.querySelectorAll(".weekBtn").forEach(x=>x.classList.remove("active"));
-    });
-
-    nextBtn.addEventListener("click", ()=>{
-      if(nextBtn.disabled) return;
-      next();
-    });
-    prevBtn.addEventListener("click", prev);
-
-    backHome.addEventListener("click", ()=>{
-      show(startScreen);
-    });
-
-    downloadCert.addEventListener("click", downloadCertificate);
-    printCert.addEventListener("click", printCertificate);
-
-    // تشغيل أولي
-    buildWeeks();
-    metaTime.textContent = "10";
-  </script>
+</script>
 </body>
 </html>
+
