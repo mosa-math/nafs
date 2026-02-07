@@ -34,8 +34,12 @@ const durationEl = $("duration");
 
 const QUIZ_MINUTES = 10;
 const WEEKS = window.WEEKS || {};
-let selectedWeek = 10; // الافتراضي
-let QUESTIONS = (WEEKS[selectedWeek] || []).slice(0);
+// اختيار آخر أسبوع موجود تلقائيًا
+const weekKeys = Object.keys(WEEKS).map(Number);
+const latestWeek = weekKeys.length ? Math.max(...weekKeys) : null;
+
+let selectedWeek = latestWeek;
+let QUESTIONS = selectedWeek ? (WEEKS[selectedWeek] || []).slice(0) : [];
 
 qCount.textContent = toArabicDigits(String(QUESTIONS.length));
 qTotal.textContent = toArabicDigits(String(QUESTIONS.length));
