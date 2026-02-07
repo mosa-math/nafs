@@ -40,22 +40,21 @@
         @keyframes pop { 0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; } 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; } }
     </style>
 </head>
-<body class="p-4 md:p-8">
-
-<div id="app" class="flex-grow flex items-center justify-center">
-    
-    <div id="mainContainer" class="w-full max-w-5xl bg-white rounded-3xl shadow-2xl overflow-hidden grid md:grid-cols-2">
-        <section id="heroSection" class="p-10 bg-slate-50 flex flex-col justify-center items-center text-center border-l border-slate-100">
-            <img src="https://iconape.com/wp-content/files/zz/389912/svg/389912.svg" class="w-24 mb-4">
-            <p class="text-slate-500 font-bold text-xs uppercase">الإدارة العامة للتعليم بنجران</p>
-            <p class="text-green-800 font-bold text-sm mb-6">مدرسة علي بن أبي طالب الابتدائية</p>
-            <h1 class="text-2xl font-black text-slate-800 mb-1">منصة تدريب اختبار نافس</h1>
-            <p class="text-slate-400 font-bold text-xs">مادة الرياضيات للصف السادس الابتدائي</p>
+<body class="bg-slate-100 p-4">
+    <div id="app" class="max-w-5xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden grid md:grid-cols-2 min-h-[500px]">
+        <section class="p-8 bg-slate-50 flex flex-col items-center text-center border-l">
+            <div class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-bold mb-4">⭐ تدريب تفاعلي</div>
+            <img src="https://iconape.com/wp-content/files/zz/389912/svg/389912.svg" class="w-20 mb-4">
+            <p class="text-[10px] font-bold text-slate-500 uppercase">تعليم نجران - مدرسة علي بن أبي طالب</p>
+            <h1 class="text-xl font-black mb-1">منصة تدريب نافس</h1>
+            <p class="text-xs text-slate-400 font-bold">رياضيات السادس - خطة ١٠٠ يوم</p>
         </section>
+
 
         <div id="interactiveSection" class="p-10 flex flex-col justify-center">
             <div id="startScreen" class="space-y-6">
-                <div class="welcomeTitle"><span class="wave">👋</span> أهلًا وسهلًا يا بطل!</div>
+                div class="text-xl font-black">👋 أهلًا وسهلًا يا بطل!</div>
+                <p class="text-xs font-bold text-slate-400">اكتب بياناتك ثم اختر الأسبوع واضغط ابدأ التدريب 🚀</p>
                 <input id="studentName" type="text" placeholder="اكتب اسمك هنا..." class="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500">
                 <div class="grid grid-cols-2 gap-3">
                     <select id="gradeSelect" class="px-4 py-3 rounded-xl border border-slate-200 font-bold">
@@ -136,26 +135,243 @@
 
 <div id="feedback-toast"></div>
 
-<div id="printArea" class="hidden">
-    <div style="width: 1100px; height: 780px; margin: auto; padding: 50px; border: 20px double #1e3a8a; background: white; text-align: center; direction: rtl; box-sizing: border-box;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <img src="https://iconape.com/wp-content/files/zz/389912/svg/389912.svg" style="width: 120px;">
-            <h1 style="font-size: 55px; color: #1e3a8a; font-weight: 900;">شهادة شكر وتقدير</h1>
-            <img src="مدرسة.png" style="width: 140px;">
-        </div>
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>شهادة - A4 أفقي</title>
 
-        <p style="font-size: 30px; margin-top: 50px;">يتقدم معلم الرياضيات بمدرسة علي بن أبي طالب بخالص الشكر للطالب:</p>
-        <h2 id="certName" style="font-size: 60px; color: #000; border-bottom: 5px solid #d4af37; display: inline-block; padding: 0 80px; margin: 20px 0;"></h2>
-        <p style="font-size: 28px;">بالصف: <span id="certClass" style="font-weight: bold;"></span></p>
-        <p style="font-size: 26px; color: #059669; font-weight: 900;">لاجتيازه تدريبات نافس بنسبة إنجاز: <span id="certPercent"></span></p>
-        <div style="margin-top: 40px; font-weight: bold;">بتاريخ: <span id="certDateVal"></span> هـ</div>
-        <div style="margin-top: 80px; display: flex; justify-content: space-between; padding: 0 100px;">
-            <div><p>معلم المادة</p><b>أ/ موسى الصبحي</b></div>
-            <div><p>مدير المدرسة</p><b>أ/ نواف آل جعره</b></div>
-        </div>
+  <style>
+    body{
+      font-family: Tahoma, Arial, sans-serif;
+      margin:0;
+      background:#f3f4f6;
+      padding:16px;
+    }
+
+    /* أدوات على الشاشة فقط */
+    .toolbar{
+      max-width: 1100px;
+      margin: 0 auto 12px;
+      background:#fff;
+      padding:12px;
+      border-radius:12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,.08);
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .toolbar .inputs{ display:flex; gap:10px; flex-wrap:wrap; }
+    input{
+      padding:10px 12px;
+      border:1px solid #d1d5db;
+      border-radius:10px;
+      font-size:16px;
+      width: 220px;
+    }
+    button{
+      padding:12px 16px;
+      border:0;
+      border-radius:12px;
+      font-size:16px;
+      font-weight:700;
+      cursor:pointer;
+      background:#1e3a8a;
+      color:#fff;
+    }
+    .hint{ color:#6b7280; font-size:13px; }
+
+    /* معاينة على الشاشة (بنفس نسب A4 أفقي) */
+    .preview-wrap{
+      display:flex;
+      justify-content:center;
+      margin-top: 10px;
+    }
+    .cert{
+      /* المقاس الحقيقي للطباعة */
+      width: 297mm;
+      height: 210mm;
+
+      /* معاينة: لو الشاشة أصغر، نصغّرها بدون تشويه */
+      max-width: 98vw;
+      max-height: calc(98vw * 210 / 297);
+      aspect-ratio: 297 / 210;
+
+      box-sizing: border-box;
+      padding: 14mm;
+      border: 6mm double #1e3a8a;
+      background:#fff;
+      text-align:center;
+      direction: rtl;
+
+      box-shadow: 0 12px 35px rgba(0,0,0,.12);
+    }
+
+    .top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+    .title{
+      font-size:55px;
+      color:#1e3a8a;
+      font-weight:900;
+      margin:0;
+      line-height:1;
+    }
+    .lead{
+      font-size:30px;
+      margin-top:18mm;
+      margin-bottom: 6mm;
+    }
+    #certName{
+      font-size:60px;
+      color:#000;
+      border-bottom:5px solid #d4af37;
+      display:inline-block;
+      padding:0 22mm;
+      margin:6mm 0;
+      line-height: 1.2;
+      min-height: 1.2em;
+    }
+    .line{
+      font-size:28px;
+      margin: 6px 0;
+    }
+    .green{
+      font-size:26px;
+      color:#059669;
+      font-weight:900;
+      margin: 10px 0 0;
+    }
+    .date{
+      margin-top:10mm;
+      font-weight:bold;
+      font-size:22px;
+    }
+    .sign{
+      margin-top:20mm;
+      display:flex;
+      justify-content:space-between;
+      padding:0 22mm;
+      font-size:20px;
+    }
+    .sign p{ margin:0 0 6px; }
+
+    /* ===== الطباعة ===== */
+    @media print {
+      @page{ size: A4 landscape; margin: 8mm; }
+
+      /* أخفي كل شيء إلا الشهادة */
+      body{ background:#fff; padding:0; }
+      .toolbar, .hint, .preview-wrap{ display:none !important; }
+
+      /* اطبع الشهادة وحدها */
+      .cert{
+        box-shadow: none !important;
+        width: 100%;
+        height: auto;
+        max-width: 297mm;
+        max-height: 210mm;
+      }
+
+      /* ضمان طباعة الألوان/الإطار */
+      .cert{
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      /* منع التقسيم */
+      .cert, .cert *{
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- أدوات تعبئة على الشاشة فقط -->
+  <div class="toolbar">
+    <div class="inputs">
+      <input id="nameInput" placeholder="اسم الطالب" />
+      <input id="classInput" placeholder="الصف (مثال: سادس أ)" />
+      <input id="percentInput" placeholder="نسبة الإنجاز (مثال: ٩٥٪)" />
+      <input id="dateInput" placeholder="التاريخ الهجري (مثال: ١٠ / ٨ / ١٤٤٧)" />
     </div>
-</div>
+    <div>
+      <button onclick="fillAndPrint()">طباعة الشهادة</button>
+      <div class="hint">في Safari: من نافذة الطباعة فعّل Print backgrounds إذا احتجت.</div>
+    </div>
+  </div>
 
+  <!-- معاينة الشهادة -->
+  <div class="preview-wrap">
+    <div class="cert" id="certBox">
+
+      <div class="top">
+        <img src="https://iconape.com/wp-content/files/zz/389912/svg/389912.svg" style="width:120px;">
+        <h1 class="title">شهادة شكر وتقدير</h1>
+        <img src="مدرسة.png" style="width:140px;">
+      </div>
+
+      <p class="lead">يتقدم معلم الرياضيات بمدرسة علي بن أبي طالب بخالص الشكر للطالب:</p>
+
+      <div id="certName"></div>
+
+      <p class="line">بالصف: <span id="certClass" style="font-weight:bold;"></span></p>
+
+      <p class="green">لاجتيازه تدريبات نافس بنسبة إنجاز: <span id="certPercent"></span></p>
+
+      <div class="date">بتاريخ: <span id="certDateVal"></span> هـ</div>
+
+      <div class="sign">
+        <div>
+          <p>معلم المادة</p>
+          <b>أ/ موسى الصبحي</b>
+        </div>
+        <div>
+          <p>مدير المدرسة</p>
+          <b>أ/ نواف آل جعره</b>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function setText(id, v){ document.getElementById(id).textContent = v || ""; }
+
+    function fillCertificate(){
+      const name = document.getElementById("nameInput").value.trim();
+      const cls  = document.getElementById("classInput").value.trim();
+      const pct  = document.getElementById("percentInput").value.trim();
+      const date = document.getElementById("dateInput").value.trim();
+
+      setText("certName", name);
+      setText("certClass", cls);
+      setText("certPercent", pct);
+      setText("certDateVal", date);
+    }
+
+    function fillAndPrint(){
+      fillCertificate();
+      window.print();
+    }
+
+    // قيم افتراضية (احذفها إذا ما تبي)
+    setText("certName"," ");
+    setText("certClass"," ");
+    setText("certPercent"," ");
+    setText("certDateVal"," ");
+  </script>
+
+</body>
+</html>
 <script>
     const WEEKS_DATA = {
         10: [
