@@ -19,6 +19,9 @@ const btnExit = $("btnExit");
 const btnPrev = $("btnPrev");
 const btnNext = $("btnNext");
 
+const weeksGrid = $("weeksGrid");
+const weekNumber = $("weekNumber");
+
 const scoreBig = $("scoreBig");
 const percentBig = $("percentBig");
 const btnRetry = $("btnRetry");
@@ -30,12 +33,14 @@ const timerEl = $("timer");
 const durationEl = $("duration");
 
 const QUIZ_MINUTES = 10;
-const QUESTIONS = (window.QUESTIONS || []).slice(0);
+const WEEKS = window.WEEKS || {};
+let selectedWeek = 10; // الافتراضي
+let QUESTIONS = (WEEKS[selectedWeek] || []).slice(0);
 
 qCount.textContent = toArabicDigits(String(QUESTIONS.length));
 qTotal.textContent = toArabicDigits(String(QUESTIONS.length));
 durationEl.textContent = toArabicDigits(String(QUIZ_MINUTES));
-
+buildWeeks();
 const schoolLogo = new Image();
 schoolLogo.src = "school-logo.png";
 
@@ -112,11 +117,53 @@ function validateStart(){
   return studentName.value.trim().length >= 2 && studentGrade.value.trim().length >= 1;
 }
 
-btnStart.addEventListener("click", () => {
-  if (!validateStart()){
-    alert("اكتب اسم الطالب والصف عشان يبدأ الاختبار.");
+function setWeek(w){
+  selectedWeek = w;
+  weekNumber.value = String(w);
+  QUESTIONS = (WEEKS[w] || []).slice(0);
+
+  qCount.textContent = toArabicDigits(String(QUESTIONS.length));
+  qTotal.textContent = toArabicDigits(String(QUESTIONS.length));
+
+  // تفعيل الزر المختار
+  [...weeksGrid.querySelectorAll(".week-btn")].forEach(b=>{
+    b.classList.toggle("active", Number(b.dataset.week) === w);
+  });
+}
+
+function buildWeeks(){
+  // اجمع الأسابيع الموجودة ورتبها تنازلي
+  const list = Object.keys(WEEKS).map(n=>Number(n)).sort((a,b)=>b-a);
+
+  // إذا ما فيه أسابيع، نخلي زر البداية مقفول
+  if (!list.length){
+    weeksGrid.innerHTML = "<div class='note'>لا توجد أسابيع مضافة في ملف الأسئلة.</div>";
+    btnStart.disabled = true;
     return;
   }
+
+  weeksGrid.innerHTML = "";
+  list.forEach(w=>{
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "week-btn";
+    btn.dataset.week = String(w);
+    btn.innerHTML = `<span class="w1">الأسبوع ${toArabicDigits(String(w))}</span><span class="w2">اضغط للاختيار</span>`;
+    btn.addEventListener("click", ()=> setWeek(w));
+    weeksGrid.appendChild(btn);
+  });
+
+  // اختر أول أسبوع موجود كافتراضي
+  const def = list.includes(10) ? 10 : list[0];
+  setWeek(def);
+}
+
+btnStart.addEventListener("click", () => {
+ if (!QUESTIONS.length){
+  alert("لا توجد أسئلة لهذا الأسبوع.");
+  return;
+}
+
   idx = 0;
   answers = new Array(QUESTIONS.length).fill(null);
   remainingSeconds = QUIZ_MINUTES * 60;
