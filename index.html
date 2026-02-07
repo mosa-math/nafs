@@ -27,36 +27,52 @@
         /* ===== طباعة الشهادة فقط - A4 أفقي - صفحة واحدة ===== */
 @media print {
 
-  @page { size: A4 landscape; margin: 0; }
+  /* حاول إلغاء الهوامش (بعض الطابعات تفرض هامش بسيط) */
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
 
-  html, body {
+  html, body{
+    width: 100%;
+    height: 100%;
     margin: 0 !important;
     padding: 0 !important;
     background: #fff !important;
+    overflow: hidden !important;
   }
 
-  /* أهم نقطة: استخدم display:none بدل visibility */
-  body > * {
-    display: none !important;
+  /* اخفِ كل شيء */
+  body *{
+    visibility: hidden !important;
   }
 
-  /* اطبع الشهادة فقط */
-  #printArea {
-    display: block !important;
+  /* أظهر منطقة الشهادة فقط */
+  #printArea, #printArea *{
+    visibility: visible !important;
   }
 
-  /* حتى لو عليها hidden من Tailwind */
-  #printArea.hidden {
-    display: block !important;
+  /* مهم جدًا: كلاس hidden يجعل display:none — لازم نكسره هنا */
+  #printArea{
+    position: fixed !important;
+    inset: 0 !important;
+    display: flex !important;      /* ← يكسر hidden */
+    align-items: stretch !important;
+    justify-content: stretch !important;
+    background: #fff !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
-  .cert-box {
+  /* اطبع الشهادة بمقاس A4 الحقيقي */
+  .cert-box{
     width: 297mm !important;
     height: 210mm !important;
     box-sizing: border-box !important;
 
-    /* مساحة داخلية آمنة لأن طباعة الجوال تقص من الأطراف أحيانًا */
+    /* بدل الهوامش الخارجية نخلي مساحة آمنة داخلية */
     padding: 14mm !important;
+
     border: 6mm double #1e3a8a !important;
     background: #fff !important;
     text-align: center !important;
@@ -64,6 +80,9 @@
 
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
+
+    page-break-inside: avoid;
+    break-inside: avoid;
   }
 }
 
@@ -270,20 +289,6 @@
         document.getElementById('certDateVal').innerText = dateStr;
     }
 
-    <script>
- function printCert() {
-  const area = document.getElementById("printArea");
-
-  // مهم للجوال: اكسر hidden قبل الطباعة
-  area.classList.remove("hidden");
-
-  setTimeout(() => {
-    window.print();
-
-    // بعد الطباعة رجّعها مخفية (اختياري)
-    setTimeout(() => area.classList.add("hidden"), 500);
-  }, 150);
-}
 </script>
 </body>
 </html>
