@@ -3,140 +3,58 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>تدريب نافس - الصف السادس</title>
+  <title>تدريب نافس - صفحة التدريب</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-  <!-- Header / Hero -->
-  <header class="hero">
-    <div class="hero-inner">
-      <div class="hero-card">
-        <div class="hero-top">
-          <div class="school">
-            <img class="school-logo" src="school-logo.png" alt="شعار المدرسة" />
-            <div class="school-text">
-              <div class="school-name">مدرسة علي بن أبي طالب الابتدائية</div>
-              <div class="school-sub">الإدارة العامة للتعليم بمنطقة نجران</div>
-            </div>
+  <main class="page">
+    <!-- شريط علوي مثل الصورة -->
+    <section class="topbar">
+      <div class="topbar__row">
+        <div class="topbar__left">
+          <div class="meta">
+            <span id="qIndexText">السؤال 1</span>
+            <span class="dot">•</span>
+            <span id="qTotalText">من 10</span>
           </div>
 
-          <div class="chip">⭐ تدريب تفاعلي</div>
+          <div class="progress">
+            <div id="progressFill" class="progress__fill" style="width:0%"></div>
+          </div>
+
+          <div class="submeta" id="subMeta">
+            الرياضيات - السادس الابتدائي
+          </div>
         </div>
 
-<h1 class="page-title">
-  تدريب اختبار نافس في مادة الرياضيات
-  <span>للصف السادس الابتدائي</span>
-</h1>        
-        <p class="hero-subtitle">حل الأسئلة بسهولة ✔️ شاهد نتيجتك فورًا ✔️ واحفظ شهادة إنجاز جميلة ✔️</p>
-
-        <div class="badges">
-          <div class="badge">🧠 أسئلة ممتعة</div>
-          <div class="badge">⏱️ وقت منظم</div>
-          <div class="badge">🏆 شهادة إنجاز</div>
+        <div class="topbar__right">
+          <div class="student">
+            <span id="studentNameTop">عبدالله</span>
+            <span class="student__icon">👤</span>
+          </div>
         </div>
-      </div>
-    </div>
-
-    <div class="hero-waves" aria-hidden="true"></div>
-  </header>
-
-  <main class="wrap">
-    <!-- شاشة البداية -->
-    <section id="screenStart" class="card">
-      <div class="welcome">
-        <div class="welcome-icon">👋</div>
-        <div>
-          <h2 class="welcome-title">أهلاً وسهلاً يا بطل!</h2>
-          <p class="welcome-sub">اكتب بياناتك ثم اضغط <b>ابدأ ‏التدريب</b> 🚀</p>
-        </div>
-      </div>
-
-      <div class="grid">
-        <div>
-          <input id="studentName" placeholder="اسم الطالب" />
-        </div>
-        <div>
-          <input id="studentClass" placeholder=" ‏الفصل" />
-        </div>
-      </div>
-
-      <!-- ✅ صف متناسق: معلومات + زر -->
-      <div class="start-row">
-        <div class="start-info">
-          <span>📌 عدد الأسئلة: <b id="qCount">—</b></span>
-          <span>⏱️ المدة: <b id="duration">—</b> دقائق</span>
-        </div>
-        
-<div class="week-card">
-  <div class="week-head">
-    <div class="week-title">اختر الأسبوع</div>
-    <div class="week-sub">ثم اضغط ابدأ التدريب</div>
-  </div>
-
-  <div id="weeksGrid" class="weeks-grid"></div>
-
-  <input id="weekNumber" type="hidden" value="10" />
-</div>
-        
-        <button id="btnStart" class="start-btn">ابدأ التدريب 🚀</button>
-      </div>
-
-      <p class="note">ملاحظة: بياناتك تبقى داخل جهازك ولا يتم رفعها.</p>
-    </section>
-
-    <!-- شاشة الاختبار -->
-    <section id="screenQuiz" class="card hidden">
-      <div class="quizTop">
-        <div class="meta">
-          <div class="pill">🧩 السؤال <span id="qIndex">١</span> / <span id="qTotal">١</span></div>
-          <div class="pill">⏳ الوقت: <span id="timer">—</span></div>
-        </div>
-        <button id="btnExit" class="btn ghost">خروج</button>
-      </div>
-
-      <h2 id="qText" class="qText">—</h2>
-      <div id="choices" class="choices"></div>
-
-      <div class="quizNav">
-        <button id="btnPrev" class="btn">⬅️ السابق</button>
-        <button id="btnNext" class="btn primary">التالي ➡️</button>
       </div>
     </section>
 
-    <!-- شاشة النتيجة -->
-    <section id="screenResult" class="card hidden">
-      <h2 class="result-title">🎉 النتيجة</h2>
+    <!-- بطاقة السؤال -->
+    <section class="card">
+      <h2 id="qText" class="qtitle">السؤال يظهر هنا…</h2>
 
-      <div class="resultBox">
-        <div>
-          <div class="big" id="scoreBig">—</div>
-          <div class="small">درجتك ✅</div>
-        </div>
-        <div class="vline"></div>
-        <div>
-          <div class="big" id="percentBig">—</div>
-          <div class="small">النسبة ⭐</div>
-        </div>
+      <div id="choices" class="choices">
+        <!-- الخيارات تُبنى من JS -->
       </div>
+    </section>
 
-      <div class="actions">
-        <button id="btnCert" class="btn primary">حفظ الشهادة 🏆</button>
-        <button id="btnRetry" class="btn">إعادة الاختبار 🔁</button>
-      </div>
-
-      <details class="details">
-        <summary>📚 عرض الإجابات</summary>
-        <div id="review"></div>
-      </details>
-
-      <canvas id="certCanvas" width="1600" height="1130" class="hidden"></canvas>
+    <!-- شريط زر التالي مثل الصورة -->
+    <section class="bottombar">
+      <button id="nextBtn" class="nextbtn" disabled>
+        <span class="nextbtn__icon">⬅</span>
+        <span>السؤال التالي</span>
+      </button>
     </section>
   </main>
 
-  <footer class="foot">
-    ‏إعداد: موسى الصبحي 
-  </footer>
-
-  <script src="questions.js"></script>
-<script src="app.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
