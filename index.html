@@ -2,674 +2,522 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>تدريب اختبار نافس في مادة الرياضيات للصف السادس الابتدائي</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>تدريب اختبار نافس في مادة الرياضيات للصف السادس الابتدائي – الأسبوع العاشر</title>
+
   <style>
     :root{
-      --bg1:#eef6ff;
-      --bg2:#f7f2ff;
+      --bg1:#eaf2ff;
+      --bg2:#f3edff;
       --card:#ffffffcc;
       --card2:#ffffff;
-      --text:#0f172a;
+      --ink:#0f172a;
       --muted:#64748b;
-      --primary:#4f46e5;
-      --primary2:#06b6d4;
-      --good:#16a34a;
+      --brand1:#6d28d9;
+      --brand2:#0ea5e9;
+      --ok:#16a34a;
       --bad:#dc2626;
       --line:#e2e8f0;
-      --shadow: 0 20px 60px rgba(2,6,23,.10);
-      --radius:22px;
-      --radius2:16px;
+      --shadow: 0 18px 45px rgba(2,6,23,.12);
+      --r:22px;
     }
 
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: system-ui, -apple-system, "Segoe UI", Tahoma, Arial, "Noto Kufi Arabic", "Noto Sans Arabic", sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(1200px 600px at 80% 0%, rgba(79,70,229,.18), transparent 55%),
-        radial-gradient(900px 500px at 10% 10%, rgba(6,182,212,.16), transparent 55%),
-        linear-gradient(180deg, var(--bg2), var(--bg1));
+      font-family: system-ui, -apple-system, "Segoe UI", Tahoma, Arial;
+      color:var(--ink);
+      background: radial-gradient(1200px 600px at 20% 10%, var(--bg2), transparent 60%),
+                  radial-gradient(1000px 700px at 80% 0%, var(--bg1), transparent 60%),
+                  linear-gradient(180deg, #f7fbff 0%, #eef4ff 55%, #eef6ff 100%);
       min-height:100vh;
     }
 
-    .wrap{
-      width:min(1100px, 92vw);
-      margin: 28px auto 40px;
-    }
+    .wrap{max-width:1080px;margin:28px auto 60px;padding:0 18px}
 
-    /* ===== HERO (تصميم الصورة 1) ===== */
+    /* HERO */
     .hero{
-      background: linear-gradient(135deg, #6d28d9, #2563eb 55%, #06b6d4);
-      color:#fff;
       border-radius: 28px;
-      padding: 22px 22px 20px;
+      padding: 22px 26px;
+      background: linear-gradient(135deg, rgba(109,40,217,.95), rgba(14,165,233,.92));
+      color:#fff;
       box-shadow: var(--shadow);
-      position: relative;
+      position:relative;
       overflow:hidden;
     }
-    .hero::after{
+    .hero:before{
       content:"";
-      position:absolute; inset:-60px -80px auto auto;
-      width:280px; height:280px;
-      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 60%);
-      transform: rotate(18deg);
-      pointer-events:none;
+      position:absolute; inset:-120px -160px auto auto;
+      width:320px;height:320px;border-radius:50%;
+      background: rgba(255,255,255,.12);
+      filter: blur(0px);
     }
     .heroTop{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:14px;
+      display:flex; align-items:flex-start; justify-content:space-between; gap:14px;
+      flex-wrap:wrap;
     }
     .chip{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 14px;
+      border-radius:999px;
       background: rgba(255,255,255,.18);
-      border:1px solid rgba(255,255,255,.22);
-      padding: 10px 14px;
-      border-radius: 999px;
-      font-weight: 700;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 10px 30px rgba(0,0,0,.08);
-      user-select:none;
+      border:1px solid rgba(255,255,255,.25);
+      font-weight:700;
     }
-    .chip small{opacity:.95;font-weight:700}
     .schoolBox{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      text-align:right;
+      display:flex; align-items:center; gap:12px;
+      background: rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.22);
+      padding:10px 12px;
+      border-radius:16px;
+      max-width: 420px;
     }
-    .schoolText{
-      line-height:1.25;
-      font-weight:800;
-      font-size: 13.5px;
-      opacity:.98;
-    }
-    .schoolText .sub{display:block; font-weight:700; opacity:.92; font-size: 12.5px;}
     .logo{
-      width:54px; height:54px;
-      border-radius:14px;
-      background: rgba(255,255,255,.92);
-      display:grid; place-items:center;
+      width:46px;height:46px;border-radius:14px;
+      background:#fff;
+      display:grid;place-items:center;
       overflow:hidden;
-      box-shadow: 0 18px 40px rgba(0,0,0,.18);
-      flex:0 0 auto;
+      flex: 0 0 auto;
     }
-    .logo img{width:100%; height:100%; object-fit:contain; padding:6px}
+    .logo img{width:100%;height:100%;object-fit:cover}
+    .schoolText{line-height:1.35}
+    .schoolText .n{font-weight:800}
+    .schoolText .s{opacity:.9;font-size:12.5px}
 
-    .heroMain{
-      margin-top: 14px;
+    .heroH1{
+      margin:14px 0 6px;
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing:.2px;
       text-align:center;
     }
-    .heroTitle{
-      font-size: clamp(20px, 2.3vw, 34px);
-      margin: 8px 0 6px;
-      font-weight: 900;
-      letter-spacing: .2px;
-    }
-    .heroSubtitle{
-      margin:0;
-      font-weight: 700;
-      opacity: .95;
-      font-size: 14px;
+    .heroSub{
+      margin:0 0 14px;
+      text-align:center;
+      font-weight:700;
+      opacity:.95;
     }
     .badges{
-      display:flex;
-      gap:10px;
-      justify-content:center;
-      flex-wrap:wrap;
-      margin-top: 14px;
+      display:flex; justify-content:center; gap:10px; flex-wrap:wrap;
+      margin-top:8px;
     }
     .badge{
-      background: rgba(255,255,255,.92);
-      color:#0f172a;
-      padding: 10px 14px;
-      border-radius: 999px;
-      font-weight: 800;
-      font-size: 13px;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      box-shadow: 0 14px 35px rgba(0,0,0,.12);
-      border: 1px solid rgba(15, 23, 42, .06);
-      user-select:none;
+      display:inline-flex; align-items:center; gap:8px;
+      background:#fff;
+      color:#0b1220;
+      padding:10px 14px;
+      border-radius:999px;
+      box-shadow: 0 10px 20px rgba(2,6,23,.12);
+      font-weight:800;
     }
 
-    /* ===== CARD (واجهة الدخول + الأسابيع) ===== */
+    /* CARD */
     .card{
-      margin-top: 18px;
+      margin-top:18px;
       background: var(--card);
-      border: 1px solid rgba(255,255,255,.55);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-      padding: 18px;
+      border:1px solid rgba(226,232,240,.9);
+      border-radius: var(--r);
+      box-shadow: 0 14px 35px rgba(2,6,23,.08);
+      overflow:hidden;
     }
-    .cardInner{
-      background: var(--card2);
-      border: 1px solid rgba(15,23,42,.06);
-      border-radius: var(--radius2);
-      padding: 16px;
-    }
+    .cardInner{padding:18px}
 
     .welcomeRow{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-      margin-bottom: 12px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      flex-wrap:wrap;
     }
     .welcomeTitle{
-      margin:0;
-      font-weight: 900;
-      font-size: 20px;
+      display:flex; align-items:center; gap:10px;
+      font-weight:900;
+      font-size:20px;
     }
-    .welcomeSub{
-      margin: 4px 0 0;
-      color: var(--muted);
-      font-weight: 700;
-      font-size: 13.5px;
+    .wave{
+      width:44px;height:44px;border-radius:14px;
+      display:grid;place-items:center;
+      background: #f8fafc;
+      border:1px solid var(--line);
+      animation: bounce 2.4s infinite;
     }
-    .emojiBox{
-      width:44px; height:44px;
-      border-radius: 14px;
-      background: #f1f5f9;
-      border: 1px solid rgba(15,23,42,.06);
-      display:grid; place-items:center;
-      font-size: 22px;
-      flex:0 0 auto;
+    @keyframes bounce{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-4px)}
     }
 
-    .grid2{
-      display:grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 14px;
-      align-items: start;
-    }
-
-    .inputs{
+    .grid{
       display:grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      gap:12px;
+      margin-top:14px;
     }
     .field{
-      position:relative;
+      background:var(--card2);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:12px 12px;
+      display:flex; align-items:center; gap:10px;
     }
-    input, select{
-      width:100%;
-      padding: 14px 14px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      outline:none;
-      font-size: 14px;
-      font-weight: 700;
-      background:#fff;
-    }
-    input:focus, select:focus{
-      border-color: rgba(79,70,229,.55);
-      box-shadow: 0 0 0 4px rgba(79,70,229,.10);
+    .field input{
+      border:0; outline:0; width:100%;
+      font-size:15px;
+      background:transparent;
+      text-align:right;
     }
 
     .metaRow{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:flex-start;
-      align-items:center;
-      margin-top: 12px;
+      display:flex; gap:10px; flex-wrap:wrap;
+      align-items:center; justify-content:flex-end;
+      margin-top:12px;
     }
     .pill{
-      display:inline-flex;
-      gap:8px;
-      align-items:center;
-      padding: 10px 12px;
-      border-radius: 999px;
       background:#f8fafc;
-      border:1px solid rgba(15,23,42,.08);
-      font-weight: 800;
-      font-size: 13px;
-      color:#111827;
+      border:1px solid var(--line);
+      padding:10px 12px;
+      border-radius:999px;
+      font-weight:800;
+      color:#0b1220;
+      display:inline-flex; align-items:center; gap:8px;
+      min-height:40px;
     }
 
-    /* زر ابدأ (متناسق) */
-    .btn{
-      border:0;
-      cursor:pointer;
-      font-weight: 900;
-      padding: 14px 18px;
-      border-radius: 16px;
-      font-size: 15px;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
-      user-select:none;
-      white-space:nowrap;
+    .weeksBox{
+      margin-top:12px;
+      background: #ffffff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px;
     }
-    .btnPrimary{
-      color:#fff;
-      background: linear-gradient(135deg, var(--primary), #2563eb);
-      box-shadow: 0 18px 40px rgba(79,70,229,.22);
-      min-width: 168px;
-    }
-    .btnPrimary:hover{ transform: translateY(-1px); }
-    .btnPrimary:active{ transform: translateY(0px) scale(.99); }
-    .btnGhost{
-      background:#eef2ff;
-      color:#1e293b;
-      border:1px solid rgba(79,70,229,.22);
-      min-width: 140px;
-    }
-    .btn[disabled]{opacity:.55; cursor:not-allowed; transform:none}
-
-    /* ===== Week Selector (تصميم الصورة 2) ===== */
-    .weekBox{
-      background:#fff;
-      border:1px solid rgba(15,23,42,.06);
-      border-radius: 18px;
-      padding: 14px;
-      box-shadow: 0 14px 35px rgba(2,6,23,.06);
-    }
-    .weekTitle{
-      margin: 0 0 10px;
-      font-weight: 900;
-      font-size: 15px;
+    .weeksTitle{
+      font-weight:900;
+      margin:0 0 10px;
       text-align:center;
     }
     .weeksGrid{
       display:grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-template-columns: repeat(5, minmax(0,1fr));
       gap:10px;
     }
     .weekBtn{
-      border:1px solid rgba(15,23,42,.10);
       background:#fff;
-      border-radius: 16px;
-      padding: 10px 8px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:10px 10px;
       cursor:pointer;
+      font-weight:900;
       transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
-      text-align:center;
-      font-weight: 900;
-      font-size: 13px;
-      color:#0f172a;
-      box-shadow: 0 10px 22px rgba(2,6,23,.04);
+      min-height:54px;
+      display:flex; flex-direction:column; justify-content:center; gap:4px;
     }
-    .weekBtn small{
-      display:block;
-      margin-top:4px;
-      font-weight:800;
-      color: var(--muted);
-      font-size: 11px;
-    }
-    .weekBtn:hover{ transform: translateY(-1px); }
+    .weekBtn small{font-weight:700;color:var(--muted)}
+    .weekBtn:hover{transform: translateY(-1px); box-shadow: 0 10px 18px rgba(2,6,23,.08)}
     .weekBtn.active{
-      border-color: rgba(79,70,229,.55);
-      box-shadow: 0 16px 34px rgba(79,70,229,.16);
-      background: linear-gradient(180deg, #fff, #f5f3ff);
+      border-color: rgba(109,40,217,.65);
+      box-shadow: 0 0 0 4px rgba(109,40,217,.12);
+    }
+
+    .startRow{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; flex-wrap:wrap;
+      margin-top:12px;
+    }
+
+    .btn{
+      border:0;
+      border-radius:16px;
+      padding:12px 16px;
+      font-weight:900;
+      cursor:pointer;
+      transition: transform .12s ease, filter .12s ease;
+      min-height:46px;
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      white-space:nowrap;
+    }
+    .btn:active{transform: translateY(1px)}
+    .btnPrimary{
+      color:#fff;
+      background: linear-gradient(135deg, var(--brand1), var(--brand2));
+      box-shadow: 0 14px 28px rgba(109,40,217,.22);
+      min-width: 170px;
+    }
+    .btnGhost{
+      background:#fff;
+      border:1px solid var(--line);
+      color:#0b1220;
+      min-width: 170px;
     }
 
     .note{
-      margin-top: 10px;
-      color: var(--muted);
-      font-weight: 800;
-      font-size: 12.5px;
-      text-align: left;
-    }
-    .note strong{color:#0f172a}
-
-    /* ===== Quiz UI (تصميم الصورة 3) ===== */
-    .quizTop{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      margin-bottom: 14px;
-    }
-    .userTag{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      font-weight: 900;
-    }
-    .userDot{
-      width:32px; height:32px;
-      border-radius: 999px;
-      background:#e2e8f0;
-      display:grid; place-items:center;
-      font-size: 16px;
-    }
-    .qCount{
-      font-weight: 900;
-      color:#0f172a;
-    }
-    .progressBar{
-      height: 10px;
-      width: 260px;
-      background:#e8eefc;
-      border-radius: 999px;
-      overflow:hidden;
-      border:1px solid rgba(15,23,42,.06);
-    }
-    .progressFill{
-      height:100%;
-      width:0%;
-      background: linear-gradient(90deg, #2563eb, #4f46e5);
-      border-radius: 999px;
-      transition: width .25s ease;
-    }
-    .subline{
-      margin-top: 8px;
-      text-align:center;
-      color: var(--muted);
-      font-weight: 800;
-      font-size: 12.5px;
-    }
-
-    .qCard{
-      margin-top: 14px;
-      background:#fff;
-      border:1px solid rgba(15,23,42,.06);
-      border-radius: var(--radius);
-      padding: 16px;
-      box-shadow: 0 18px 50px rgba(2,6,23,.06);
-    }
-    .qTitle{
-      margin: 0 0 14px;
-      font-size: 20px;
-      font-weight: 900;
-      text-align:center;
-    }
-
-    /* خيارات متناسقة (يمين/يسار) */
-    .choices{
-      display:grid;
-      gap:12px;
-      margin-top: 10px;
-    }
-    .choice{
-      border: 2px solid rgba(37,99,235,.18);
-      background: #f4f8ff;
-      border-radius: 16px;
-      padding: 14px 14px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      cursor:pointer;
-      user-select:none;
-      transition: transform .12s ease, border-color .12s ease, box-shadow .12s ease, background .12s ease;
-      font-weight: 900;
-      min-height: 56px;
-    }
-    .choice:hover{ transform: translateY(-1px); box-shadow: 0 14px 30px rgba(2,6,23,.06); }
-    .choice .num{
-      width:38px; height:38px;
-      border-radius: 999px;
-      display:grid; place-items:center;
-      background:#fff;
-      border:1px solid rgba(15,23,42,.10);
-      color:#0f172a;
-      font-weight: 900;
-      flex:0 0 auto;
-    }
-    .choice .txt{
-      flex:1;
+      margin-top:10px;
+      color:var(--muted);
+      font-weight:700;
       text-align:right;
-      font-size: 16px;
-      color:#0f172a;
+      font-size:13px;
     }
 
-    /* صح/خطأ مثل صور 4/5 */
-    .choice.correct{
-      background: #ecfdf3;
-      border-color: rgba(22,163,74,.55);
-      box-shadow: 0 18px 45px rgba(22,163,74,.12);
+    /* QUIZ TOP BAR */
+    .quizTop{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; flex-wrap:wrap;
+      padding:14px 16px;
+      border-bottom:1px solid var(--line);
+      background: rgba(255,255,255,.8);
     }
-    .choice.wrong{
-      background: #fef2f2;
-      border-color: rgba(220,38,38,.55);
-      box-shadow: 0 18px 45px rgba(220,38,38,.10);
+    .qtLeft, .qtRight{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+    .studentTag{
+      display:inline-flex; align-items:center; gap:8px;
+      font-weight:900;
+      padding:10px 12px;
+      border-radius:999px;
+      background:#fff;
+      border:1px solid var(--line);
     }
-    .choice.selected{
-      border-color: rgba(79,70,229,.55);
-      box-shadow: 0 18px 45px rgba(79,70,229,.10);
-      background: linear-gradient(180deg, #f4f8ff, #f7f2ff);
+    .progress{
+      width:240px; height:10px; border-radius:999px;
+      background:#e9efff; overflow:hidden;
+      border:1px solid #dbe6ff;
+    }
+    .bar{height:100%; width:0%; background: linear-gradient(90deg, var(--brand1), var(--brand2)); border-radius:999px}
+
+    /* QUESTION */
+    .qCard{padding:18px}
+    .qTitle{
+      font-size:22px;
+      font-weight:900;
+      margin:6px 0 14px;
+      text-align:center;
+    }
+    .options{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      margin-top:10px;
+    }
+    .opt{
+      border:1px solid #dbe6ff;
+      background:#f2f7ff;
+      padding:14px 16px;
+      border-radius:18px;
+      cursor:pointer;
+      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+      display:flex; align-items:center; justify-content:space-between;
+      font-weight:900;
+      min-height:56px;
+    }
+    .opt:hover{transform: translateY(-1px); box-shadow: 0 10px 18px rgba(2,6,23,.06)}
+    .opt .v{font-weight:900}
+    .opt.selected{
+      border-color: rgba(109,40,217,.7);
+      box-shadow: 0 0 0 4px rgba(109,40,217,.12);
+      background:#f7f3ff;
+    }
+    .opt.correct{
+      border-color: rgba(22,163,74,.75);
+      box-shadow: 0 0 0 4px rgba(22,163,74,.14);
+      background:#effcf3;
+    }
+    .opt.wrong{
+      border-color: rgba(220,38,38,.7);
+      box-shadow: 0 0 0 4px rgba(220,38,38,.12);
+      background:#fff1f2;
     }
 
     .navRow{
-      margin-top: 14px;
-      display:flex;
-      gap:10px;
-      justify-content:space-between;
-      align-items:center;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px; flex-wrap:wrap;
+      padding:14px 16px 18px;
     }
     .btnWide{
       width:100%;
-      border-radius: 16px;
-      padding: 16px 18px;
-      font-size: 16px;
-      box-shadow: 0 18px 50px rgba(2,6,23,.10);
-    }
-    .btnNext{
-      background: linear-gradient(135deg, #94a3b8, #64748b);
+      border-radius:16px;
+      padding:14px 16px;
+      font-weight:900;
+      background:#94a3b8;
       color:#fff;
       border:0;
+      opacity:.95;
     }
-    .btnNext.ready{
-      background: linear-gradient(135deg, #2563eb, #4f46e5);
+    .btnWide.enabled{
+      background: linear-gradient(135deg, var(--brand1), var(--brand2));
+      cursor:pointer;
+      box-shadow: 0 14px 26px rgba(109,40,217,.18);
     }
 
-    /* ===== Results (صور 6/7) ===== */
-    .resultGrid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:14px;
-      align-items:start;
+    /* RESULT */
+    .resultBox{
+      padding:18px;
+      text-align:center;
     }
-    .stat{
+    .resultTitle{font-size:22px;font-weight:900;margin:6px 0 6px}
+    .score{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:12px 16px;
+      border-radius:999px;
+      border:1px solid var(--line);
       background:#fff;
-      border:1px solid rgba(15,23,42,.06);
-      border-radius: 18px;
-      padding: 14px;
-      box-shadow: 0 18px 50px rgba(2,6,23,.06);
+      font-weight:900;
+      margin:10px 0;
     }
-    .stat h3{
-      margin:0 0 8px;
-      font-weight: 900;
-      font-size: 15px;
+    .details{
+      margin:12px auto 0;
+      max-width:720px;
+      text-align:right;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px;
+      color:#0b1220;
     }
-    .bigNum{
-      font-size: 36px;
-      font-weight: 1000;
-      margin: 0;
-    }
-    .muted{color:var(--muted); font-weight:800}
+    .details h4{margin:0 0 8px;font-weight:900}
+    .details ul{margin:0;padding:0 18px;line-height:1.9;font-weight:700;color:#334155}
 
-    .actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top: 12px;
-      justify-content:center;
-    }
-
-    /* Footer center */
-    footer.foot{
-      margin-top: 14px;
-      text-align: center;
-      color:#475569;
-      font-weight: 900;
-      padding: 10px 0 4px;
+    /* FOOTER */
+    .foot{
+      margin-top:18px;
+      text-align:center; /* المطلوب */
+      color:#64748b;
+      font-weight:800;
     }
 
-    /* Responsive */
-    @media (max-width: 900px){
-      .grid2{grid-template-columns:1fr}
-      .inputs{grid-template-columns:1fr}
-      .weeksGrid{grid-template-columns: repeat(3, minmax(0,1fr));}
-      .progressBar{width: 180px;}
-      .resultGrid{grid-template-columns:1fr}
+    /* HIDE/SHOW */
+    .hidden{display:none !important}
+
+    @media (max-width: 840px){
+      .heroH1{font-size:22px}
+      .grid{grid-template-columns:1fr}
+      .weeksGrid{grid-template-columns: repeat(3, minmax(0,1fr))}
+      .progress{width:170px}
     }
-</style>
+  </style>
 </head>
+
 <body>
   <div class="wrap">
-    
-    <!-- HERO (الصورة 1) -->
-     <section class="hero">
+
+    <!-- HERO (مثل الصورة 1) -->
+    <section class="hero">
       <div class="heroTop">
-        <div class="chip">⭐ <small>تدريب تفاعلي</small></div>
+        <div class="chip">⭐ تدريب تفاعلي</div>
 
         <div class="schoolBox">
-          <div class="schoolText">
-            مدرسة علي بن أبي طالب الابتدائية
-            <span class="sub">الإدارة العامة للتعليم بمنطقة نجران</span>
-          </div>
           <div class="logo" title="شعار المدرسة">
-            <img src="389912.svg" alt="شعار المدرسة" onerror="this.style.display='none'; this.parentElement.textContent='🏫'; this.parentElement.style.fontSize='24px';" />
+            <img src="school-logo.png" alt="شعار المدرسة" />
+          </div>
+          <div class="schoolText">
+            <div class="n">مدرسة علي بن أبي طالب الابتدائية</div>
+            <div class="s">الإدارة العامة للتعليم بمنطقة نجران • المدير: نواف آل جافلة</div>
           </div>
         </div>
       </div>
 
-      <div class="heroMain">
-        <h1 class="heroTitle">تدريب اختبار نافس في مادة الرياضيات للصف السادس الابتدائي</h1>
-        <p class="heroSubtitle">اختر الأسبوع، أدخل بياناتك، وابدأ التدريب بكل سهولة 🎉</p>
+      <h1 class="heroH1">تدريب اختبار نافس في مادة الرياضيات للصف السادس الابتدائي</h1>
+      <p class="heroSub">اختر الأسبوع، أدخل بياناتك، وابدأ التدريب بكل سهولة 🎉</p>
 
-        <div class="badges">
-          <div class="badge">🧠 أسئلة ممتعة</div>
-          <div class="badge">⏱️ وقت منظم</div>
-          <div class="badge">🏆 شهادة إنجاز</div>
-        </div>
+      <div class="badges">
+        <span class="badge">🧠 أسئلة ممتعة</span>
+        <span class="badge">⏱️ وقت منظم</span>
+        <span class="badge">🏆 شهادة إنجاز</span>
       </div>
     </section>
 
-    <!-- START SCREEN -->
-    <section id="screenStart" class="card">
+    <!-- START SCREEN (واجهة مثل 1 + بيانات مثل 2) -->
+    <section id="startScreen" class="card">
       <div class="cardInner">
         <div class="welcomeRow">
           <div>
-            <h2 class="welcomeTitle">أهلًا وسهلًا يا بطل!</h2>
-            <p class="welcomeSub">اكتب بياناتك ثم اختر الأسبوع واضغط ابدأ التدريب 🚀</p>
-          </div>
-          <div class="emojiBox">👋</div>
-        </div>
-
-        <div class="grid2">
-          <!-- left: inputs -->
-          <div>
-            <div class="inputs">
-              <div class="field">
-                <input id="studentName" type="text" placeholder="اسم الطالب" autocomplete="off" />
-              </div>
-              <div class="field">
-                <input id="classRoom" type="text" placeholder="الفصل" autocomplete="off" />
-              </div>
-            </div>
-
-            <div class="metaRow">
-              <div class="pill">📌 عدد الأسئلة: <span id="qCountLabel">—</span></div>
-              <div class="pill">⏳ المدة: <span id="timeLabel">10 دقائق</span></div>
-              <div class="pill">🧩 الأسبوع المختار: <span id="weekLabel">—</span></div>
-            </div>
-
-            <div class="actions" style="justify-content:flex-start; margin-top:14px;">
-              <button id="btnStart" class="btn btnPrimary">🚀 ابدأ ‏التدريب</button>
-              <button id="btnReset" class="btn btnGhost" type="button">↩️ إعادة اختيار</button>
-            </div>
-
-            <div class="note"><strong>ملاحظة:</strong> بياناتك تبقى داخل جهازك ولا يتم رفعها.</div>
-          </div>
-
-          <!-- right: weeks -->
-          <div class="weekBox">
-            <h3 class="weekTitle">اختر الأسبوع</h3>
-            <div id="weeksGrid" class="weeksGrid"></div>
-            <div class="note" style="text-align:center; margin-top:12px;">بعد اختيار الأسبوع اضغط <strong>ابدأ ‏التدريب</strong>.</div>
+            <div class="welcomeTitle"><span class="wave">👋</span> أهلًا وسهلًا يا بطل!</div>
+            <div style="color:var(--muted);font-weight:800;margin-top:6px">اكتب بياناتك ثم اختر الأسبوع واضغط ابدأ التدريب 🚀</div>
           </div>
         </div>
+
+        <div class="grid">
+          <div class="field"><input id="studentName" type="text" placeholder="اسم الطالب" /></div>
+          <div class="field"><input id="studentClass" type="text" placeholder="الفصل (مثال: سادس/أ)" /></div>
+        </div>
+
+        <div class="metaRow">
+          <div class="pill">📌 عدد الأسئلة: <span id="metaCount">—</span></div>
+          <div class="pill">⏳ المدة: <span id="metaTime">10</span> دقائق</div>
+          <div class="pill">🗓️ الأسبوع المختار: <span id="metaWeek">—</span></div>
+        </div>
+
+        <div class="weeksBox">
+          <div class="weeksTitle">اختر الأسبوع</div>
+          <div id="weeksGrid" class="weeksGrid"></div>
+          <div class="note" style="text-align:center;margin-top:10px">بعد اختيار الأسبوع اضغط ابدأ التدريب.</div>
+        </div>
+
+        <div class="startRow">
+          <button id="resetBtn" class="btn btnGhost" type="button">↩️ إعادة اختيار</button>
+          <button id="startBtn" class="btn btnPrimary" type="button">🚀 ابدأ التدريب</button>
+        </div>
+
+        <div class="note">ملاحظة: بياناتك تبقى داخل جهازك ولا يتم رفعها.</div>
+        <footer class="foot">إعداد: موسى الصبحي</footer>
+      </div>
+    </section>
+
+    <!-- QUIZ SCREEN (مثل الصورة 3 + صح/خطأ 4/5) -->
+    <section id="quizScreen" class="card hidden">
+      <div class="quizTop">
+        <div class="qtRight">
+          <div class="studentTag">👤 <span id="topStudent">—</span></div>
+          <div class="progress" aria-label="شريط التقدم"><div id="bar" class="bar"></div></div>
+        </div>
+        <div class="qtLeft">
+          <div class="pill">السؤال <b id="qIndex">1</b> من <b id="qTotal">0</b></div>
+          <div class="pill">⏱️ الوقت المتبقي: <b id="timer">10:00</b></div>
+        </div>
+      </div>
+
+      <div class="qCard">
+        <div class="note" style="text-align:center;margin:6px 0 10px">الرياضيات – السادس الابتدائي</div>
+        <div id="questionText" class="qTitle">—</div>
+
+        <div id="options" class="options"></div>
+      </div>
+
+      <div class="navRow">
+        <button id="prevBtn" class="btn btnGhost" type="button">↩️ السابق</button>
+        <button id="nextBtn" class="btnWide" type="button" disabled>⬅️ السؤال التالي</button>
       </div>
 
       <footer class="foot">إعداد: موسى الصبحي</footer>
     </section>
 
-    <!-- QUIZ SCREEN -->
-    <section id="screenQuiz" class="card" style="display:none;">
-      <div class="cardInner">
-        <div class="quizTop">
-          <div class="qCount" id="qTopLabel">السؤال 1 من 10</div>
+    <!-- RESULT SCREEN (مثل 6 + 7) -->
+    <section id="resultScreen" class="card hidden">
+      <div class="resultBox">
+        <div class="resultTitle">✅ انتهى الاختبار</div>
+        <div style="font-weight:800;color:var(--muted)">شاهد نتيجتك واطبع/حمّل شهادة الإنجاز</div>
 
-          <div class="progressBar" aria-hidden="true">
-            <div class="progressFill" id="progressFill"></div>
-          </div>
+        <div class="score">🏁 النتيجة: <span id="scoreText">0 / 0</span></div>
 
-          <div class="userTag">
-            <span id="studentTag">طالب</span>
-            <span class="userDot">👤</span>
-          </div>
+        <div class="details">
+          <h4>تفاصيل</h4>
+          <ul id="detailsList"></ul>
         </div>
 
-        <div class="subline" id="subLine">الرياضيات – السادس الابتدائي • الوقت المتبقي: <span id="timer">10:00</span></div>
-
-        <div class="qCard">
-          <h3 class="qTitle" id="qText">—</h3>
-          <div class="choices" id="choices"></div>
-
-          <div class="navRow">
-            <button id="btnPrev" class="btn btnGhost" type="button">↩️ السابق</button>
-            <button id="btnNext" class="btn btnWide btnNext" type="button">⬅️ السؤال التالي</button>
-          </div>
+        <div class="startRow" style="justify-content:center;margin-top:14px">
+          <button id="downloadCert" class="btn btnPrimary" type="button">⬇️ تحميل الشهادة (PNG)</button>
+          <button id="printCert" class="btn btnGhost" type="button">🖨️ طباعة الشهادة</button>
+          <button id="backHome" class="btn btnGhost" type="button">🏠 العودة للواجهة</button>
         </div>
+
+        <canvas id="certCanvas" width="1400" height="900" class="hidden"></canvas>
+        <footer class="foot">إعداد: موسى الصبحي</footer>
       </div>
-    </section>
-
-    <!-- RESULTS SCREEN -->
-    <section id="screenResult" class="card" style="display:none;">
-      <div class="cardInner">
-        <h2 class="welcomeTitle" style="text-align:center; margin-bottom:6px;">🎉 انتهى الاختبار</h2>
-        <p class="welcomeSub" style="text-align:center; margin-top:0;">شاهد نتيجتك واطبع/حمّل شهادة الإنجاز</p>
-
-        <div class="resultGrid" style="margin-top:14px;">
-          <div class="stat">
-            <h3>النتيجة</h3>
-            <p class="bigNum" id="scoreBig">0 / 0</p>
-            <p class="muted" id="scoreSub">—</p>
-          </div>
-          <div class="stat">
-            <h3>تفاصيل</h3>
-            <p class="muted" id="detailLine">—</p>
-            <p class="muted" id="timeUsed">—</p>
-          </div>
-        </div>
-
-        <div class="actions">
-          <button id="btnDownloadCert" class="btn btnPrimary" type="button">⬇️ تحميل الشهادة (PNG)</button>
-          <button id="btnPrintCert" class="btn btnGhost" type="button">🖨️ طباعة الشهادة</button>
-          <button id="btnRestart" class="btn btnGhost" type="button">🔄 العودة للواجهة</button>
-        </div>
-
-        <canvas id="certCanvas" width="1600" height="1100" style="display:none;"></canvas>
-      </div>
-
-      <footer class="foot">إعداد: موسى الصبحي</footer>
     </section>
 
   </div>
 
   <script>
-    /***********************
-     * 1) الأسابيع والأسئلة
-     ***********************/
-    // عدّل الأسئلة هنا كل أسبوع (1..10). كل سؤال: q النص، c الخيارات، correct رقم الخيار الصحيح (0..3)
+    /**************
+     *  البيانات: أسئلة الأسابيع (1 إلى 10)
+     *  عدّل هنا كل أسبوع بسهولة
+     **************/
     window.WEEKS = {
       10: [
         { q: "أوجد ناتج: ٣٦٢ × ٢٥", c: ["٧٢٥٠", "٨٠٥٠", "٩٠٥٠", "٦٢٥٠"], correct: 0 },
         { q: "أوجد ناتج: ٦٨٧٣٥٩٤ − ٣٧٦١٤٥٢", c: ["٣١١٢١٤٢", "٣٠١٢١٤٢", "٣٢١١١٤٢", "٣١١١٢٤٢"], correct: 0 },
-        { q: "ما القاسم المشترك الأكبر للعددين ١٢ و ١٨؟", c: ["٣", "٦", "٩", "١٢"], correct: 1 },
       ],
       9: [
         { q: "سؤال الأسبوع التاسع ١", c: ["أ", "ب", "ج", "د"], correct: 1 },
@@ -705,432 +553,364 @@
       ],
     };
 
-    /***********************
-     * 2) عناصر الصفحة
-     ***********************/
-    const screenStart = document.getElementById("screenStart");
-    const screenQuiz  = document.getElementById("screenQuiz");
-    const screenResult= document.getElementById("screenResult");
+    /**************
+     *  عناصر الصفحة
+     **************/
+    const startScreen = document.getElementById("startScreen");
+    const quizScreen  = document.getElementById("quizScreen");
+    const resultScreen= document.getElementById("resultScreen");
 
     const studentName = document.getElementById("studentName");
-    const classRoom   = document.getElementById("classRoom");
+    const studentClass= document.getElementById("studentClass");
 
     const weeksGrid   = document.getElementById("weeksGrid");
-    const weekLabel   = document.getElementById("weekLabel");
-    const qCountLabel = document.getElementById("qCountLabel");
-    const btnStart    = document.getElementById("btnStart");
-    const btnReset    = document.getElementById("btnReset");
+    const metaCount   = document.getElementById("metaCount");
+    const metaWeek    = document.getElementById("metaWeek");
+    const metaTime    = document.getElementById("metaTime");
 
-    const qTopLabel   = document.getElementById("qTopLabel");
-    const qText       = document.getElementById("qText");
-    const choicesBox  = document.getElementById("choices");
-    const btnPrev     = document.getElementById("btnPrev");
-    const btnNext     = document.getElementById("btnNext");
-    const progressFill= document.getElementById("progressFill");
+    const startBtn    = document.getElementById("startBtn");
+    const resetBtn    = document.getElementById("resetBtn");
+
+    const topStudent  = document.getElementById("topStudent");
+    const qIndexEl    = document.getElementById("qIndex");
+    const qTotalEl    = document.getElementById("qTotal");
     const timerEl     = document.getElementById("timer");
-    const studentTag  = document.getElementById("studentTag");
+    const barEl       = document.getElementById("bar");
 
-    const scoreBig    = document.getElementById("scoreBig");
-    const scoreSub    = document.getElementById("scoreSub");
-    const detailLine  = document.getElementById("detailLine");
-    const timeUsedEl  = document.getElementById("timeUsed");
-    const btnRestart  = document.getElementById("btnRestart");
-    const btnDownload = document.getElementById("btnDownloadCert");
-    const btnPrint    = document.getElementById("btnPrintCert");
+    const questionText= document.getElementById("questionText");
+    const optionsBox  = document.getElementById("options");
+    const prevBtn     = document.getElementById("prevBtn");
+    const nextBtn     = document.getElementById("nextBtn");
+
+    const scoreText   = document.getElementById("scoreText");
+    const detailsList = document.getElementById("detailsList");
+
+    const downloadCert= document.getElementById("downloadCert");
+    const printCert   = document.getElementById("printCert");
+    const backHome    = document.getElementById("backHome");
 
     const certCanvas  = document.getElementById("certCanvas");
+    const ctx         = certCanvas.getContext("2d");
 
-    /***********************
-     * 3) حالة الاختبار
-     ***********************/
+    /**************
+     *  حالة الاختبار
+     **************/
     let selectedWeek = null;
     let QUESTIONS = [];
-    let idx = 0;
-    let answers = [];        // chosen index لكل سؤال
-    let locked = false;      // بعد الاختيار يظهر صح/خطأ ثم يسمح التالي
+    let current = 0;
+    let answers = []; // {selectedIndex, correctIndex}
+    let locked  = false;
+    let timeLeft = 10 * 60; // 10 دقائق افتراضي
+    let tHandle = null;
 
-    // وقت الاختبار (10 دقائق)
-    const QUIZ_SECONDS = 10 * 60;
-    let remaining = QUIZ_SECONDS;
-    let timerId = null;
-    let startTime = null;
-
-    /***********************
-     * 4) بناء أزرار الأسابيع
-     ***********************/
+    // بناء أزرار الأسابيع
     function buildWeeks(){
       weeksGrid.innerHTML = "";
-      const weeks = Object.keys(window.WEEKS).map(Number).sort((a,b)=>b-a);
+      const weeks = Object.keys(window.WEEKS).map(Number).sort((a,b)=>a-b);
       weeks.forEach(w=>{
-        const b = document.createElement("button");
-        b.className = "weekBtn";
-        b.type = "button";
-        b.innerHTML = `الأسبوع ${toArabicDigits(w)}<small>اضغط للاختيار</small>`;
-        b.addEventListener("click", ()=>{
-          selectedWeek = w;
-          QUESTIONS = window.WEEKS[w] || [];
+        const btn = document.createElement("button");
+        btn.type="button";
+        btn.className="weekBtn";
+        btn.innerHTML = `<div>الأسبوع ${w}</div><small>اضغط للاختيار</small>`;
+        btn.addEventListener("click", ()=>{
           document.querySelectorAll(".weekBtn").forEach(x=>x.classList.remove("active"));
-          b.classList.add("active");
-          weekLabel.textContent = toArabicDigits(w);
-          qCountLabel.textContent = toArabicDigits(QUESTIONS.length);
+          btn.classList.add("active");
+          selectedWeek = w;
+          QUESTIONS = (window.WEEKS[w] || []).slice();
+          metaWeek.textContent = w;
+          metaCount.textContent = QUESTIONS.length ? QUESTIONS.length : "—";
         });
-        weeksGrid.appendChild(b);
+        weeksGrid.appendChild(btn);
       });
     }
 
-    /***********************
-     * 5) التحقق قبل البدء
-     ***********************/
+    // وقت mm:ss
+    function fmtTime(sec){
+      const m = Math.floor(sec/60);
+      const s = sec%60;
+      return String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+    }
+
     function validateStart(){
+      const n = studentName.value.trim();
+      const c = studentClass.value.trim();
+      if(!n || !c){
+        alert("اكتب اسم الطالب والفصل عشان يبدأ التدريب.");
+        return false;
+      }
       if(!selectedWeek){
         alert("اختر الأسبوع أولًا.");
         return false;
       }
-      if(!QUESTIONS.length){
+      // استبدال التحقق بطلبك:
+      if (!QUESTIONS.length){
         alert("لا توجد أسئلة لهذا الأسبوع.");
-        return false;
-      }
-      const n = (studentName.value || "").trim();
-      const c = (classRoom.value || "").trim();
-      if(!n || !c){
-        alert("اكتب اسم الطالب والفصل عشان يبدأ الاختبار.");
         return false;
       }
       return true;
     }
 
-    /***********************
-     * 6) تشغيل الاختبار
-     ***********************/
+    function show(el){
+      [startScreen, quizScreen, resultScreen].forEach(x=>x.classList.add("hidden"));
+      el.classList.remove("hidden");
+      window.scrollTo({top:0, behavior:"smooth"});
+    }
+
     function startQuiz(){
       if(!validateStart()) return;
 
-      idx = 0;
-      answers = new Array(QUESTIONS.length).fill(null);
+      // تهيئة
+      current = 0;
+      answers = Array(QUESTIONS.length).fill(null);
       locked = false;
 
-      remaining = QUIZ_SECONDS;
-      startTime = Date.now();
-      if(timerId) clearInterval(timerId);
-      timerId = setInterval(tick, 1000);
-      renderTimer();
+      topStudent.textContent = studentName.value.trim();
+      qTotalEl.textContent = QUESTIONS.length;
 
-      studentTag.textContent = studentName.value.trim();
-      screenStart.style.display = "none";
-      screenResult.style.display = "none";
-      screenQuiz.style.display = "block";
+      timeLeft = Number(metaTime.textContent || "10") * 60;
+      timerEl.textContent = fmtTime(timeLeft);
 
+      if(tHandle) clearInterval(tHandle);
+      tHandle = setInterval(()=>{
+        timeLeft--;
+        timerEl.textContent = fmtTime(Math.max(0,timeLeft));
+        if(timeLeft<=0){
+          clearInterval(tHandle);
+          finishQuiz();
+        }
+      }, 1000);
+
+      show(quizScreen);
       renderQuestion();
     }
 
-    function tick(){
-      remaining--;
-      renderTimer();
-      if(remaining <= 0){
-        remaining = 0;
-        renderTimer();
-        finishQuiz(true);
-      }
-    }
-
-    function renderTimer(){
-      const m = Math.floor(remaining/60);
-      const s = remaining%60;
-      timerEl.textContent = `${toArabicDigits(m)}:${toArabicDigits(String(s).padStart(2,"0"))}`;
-    }
-
-    /***********************
-     * 7) عرض السؤال والخيارات
-     ***********************/
     function renderQuestion(){
-      const total = QUESTIONS.length;
-      const q = QUESTIONS[idx];
+      const q = QUESTIONS[current];
+      qIndexEl.textContent = current+1;
 
-      qTopLabel.textContent = `السؤال ${toArabicDigits(idx+1)} من ${toArabicDigits(total)}`;
-      progressFill.style.width = `${((idx+1)/total)*100}%`;
+      const pct = ((current)/Math.max(1,QUESTIONS.length))*100;
+      barEl.style.width = pct + "%";
 
-      qText.textContent = q.q;
+      questionText.textContent = q?.q || "—";
+      optionsBox.innerHTML = "";
+      locked = false;
 
-      choicesBox.innerHTML = "";
-      const chosen = answers[idx];
+      const saved = answers[current]; // قد يكون null
+      q.c.forEach((choice, idx)=>{
+        const opt = document.createElement("div");
+        opt.className = "opt";
+        opt.innerHTML = `<span></span><span class="v">${choice}</span>`;
+        if(saved && saved.selectedIndex === idx) opt.classList.add("selected");
 
-      q.c.forEach((choiceText, i)=>{
-        const row = document.createElement("div");
-        row.className = "choice";
-        row.dataset.i = i;
-
-        const num = document.createElement("div");
-        num.className = "num";
-        num.textContent = toArabicDigits(i+1);
-
-        const txt = document.createElement("div");
-        txt.className = "txt";
-        txt.textContent = choiceText;
-
-        row.appendChild(txt);
-        row.appendChild(num);
-
-        if(chosen !== null && chosen === i) row.classList.add("selected");
-
-        row.addEventListener("click", ()=>{
+        opt.addEventListener("click", ()=>{
           if(locked) return;
-          answers[idx] = i;
 
-          // إظهار صح/خطأ مباشرة
-          locked = true;
-          showCorrectWrong(i);
+          // تمييز اختيار
+          optionsBox.querySelectorAll(".opt").forEach(x=>x.classList.remove("selected"));
+          opt.classList.add("selected");
 
-          // جهّز زر التالي
-          btnNext.classList.add("ready");
-          btnNext.textContent = (idx === total-1) ? "🏁 إنهاء الاختبار" : "⬅️ السؤال التالي";
+          // حفظ
+          answers[current] = { selectedIndex: idx, correctIndex: q.correct };
+
+          // إتاحة التالي
+          nextBtn.disabled = false;
+          nextBtn.classList.add("enabled");
         });
 
-        choicesBox.appendChild(row);
+        optionsBox.appendChild(opt);
       });
 
       // أزرار التنقل
-      btnPrev.disabled = (idx === 0);
-      btnNext.classList.remove("ready");
-      btnNext.textContent = (idx === total-1) ? "🏁 إنهاء الاختبار" : "⬅️ السؤال التالي";
+      prevBtn.disabled = current===0;
+      prevBtn.style.opacity = current===0 ? .6 : 1;
 
-      // إذا كان الطالب مختار سابقاً، نعيد عرض الحالة
-      if(chosen !== null){
-        locked = true;
-        showCorrectWrong(chosen);
-        btnNext.classList.add("ready");
-        btnNext.textContent = (idx === total-1) ? "🏁 إنهاء الاختبار" : "⬅️ السؤال التالي";
-      }else{
-        locked = false;
-      }
+      // زر التالي: لا يعمل إلا بعد اختيار
+      const has = !!answers[current];
+      nextBtn.disabled = !has;
+      nextBtn.classList.toggle("enabled", has);
+      nextBtn.textContent = (current === QUESTIONS.length-1) ? "✅ إنهاء الاختبار" : "⬅️ السؤال التالي";
     }
 
-    function showCorrectWrong(chosenIndex){
-      const q = QUESTIONS[idx];
-      const correct = q.correct;
+    function markAnswer(){
+      // تلوين صح/خطأ (4/5)
+      const q = QUESTIONS[current];
+      const a = answers[current];
+      if(!a) return;
 
-      [...choicesBox.children].forEach(el=>{
-        const i = Number(el.dataset.i);
-        el.classList.remove("correct","wrong","selected");
-
-        if(i === chosenIndex) el.classList.add("selected");
-
-        // لو اختار، نلون الصح والخطأ
-        if(i === correct) el.classList.add("correct");
-        if(i === chosenIndex && chosenIndex !== correct) el.classList.add("wrong");
+      const opts = Array.from(optionsBox.querySelectorAll(".opt"));
+      opts.forEach((el, idx)=>{
+        el.classList.remove("correct","wrong");
+        if(idx === q.correct) el.classList.add("correct");
+        if(idx === a.selectedIndex && a.selectedIndex !== q.correct) el.classList.add("wrong");
       });
+      locked = true;
     }
 
-    /***********************
-     * 8) التالي/السابق/إنهاء
-     ***********************/
-    btnPrev.addEventListener("click", ()=>{
-      if(idx === 0) return;
-      idx--;
-      locked = false;
-      renderQuestion();
-    });
-
-    btnNext.addEventListener("click", ()=>{
-      // لازم يختار قبل التالي
-      if(answers[idx] === null){
+    function next(){
+      if(!answers[current]){
         alert("اختر إجابة أولًا.");
         return;
       }
 
-      if(idx === QUESTIONS.length-1){
-        finishQuiz(false);
-        return;
-      }
-
-      idx++;
-      locked = false;
-      renderQuestion();
-    });
-
-    function finishQuiz(auto){
-      if(timerId) clearInterval(timerId);
-      timerId = null;
-
-      // حساب النتيجة
-      const total = QUESTIONS.length;
-      let correctCount = 0;
-      for(let i=0;i<total;i++){
-        if(answers[i] === QUESTIONS[i].correct) correctCount++;
-      }
-      const wrongCount = total - correctCount;
-      const percent = Math.round((correctCount/total)*100);
-
-      scoreBig.textContent = `${toArabicDigits(correctCount)} / ${toArabicDigits(total)}`;
-      scoreSub.textContent = `النسبة: ${toArabicDigits(percent)}٪`;
-
-      detailLine.textContent = `الإجابات الصحيحة: ${toArabicDigits(correctCount)} • الخاطئة: ${toArabicDigits(wrongCount)} • الأسبوع: ${toArabicDigits(selectedWeek)}`;
-
-      const usedSec = QUIZ_SECONDS - remaining;
-      timeUsedEl.textContent = `الوقت المستغرق: ${formatTime(usedSec)} ${auto ? "• (انتهى الوقت)" : ""}`;
-
-      // إظهار صفحة النتائج
-      screenQuiz.style.display = "none";
-      screenStart.style.display = "none";
-      screenResult.style.display = "block";
+      // إظهار صح/خطأ لحظة بسيطة
+      markAnswer();
+      setTimeout(()=>{
+        if(current === QUESTIONS.length-1){
+          finishQuiz();
+          return;
+        }
+        current++;
+        renderQuestion();
+      }, 450);
     }
 
-    btnRestart.addEventListener("click", ()=>{
-      screenQuiz.style.display = "none";
-      screenResult.style.display = "none";
-      screenStart.style.display = "block";
-    });
+    function prev(){
+      if(current===0) return;
+      current--;
+      renderQuestion();
+    }
 
-    btnReset.addEventListener("click", ()=>{
-      selectedWeek = null;
-      QUESTIONS = [];
-      weekLabel.textContent = "—";
-      qCountLabel.textContent = "—";
-      document.querySelectorAll(".weekBtn").forEach(x=>x.classList.remove("active"));
-    });
+    function finishQuiz(){
+      if(tHandle) clearInterval(tHandle);
 
-    /***********************
-     * 9) الشهادة (تحميل/طباعة)
-     ***********************/
+      // حساب النتيجة
+      let correct = 0;
+      detailsList.innerHTML = "";
+
+      QUESTIONS.forEach((q, i)=>{
+        const a = answers[i];
+        const ok = a && a.selectedIndex === q.correct;
+        if(ok) correct++;
+
+        const li = document.createElement("li");
+        li.textContent = `س${i+1}: ${ok ? "إجابة صحيحة ✅" : "إجابة غير صحيحة ❌"}`;
+        detailsList.appendChild(li);
+      });
+
+      scoreText.textContent = `${correct} / ${QUESTIONS.length}`;
+      show(resultScreen);
+      barEl.style.width = "100%";
+    }
+
     function drawCertificate(){
-      const ctx = certCanvas.getContext("2d");
+      const w = certCanvas.width, h = certCanvas.height;
 
       // خلفية
-      ctx.clearRect(0,0,certCanvas.width, certCanvas.height);
-      const g = ctx.createLinearGradient(0,0,certCanvas.width, certCanvas.height);
-      g.addColorStop(0, "#f7f2ff");
-      g.addColorStop(0.55, "#eef6ff");
-      g.addColorStop(1, "#eaf6ff");
+      const g = ctx.createLinearGradient(0,0,w,h);
+      g.addColorStop(0,"#6d28d9");
+      g.addColorStop(.55,"#0ea5e9");
+      g.addColorStop(1,"#eaf2ff");
       ctx.fillStyle = g;
-      ctx.fillRect(0,0,certCanvas.width, certCanvas.height);
+      ctx.fillRect(0,0,w,h);
 
-      // إطار
-      ctx.strokeStyle = "rgba(79,70,229,.35)";
-      ctx.lineWidth = 10;
-      roundRect(ctx, 70, 70, certCanvas.width-140, certCanvas.height-140, 40);
-      ctx.stroke();
+      // طبقة بيضاء
+      ctx.fillStyle = "rgba(255,255,255,.92)";
+      roundRect(90,120,w-180,h-240,34,true);
 
       // عنوان
       ctx.fillStyle = "#0f172a";
-      ctx.font = "900 60px system-ui, -apple-system, 'Segoe UI', Tahoma, Arial";
+      ctx.font = "bold 52px system-ui, -apple-system, Segoe UI, Tahoma";
       ctx.textAlign = "center";
-      ctx.fillText("شهادة إنجاز", certCanvas.width/2, 190);
+      ctx.fillText("شهادة إنجاز", w/2, 220);
 
-      ctx.fillStyle = "#475569";
-      ctx.font = "800 30px system-ui, -apple-system, 'Segoe UI', Tahoma, Arial";
-      ctx.fillText("تدريب اختبار نافس في مادة الرياضيات للصف السادس الابتدائي", certCanvas.width/2, 245);
-
-      // بيانات
-      const name = (studentName.value || "").trim();
-      const cls  = (classRoom.value || "").trim();
-      ctx.fillStyle = "#0f172a";
-      ctx.font = "900 44px system-ui, -apple-system, 'Segoe UI', Tahoma, Arial";
-      ctx.fillText(`نُبارك للطالب/ـة: ${name}`, certCanvas.width/2, 360);
-
+      ctx.font = "bold 28px system-ui";
       ctx.fillStyle = "#334155";
-      ctx.font = "800 34px system-ui, -apple-system, 'Segoe UI', Tahoma, Arial";
-      ctx.fillText(`الفصل: ${cls}  •  الأسبوع: ${selectedWeek}`, certCanvas.width/2, 420);
+      ctx.fillText("تدريب اختبار نافس - رياضيات الصف السادس الابتدائي", w/2, 275);
 
-      // النتيجة
-      const total = QUESTIONS.length;
-      let correctCount = 0;
-      for(let i=0;i<total;i++){
-        if(answers[i] === QUESTIONS[i].correct) correctCount++;
-      }
-      const percent = Math.round((correctCount/total)*100);
+      const name = studentName.value.trim();
+      const cls  = studentClass.value.trim();
+      const week = selectedWeek;
 
-      // شريط
-      ctx.fillStyle = "rgba(79,70,229,.10)";
-      roundRect(ctx, 260, 490, certCanvas.width-520, 120, 26);
-      ctx.fill();
+      ctx.font = "bold 40px system-ui";
+      ctx.fillStyle = "#0b1220";
+      ctx.fillText(`الطالب: ${name}`, w/2, 380);
 
-      ctx.fillStyle = "#111827";
-      ctx.font = "900 44px system-ui, -apple-system, 'Segoe UI', Tahoma, Arial";
-      ctx.fillText(`النتيجة: ${correctCount} / ${total}  (${percent}٪)`, certCanvas.width/2, 565);
+      ctx.font = "bold 30px system-ui";
+      ctx.fillStyle = "#334155";
+      ctx.fillText(`الفصل: ${cls}  •  الأسبوع: ${week}`, w/2, 435);
 
-      // معلومات المدرسة/إعداد
+      ctx.font = "bold 34px system-ui";
       ctx.fillStyle = "#0f172a";
-      ctx.font = "900 30px system-ui, -apple-system, 'Segoe UI', Tahoma, Arial";
-      ctx.textAlign = "right";
-      ctx.fillText("مدرسة علي بن أبي طالب الابتدائية", certCanvas.width-140, 760);
+      ctx.fillText(`النتيجة: ${scoreText.textContent}`, w/2, 520);
 
+      // معلومات المدرسة
+      ctx.font = "bold 24px system-ui";
       ctx.fillStyle = "#475569";
-      ctx.font = "800 26px system-ui, -apple-system, 'Segoe UI', Tahoma, Arial";
-      ctx.fillText("الإدارة العامة للتعليم بمنطقة نجران", certCanvas.width-140, 805);
-      ctx.fillText("مدير المدرسة: نواف آل جافلة", certCanvas.width-140, 845);
+      ctx.fillText("مدرسة علي بن أبي طالب الابتدائية - الإدارة العامة للتعليم بمنطقة نجران", w/2, 625);
+      ctx.fillText("مدير المدرسة: نواف آل جافلة", w/2, 665);
+      ctx.fillText("إعداد: موسى الصبحي", w/2, 705);
 
-      ctx.textAlign = "left";
-      ctx.fillStyle = "#0f172a";
-      ctx.font = "900 30px system-ui, -apple-system, 'Segoe UI', Tahoma, Arial";
-      ctx.fillText("إعداد: موسى الصبحي", 140, 845);
-
-      // التاريخ
-      const now = new Date();
-      const date = now.toLocaleDateString("ar-SA");
-      ctx.fillStyle = "#64748b";
-      ctx.font = "800 22px system-ui, -apple-system, 'Segoe UI', Tahoma, Arial";
-      ctx.textAlign = "center";
-      ctx.fillText(`التاريخ: ${date}`, certCanvas.width/2, 930);
-
-      // شعار المدرسة (إن وجد)
-      const img = new Image();
-      img.src = "مدرسة.png";
-      img.onload = ()=>{
-        ctx.drawImage(img, 130, 140, 120, 120);
-      };
-      // لو ما حمل لا يهم
+      // شعار (إن وجد)
+      return new Promise((resolve)=>{
+        const img = new Image();
+        img.onload = ()=>{
+          ctx.save();
+          roundRect(120,160,120,120,26,true);
+          ctx.clip();
+          ctx.drawImage(img,120,160,120,120);
+          ctx.restore();
+          resolve();
+        };
+        img.onerror = ()=>resolve();
+        img.src = "school-logo.png";
+      });
     }
 
-    btnDownload.addEventListener("click", ()=>{
-      drawCertificate();
+    function roundRect(x,y,w,h,r,fill){
+      ctx.beginPath();
+      ctx.moveTo(x+r,y);
+      ctx.arcTo(x+w,y,x+w,y+h,r);
+      ctx.arcTo(x+w,y+h,x,y+h,r);
+      ctx.arcTo(x,y+h,x,y,r);
+      ctx.arcTo(x,y,x+w,y,r);
+      ctx.closePath();
+      if(fill) ctx.fill();
+    }
+
+    async function downloadCertificate(){
+      await drawCertificate();
       const a = document.createElement("a");
-      a.download = `شهادة-نافس-${studentName.value.trim() || "طالب"}.png`;
+      a.download = "شهادة-إنجاز.png";
       a.href = certCanvas.toDataURL("image/png");
       a.click();
-    });
+    }
 
-    btnPrint.addEventListener("click", ()=>{
-      drawCertificate();
-      const data = certCanvas.toDataURL("image/png");
+    async function printCertificate(){
+      await drawCertificate();
+      const dataUrl = certCanvas.toDataURL("image/png");
       const w = window.open("");
-      w.document.write(`
-        <html dir="rtl" lang="ar">
-          <head><title>طباعة الشهادة</title></head>
-          <body style="margin:0; display:grid; place-items:center; background:#fff;">
-            <img src="${data}" style="width:95vw; max-width:1000px; height:auto;" />
-            <script>window.onload=()=>{ setTimeout(()=>{ window.print(); }, 400); }<\/script>
-          </body>
-        </html>
-      `);
+      w.document.write(`<img src="${dataUrl}" style="width:100%;height:auto" />`);
       w.document.close();
+      w.focus();
+      w.print();
+    }
+
+    // أحداث
+    startBtn.addEventListener("click", startQuiz);
+    resetBtn.addEventListener("click", ()=>{
+      selectedWeek = null;
+      QUESTIONS = [];
+      metaWeek.textContent="—";
+      metaCount.textContent="—";
+      document.querySelectorAll(".weekBtn").forEach(x=>x.classList.remove("active"));
     });
 
-    /***********************
-     * 10) أدوات مساعدة
-     ***********************/
-    function toArabicDigits(x){
-      return String(x).replace(/\d/g, d=>"٠١٢٣٤٥٦٧٨٩"[d]);
-    }
-    function formatTime(sec){
-      const m = Math.floor(sec/60);
-      const s = sec%60;
-      return `${toArabicDigits(m)}:${toArabicDigits(String(s).padStart(2,"0"))}`;
-    }
-    function roundRect(ctx, x, y, w, h, r){
-      const min = Math.min(w,h);
-      if(r > min/2) r = min/2;
-      ctx.beginPath();
-      ctx.moveTo(x+r, y);
-      ctx.arcTo(x+w, y, x+w, y+h, r);
-      ctx.arcTo(x+w, y+h, x, y+h, r);
-      ctx.arcTo(x, y+h, x, y, r);
-      ctx.arcTo(x, y, x+w, y, r);
-      ctx.closePath();
-    }
+    nextBtn.addEventListener("click", ()=>{
+      if(nextBtn.disabled) return;
+      next();
+    });
+    prevBtn.addEventListener("click", prev);
 
-    /***********************
-     * 11) تشغيل أولي
-     ***********************/
+    backHome.addEventListener("click", ()=>{
+      show(startScreen);
+    });
+
+    downloadCert.addEventListener("click", downloadCertificate);
+    printCert.addEventListener("click", printCertificate);
+
+    // تشغيل أولي
     buildWeeks();
+    metaTime.textContent = "10";
   </script>
 </body>
 </html>
