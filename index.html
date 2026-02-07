@@ -27,52 +27,36 @@
         /* ===== طباعة الشهادة فقط - A4 أفقي - صفحة واحدة ===== */
 @media print {
 
-  /* حاول إلغاء الهوامش (بعض الطابعات تفرض هامش بسيط) */
-  @page {
-    size: A4 landscape;
-    margin: 0;
-  }
+  @page { size: A4 landscape; margin: 0; }
 
-  html, body{
-    width: 100%;
-    height: 100%;
+  html, body {
     margin: 0 !important;
     padding: 0 !important;
     background: #fff !important;
-    overflow: hidden !important;
   }
 
-  /* اخفِ كل شيء */
-  body *{
-    visibility: hidden !important;
+  /* أهم نقطة: استخدم display:none بدل visibility */
+  body > * {
+    display: none !important;
   }
 
-  /* أظهر منطقة الشهادة فقط */
-  #printArea, #printArea *{
-    visibility: visible !important;
+  /* اطبع الشهادة فقط */
+  #printArea {
+    display: block !important;
   }
 
-  /* مهم جدًا: كلاس hidden يجعل display:none — لازم نكسره هنا */
-  #printArea{
-    position: fixed !important;
-    inset: 0 !important;
-    display: flex !important;      /* ← يكسر hidden */
-    align-items: stretch !important;
-    justify-content: stretch !important;
-    background: #fff !important;
-    margin: 0 !important;
-    padding: 0 !important;
+  /* حتى لو عليها hidden من Tailwind */
+  #printArea.hidden {
+    display: block !important;
   }
 
-  /* اطبع الشهادة بمقاس A4 الحقيقي */
-  .cert-box{
+  .cert-box {
     width: 297mm !important;
     height: 210mm !important;
     box-sizing: border-box !important;
 
-    /* بدل الهوامش الخارجية نخلي مساحة آمنة داخلية */
+    /* مساحة داخلية آمنة لأن طباعة الجوال تقص من الأطراف أحيانًا */
     padding: 14mm !important;
-
     border: 6mm double #1e3a8a !important;
     background: #fff !important;
     text-align: center !important;
@@ -80,9 +64,6 @@
 
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
-
-    page-break-inside: avoid;
-    break-inside: avoid;
   }
 }
 
@@ -174,7 +155,7 @@
             <div id="resMsg" class="bg-amber-50 p-3 rounded-xl text-amber-700 font-bold text-sm"></div>
         </div>
         <div class="grid grid-cols-3 gap-3 w-full mt-8">
-            <button onclick="window.print()" class="bg-green-600 text-white p-3 rounded-xl font-bold text-sm">🖨️ طباعة</button>
+            <button onclick="printCert()" class="bg-green-600 text-white p-3 rounded-xl font-bold text-sm">🖨️ طباعة الشهادة</button>
             <button onclick="location.reload()" class="bg-blue-600 text-white p-3 rounded-xl font-bold text-sm">🔄 إعادة</button>
             <button onclick="location.reload()" class="bg-slate-800 text-white p-3 rounded-xl font-bold text-sm">🏠 الرئيسية</button>
         </div>
@@ -288,6 +269,23 @@
         document.getElementById('certPercent').innerText = p + "%";
         document.getElementById('certDateVal').innerText = dateStr;
     }
+
+    <script>
+  function printCert() {
+    // أظهر الشهادة قبل الطباعة (مهم للجوال)
+    const area = document.getElementById("printArea");
+    area.classList.remove("hidden");
+
+    // نفّذ الطباعة
+    setTimeout(() => {
+      window.print();
+
+      // بعد الطباعة رجّعها مخفية (اختياري)
+      setTimeout(() => {
+        area.classList.add("hidden");
+      }, 500);
+    }, 150);
+  }
 </script>
 </body>
 </html>
