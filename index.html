@@ -1182,23 +1182,59 @@ function updateTimerDisplay() {
   .top{ display:flex; justify-content:space-between; align-items:center; gap:10mm; }
   .top img{ height:26mm; width:auto; display:block; }
 
-  h1{ font-size:54px; color:#1e3a8a; font-weight:900; margin:6mm 0 0; }
-  p{ font-size:30px; margin-top:12mm; margin-bottom:6mm; }
+h1{
+  font-size: 42px;
+  color:#1e3a8a;
+  font-weight:900;
+  margin:4mm 0 0;
+}
+p{
+  font-size: 24px;
+  margin-top:10mm;
+  margin-bottom:4mm;
+}
 
   h2{
-    font-size:60px; color:#000;
-    border-bottom:5px solid #d4af37;
-    display:inline-block;
-    padding:0 22mm;
-    margin:6mm 0;
-    min-height:1.2em;
-  }
+  font-size: 46px;
+  color:#000;
+  border-bottom:4px solid #d4af37;
+  display:inline-block;
+  padding:0 18mm;
+  margin:4mm 0;
+  min-height:1.2em;
+}
 
-  .line{ font-size:28px; margin:8px 0; }
-  .green{ font-size:26px; color:#059669; font-weight:900; margin-top:8px; }
-  .date{ margin-top:10mm; font-weight:bold; font-size:22px; }
-  .sign{ margin-top:20mm; display:flex; justify-content:space-between; padding:0 22mm; }
-  .sign p{ margin:0 0 6px; }
+.line{
+  font-size: 22px;
+  margin:6px 0;
+}
+.green{
+  font-size: 22px;
+  color:#059669;
+  font-weight:900;
+  margin-top:6px;
+}
+.date{
+  margin-top:8mm;
+  font-weight:bold;
+  font-size:18px;
+}
+ .sign{
+  margin-top: 12mm;              /* كان 20mm */
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16mm;               /* كان 22mm */
+  align-items: flex-start;
+}
+
+.sign p{
+  margin: 0 0 3px;               /* كان 6px */
+  font-size: 16px;               /* تصغير */
+}
+
+.sign b{
+  font-size: 18px;               /* تصغير */
+}
 </style>
 </head>
 <body>
