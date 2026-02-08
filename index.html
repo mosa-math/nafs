@@ -1023,7 +1023,8 @@
     // Reset
     currentIdx = 0;
     score = 0;
-    timeLeft = 600;
+    const weekNum = Number(week);
+timeLeft = (weekNum === 10) ? 1800 : 600; // 30 دقيقة للأسبوع 10 فقط
     if(timerId) clearInterval(timerId);
 
     document.getElementById('mainContainer').classList.add('hidden');
@@ -1037,13 +1038,25 @@
   }
 
   function startTimer() {
-    timerId = setInterval(() => {
-      timeLeft--;
-      let mins = Math.floor(timeLeft / 60), secs = timeLeft % 60;
-      document.getElementById('timer').innerText = `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
-      if(timeLeft <= 0) endQuiz();
-    }, 1000);
-  }
+  // ✅ عرض الوقت مباشرة قبل بدء العد
+  updateTimerDisplay();
+
+  timerId = setInterval(() => {
+    timeLeft--;
+    updateTimerDisplay();
+
+    if (timeLeft <= 0) {
+      endQuiz();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const mins = Math.floor(timeLeft / 60);
+  const secs = timeLeft % 60;
+  document.getElementById('timer').innerText =
+    `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+}
 
   function loadQuestion() {
     const q = currentQuestions[currentIdx];
