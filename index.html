@@ -1,266 +1,362 @@
 <!doctype html>
 <html lang="ar" dir="rtl" class="h-full">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة تدريب نافس - الأستاذ موسى الصبحي</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <style>
-        * { font-family: 'Tajawal', sans-serif; }
-        body { background-color: #e2e8f0; min-height: 100vh; display: flex; flex-direction: column; }
-        
-        /* تنسيق منطقة السؤال */
-        .quiz-container { background: white; border-radius: 2rem; box-shadow: 0 10px 25px rgba(0,0,0,0.05); width: 100%; max-width: 800px; padding: 2.5rem; position: relative; }
-        .pill-container { display: flex; gap: 8px; position: absolute; top: -20px; left: 40px; }
-        .pill-item { background: #dbeafe; color: #1e40af; padding: 8px 20px; border-radius: 1.5rem; font-weight: 800; font-size: 0.9rem; display: flex; align-items: center; gap: 5px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        
-        /* خيارات الإجابة */
-        .option-card { width: 100%; padding: 1.2rem 2rem; background: #f8fafc; border: 2px solid #f1f5f9; border-radius: 1.2rem; display: flex; justify-content: space-between; align-items: center; font-weight: 700; color: #334155; transition: all 0.2s; cursor: pointer; }
-        .option-card:hover { border-color: #3b82f6; background: #eff6ff; }
-        .option-card.correct { background: #22c55e !important; color: white !important; border-color: #16a34a !important; }
-        .option-card.wrong { background: #ef4444 !important; color: white !important; border-color: #dc2626 !important; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>منصة تدريب نافس - الأستاذ موسى الصبحي</title>
 
-        .progress-bar { height: 8px; background: #e2e8f0; border-radius: 10px; overflow: hidden; margin-top: 10px; }
-        .progress-fill { height: 100%; background: #1e3a8a; transition: width 0.3s; }
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 
+  <style>
+    * { font-family: 'Tajawal', sans-serif; }
+    body { background-color: #e2e8f0; min-height: 100vh; display: flex; flex-direction: column; }
 
-        #feedback-toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999; padding: 1.5rem 3rem; border-radius: 1.5rem; display: none; text-align: center; color: white; font-weight: 900; font-size: 1.5rem; animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        @keyframes pop { 0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; } 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; } }
-        
-    </style>
+    /* تنسيق منطقة السؤال */
+    .quiz-container {
+      background: white; border-radius: 2rem; box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      width: 100%; max-width: 800px; padding: 2.5rem; position: relative;
+    }
+    .pill-container { display: flex; gap: 8px; position: absolute; top: -20px; left: 40px; }
+    .pill-item {
+      background: #dbeafe; color: #1e40af; padding: 8px 20px; border-radius: 1.5rem;
+      font-weight: 800; font-size: 0.9rem; display: flex; align-items: center; gap: 5px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    /* خيارات الإجابة */
+    .option-card {
+      width: 100%; padding: 1.2rem 2rem; background: #f8fafc; border: 2px solid #f1f5f9;
+      border-radius: 1.2rem; display: flex; justify-content: space-between; align-items: center;
+      font-weight: 700; color: #334155; transition: all 0.2s; cursor: pointer;
+    }
+    .option-card:hover { border-color: #3b82f6; background: #eff6ff; }
+    .option-card.correct { background: #22c55e !important; color: white !important; border-color: #16a34a !important; }
+    .option-card.wrong { background: #ef4444 !important; color: white !important; border-color: #dc2626 !important; }
+
+    .progress-bar { height: 8px; background: #e2e8f0; border-radius: 10px; overflow: hidden; margin-top: 10px; }
+    .progress-fill { height: 100%; background: #1e3a8a; transition: width 0.3s; }
+
+    /* Toast */
+    #feedback-toast {
+      position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      z-index: 9999; padding: 1.5rem 3rem; border-radius: 1.5rem; display: none;
+      text-align: center; color: white; font-weight: 900; font-size: 1.5rem;
+      animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    @keyframes pop {
+      0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+      100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    }
+  </style>
 </head>
+
 <body class="bg-slate-100 p-4">
 
 <div id="app" class="flex-grow flex items-center justify-center">
-    
-    <div id="mainContainer" class="w-full max-w-5xl bg-white rounded-3xl shadow-xl overflow-hidden grid md:grid-cols-2">
-        <section id="heroSection" class="p-8 bg-slate-50 flex flex-col items-center text-center border-l">
-            <div class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-bold mb-4">⭐ تدريب تفاعلي</div>
-            <img src="https://iconape.com/wp-content/files/zz/389912/svg/389912.svg" class="w-24 mb-4">
-            <p class="text-slate-500 font-bold text-xs uppercase">الإدارة العامة للتعليم بنجران</p>
-            <p class="text-green-800 font-bold text-sm mb-6">مدرسة علي بن أبي طالب الابتدائية</p>
-            <h1 class="text-2xl font-black text-slate-800 mb-1">منصة تدريب اختبار نافس</h1>
-            <p class="text-xs text-slate-400 font-bold">مادة الرياضيات للصف السادس الابتدائي</p>
-            
-            <button onclick="window.open('./خطة 100يوم.pdf', '_blank')" class="mt-4 flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 border border-red-200 rounded-lg text-xs font-bold hover:bg-red-100 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                توزيع خطة ١٠٠ يوم (PDF)
-            </button>
-        </section>
 
-        <div id="interactiveSection" class="p-10 flex flex-col justify-center">
-            <div id="startScreen" class="space-y-6">
-                <div class="text-xl font-black">👋 أهلًا وسهلًا يا بطل!</div>
-                <p class="text-xs font-bold text-slate-400">اكتب بياناتك ثم اختر الأسبوع واضغط ابدأ التدريب 🚀</p>
-                <input id="studentName" type="text" placeholder="اكتب اسمك هنا..." class="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500">
-                <div class="grid grid-cols-2 gap-3">
-                    <select id="gradeSelect" class="px-4 py-3 rounded-xl border border-slate-200 font-bold">
-                        <option value="">اختر الصف</option>
-                        <option value="سادس ( أ )">سادس ( أ )</option>
-                        <option value="سادس ( ب )">سادس ( ب )</option>
-                    </select>
-                    <select id="weekSelect" class="px-4 py-3 rounded-xl border border-slate-200 font-bold">
-                        <option value="">اختر الأسبوع</option>
-                        <script>for(let i=1; i<=10; i++) document.write(`<option value="${i}">الأسبوع ${i}</option>`)</script>
-                    </select>
-                </div>
-                <button onclick="startTraining()" class="w-full py-4 bg-blue-600 text-white font-black rounded-xl text-lg shadow-lg">ابدأ التدريب 🚀</button>
-            </div>
+  <div id="mainContainer" class="w-full max-w-5xl bg-white rounded-3xl shadow-xl overflow-hidden grid md:grid-cols-2">
+
+    <section id="heroSection" class="p-8 bg-slate-50 flex flex-col items-center text-center border-l">
+      <div class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-bold mb-4">⭐ تدريب تفاعلي</div>
+
+      <!-- الأفضل محليًا: moe.png / nafs.png / مدرسة.png -->
+      <div class="flex items-center justify-center gap-3 mb-4">
+        <img src="moe.png" class="w-16" alt="وزارة التعليم">
+        <img src="nafs.png" class="w-16" alt="نافس">
+      </div>
+
+      <p class="text-slate-500 font-bold text-xs uppercase">الإدارة العامة للتعليم بنجران</p>
+      <p class="text-green-800 font-bold text-sm mb-6">مدرسة علي بن أبي طالب الابتدائية</p>
+      <h1 class="text-2xl font-black text-slate-800 mb-1">منصة تدريب اختبار نافس</h1>
+      <p class="text-xs text-slate-400 font-bold">مادة الرياضيات للصف السادس الابتدائي</p>
+
+      <!-- PDF: الأفضل تغيير الاسم للإنجليزية -->
+      <button onclick="window.open('./plan100.pdf', '_blank')"
+        class="mt-4 flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 border border-red-200 rounded-lg text-xs font-bold hover:bg-red-100 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        توزيع خطة ١٠٠ يوم (PDF)
+      </button>
+    </section>
+
+    <div id="interactiveSection" class="p-10 flex flex-col justify-center">
+      <div id="startScreen" class="space-y-6">
+        <div class="text-xl font-black">👋 أهلًا وسهلًا يا بطل!</div>
+        <p class="text-xs font-bold text-slate-400">اكتب بياناتك ثم اختر الأسبوع واضغط ابدأ التدريب 🚀</p>
+
+        <input id="studentName" type="text" placeholder="اكتب اسمك هنا..."
+          class="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500">
+
+        <div class="grid grid-cols-2 gap-3">
+          <select id="gradeSelect" class="px-4 py-3 rounded-xl border border-slate-200 font-bold">
+            <option value="">اختر الصف</option>
+            <option value="سادس ( أ )">سادس ( أ )</option>
+            <option value="سادس ( ب )">سادس ( ب )</option>
+          </select>
+
+          <select id="weekSelect" class="px-4 py-3 rounded-xl border border-slate-200 font-bold">
+            <option value="">اختر الأسبوع</option>
+            <script>
+              for(let i=1; i<=10; i++) document.write(`<option value="${i}">الأسبوع ${i}</option>`)
+            </script>
+          </select>
         </div>
+
+        <!-- زر البداية -->
+        <button onclick="startTraining()" class="w-full py-4 bg-blue-600 text-white font-black rounded-xl text-lg shadow-lg">
+          ابدأ التدريب 🚀
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- شاشة الاختبار -->
+  <div id="quizScreen" class="hidden w-full flex flex-col items-center">
+    <div class="w-full max-w-3xl mb-8">
+      <div class="flex justify-between items-center mb-2">
+        <div class="flex items-center gap-2 font-bold text-slate-700">
+          <span class="bg-slate-200 p-2 rounded-full">👤</span>
+          <span id="displayStudentName"></span>
+        </div>
+        <div class="font-bold text-slate-500" id="topQIndicator"></div>
+      </div>
+      <div class="progress-bar"><div id="progressFill" class="progress-fill" style="width: 0%"></div></div>
     </div>
 
-    <div id="quizScreen" class="hidden w-full flex flex-col items-center">
-        <div class="w-full max-w-3xl mb-8">
-            <div class="flex justify-between items-center mb-2">
-                <div class="flex items-center gap-2 font-bold text-slate-700">
-                    <span class="bg-slate-200 p-2 rounded-full">👤</span> <span id="displayStudentName"></span>
-                </div>
-                <div class="font-bold text-slate-500" id="topQIndicator"></div>
-            </div>
-            <div class="progress-bar"><div id="progressFill" class="progress-fill" style="width: 0%"></div></div>
-        </div>
-        <div class="quiz-container">
-            <div class="pill-container">
-                <div class="pill-item"><span>السؤال</span> <span id="currQNum">1</span> من <span id="totalQNum">0</span></div>
-                <div class="pill-item">⏱️ الوقت: <span id="timer">10:00</span></div>
-            </div>
-            <h2 id="questionText" class="text-2xl font-extrabold text-slate-800 text-center my-8"></h2>
-            <div id="optionsGrid" class="space-y-4"></div>
-            <button id="nextBtn" onclick="nextQuestion()" class="hidden w-full py-4 bg-slate-800 text-white font-black rounded-xl mt-8 text-lg">السؤال التالي ⬅️</button>
-        </div>
+    <div class="quiz-container">
+      <div class="pill-container">
+        <div class="pill-item"><span>السؤال</span> <span id="currQNum">1</span> من <span id="totalQNum">0</span></div>
+        <div class="pill-item">⏱️ الوقت: <span id="timer">10:00</span></div>
+      </div>
+
+      <h2 id="questionText" class="text-2xl font-extrabold text-slate-800 text-center my-8"></h2>
+      <div id="optionsGrid" class="space-y-4"></div>
+
+      <button id="nextBtn" onclick="nextQuestion()" class="hidden w-full py-4 bg-slate-800 text-white font-black rounded-xl mt-8 text-lg">
+        السؤال التالي ⬅️
+      </button>
+    </div>
+  </div>
+
+  <!-- شاشة النتيجة -->
+  <div id="resultScreen" class="hidden w-full max-w-md flex flex-col items-center text-center">
+    <div class="text-6xl mb-4">🏆</div>
+    <h2 id="resStudentName" class="text-3xl font-black text-blue-900 mb-6"></h2>
+
+    <div class="bg-white w-full rounded-3xl p-8 shadow-xl space-y-6">
+      <div class="text-6xl font-black text-slate-800" id="resScoreText"></div>
+      <div class="text-2xl font-black text-blue-600" id="resPercent"></div>
+      <div class="text-xl font-bold text-slate-700">التقدير: <span id="resGrade"></span></div>
+      <div id="resMsg" class="bg-amber-50 p-3 rounded-xl text-amber-700 font-bold text-sm"></div>
     </div>
 
-    <div id="resultScreen" class="hidden w-full max-w-md flex flex-col items-center text-center">
-        <div class="text-6xl mb-4">🏆</div>
-        <h2 id="resStudentName" class="text-3xl font-black text-blue-900 mb-6"></h2>
-        <div class="bg-white w-full rounded-3xl p-8 shadow-xl space-y-6">
-            <div class="text-6xl font-black text-slate-800" id="resScoreText"></div>
-            <div class="text-2xl font-black text-blue-600" id="resPercent"></div>
-            <div class="text-xl font-bold text-slate-700">التقدير: <span id="resGrade"></span></div>
-            <div id="resMsg" class="bg-amber-50 p-3 rounded-xl text-amber-700 font-bold text-sm"></div>
-        </div>
-        <div class="grid grid-cols-3 gap-3 w-full mt-8">
-<button onclick="printCertificateOnly()" class="bg-green-600 text-white p-3 rounded-xl font-bold text-sm">🖨️ طباعة الشهادة</button> 
-            <button onclick="location.reload()" class="bg-blue-600 text-white p-3 rounded-xl font-bold text-sm">🔄 إعادة</button>
-            <button onclick="location.reload()" class="bg-slate-800 text-white p-3 rounded-xl font-bold text-sm">🏠 الرئيسية</button>
-        </div>
+    <div class="grid grid-cols-3 gap-3 w-full mt-8">
+      <button onclick="printCertificateOnly()" class="bg-green-600 text-white p-3 rounded-xl font-bold text-sm">🖨️ طباعة الشهادة</button>
+      <button onclick="location.reload()" class="bg-blue-600 text-white p-3 rounded-xl font-bold text-sm">🔄 إعادة</button>
+      <button onclick="location.reload()" class="bg-slate-800 text-white p-3 rounded-xl font-bold text-sm">🏠 الرئيسية</button>
     </div>
+  </div>
+
 </div>
 
-<footer id="pageFooter" class="p-6 text-center text-slate-400 font-bold">إعداد المعلم: <span class="text-blue-900">موسى الصبحي</span></footer>
+<footer id="pageFooter" class="p-6 text-center text-slate-400 font-bold">
+  إعداد المعلم: <span class="text-blue-900">موسى الصبحي</span>
+</footer>
 
 <div id="feedback-toast"></div>
 
 <script>
-    // بيانات الأسئلة
-    const WEEKS_DATA = {
-         10: [
-        { q: "أوجد ناتج: ٣٦٢ × ٢٥", c: ["٧٢٥٠", "٨٠٥٠", "٩٠٥٠", "٦٢٥٠"], correct: 0 },
-        { q: "أوجد ناتج: ٦٨٧٣٥٩٤ − ٣٧٦١٤٥٢", c: ["٣١١٢١٤٢", "٣٠١٢١٤٢", "٣٢١١١٤٢", "٣١١١٢٤٢"], correct: 0 },
-      ],
-      9: [
-        { q: "سؤال الأسبوع التاسع ١", c: ["أ", "ب", "ج", "د"], correct: 1 },
-        { q: "سؤال الأسبوع التاسع ٢", c: ["أ", "ب", "ج", "د"], correct: 2 },
-      ],
-      8: [
-        { q: "سؤال الأسبوع الثامن ١", c: ["أ", "ب", "ج", "د"], correct: 0 },
-      ],
-      7: [
-        { q: "سؤال الأسبوع السابع ١", c: ["أ", "ب", "ج", "د"], correct: 1 },
-        { q: "سؤال الأسبوع السابع ٢", c: ["أ", "ب", "ج", "د"], correct: 2 },
-      ],
-      6: [
-        { q: "سؤال الأسبوع السادس ١", c: ["أ", "ب", "ج", "د"], correct: 0 },
-      ],
-      5: [
-        { q: "سؤال الأسبوع الخامس ١", c: ["أ", "ب", "ج", "د"], correct: 1 },
-        { q: "سؤال الأسبوع الخامس ٢", c: ["أ", "ب", "ج", "د"], correct: 2 },
-      ],
-      4: [
-        { q: "سؤال الأسبوع الرابع ١", c: ["أ", "ب", "ج", "د"], correct: 0 },
-      ],
-      3: [
-        { q: "سؤال الأسبوع الثالث ١", c: ["أ", "ب", "ج", "د"], correct: 1 },
-        { q: "سؤال الأسبوع الثالث ٢", c: ["أ", "ب", "ج", "د"], correct: 2 },
-      ],
-      2: [
-        { q: "سؤال الأسبوع الثاني ١", c: ["أ", "ب", "ج", "د"], correct: 0 },
-      ],
-      1: [
-        { q: "سؤال الأسبوع الأول ١", c: ["أ", "ب", "ج", "د"], correct: 1 },
-        { q: "سؤال الأسبوع الأول ٢", c: ["أ", "ب", "ج", "د"], correct: 2 },
-      ],
-    };
+  // بيانات الأسئلة
+  const WEEKS_DATA = {
+    10: [
+      { q: "أوجد ناتج: ٣٦٢ × ٢٥", c: ["٧٢٥٠", "٨٠٥٠", "٩٠٥٠", "٦٢٥٠"], correct: 0 },
+      { q: "أوجد ناتج: ٦٨٧٣٥٩٤ − ٣٧٦١٤٥٢", c: ["٣١١٢١٤٢", "٣٠١٢١٤٢", "٣٢١١١٤٢", "٣١١١٢٤٢"], correct: 0 },
+    ],
+    9: [
+      { q: "سؤال الأسبوع التاسع ١", c: ["أ", "ب", "ج", "د"], correct: 1 },
+      { q: "سؤال الأسبوع التاسع ٢", c: ["أ", "ب", "ج", "د"], correct: 2 },
+    ],
+    8: [
+      { q: "سؤال الأسبوع الثامن ١", c: ["أ", "ب", "ج", "د"], correct: 0 },
+    ],
+    7: [
+      { q: "سؤال الأسبوع السابع ١", c: ["أ", "ب", "ج", "د"], correct: 1 },
+      { q: "سؤال الأسبوع السابع ٢", c: ["أ", "ب", "ج", "د"], correct: 2 },
+    ],
+    6: [
+      { q: "سؤال الأسبوع السادس ١", c: ["أ", "ب", "ج", "د"], correct: 0 },
+    ],
+    5: [
+      { q: "سؤال الأسبوع الخامس ١", c: ["أ", "ب", "ج", "د"], correct: 1 },
+      { q: "سؤال الأسبوع الخامس ٢", c: ["أ", "ب", "ج", "د"], correct: 2 },
+    ],
+    4: [
+      { q: "سؤال الأسبوع الرابع ١", c: ["أ", "ب", "ج", "د"], correct: 0 },
+    ],
+    3: [
+      { q: "سؤال الأسبوع الثالث ١", c: ["أ", "ب", "ج", "د"], correct: 1 },
+      { q: "سؤال الأسبوع الثالث ٢", c: ["أ", "ب", "ج", "د"], correct: 2 },
+    ],
+    2: [
+      { q: "سؤال الأسبوع الثاني ١", c: ["أ", "ب", "ج", "د"], correct: 0 },
+    ],
+    1: [
+      { q: "سؤال الأسبوع الأول ١", c: ["أ", "ب", "ج", "د"], correct: 1 },
+      { q: "سؤال الأسبوع الأول ٢", c: ["أ", "ب", "ج", "د"], correct: 2 },
+    ],
+  };
 
+  let currentQuestions = [];
+  let currentIdx = 0;
+  let score = 0;
+  let timeLeft = 600;
+  let timerId = null;
+  let studentData = {};
 
-    let currentQuestions = [], currentIdx = 0, score = 0, timeLeft = 600, timerId, studentData = {};
+  function startTraining() {
+    const name = document.getElementById('studentName').value.trim();
+    const grade = document.getElementById('gradeSelect').value;
+    const week = document.getElementById('weekSelect').value;
 
-    function startTraining() {
-        const name = document.getElementById('studentName').value.trim();
-        const grade = document.getElementById('gradeSelect').value;
-        const week = document.getElementById('weekSelect').value;
-        if(!name || !grade || !week) return alert("أكمل البيانات أولاً!");
-
-        studentData = { name, grade, week };
-        currentQuestions = WEEKS_DATA[week] || WEEKS_DATA[10];
-        document.getElementById('mainContainer').classList.add('hidden');
-        document.getElementById('pageFooter').classList.add('hidden');
-        document.getElementById('quizScreen').classList.remove('hidden');
-        document.getElementById('displayStudentName').innerText = name;
-        startTimer(); loadQuestion();
+    if(!name || !grade || !week) {
+      alert("أكمل البيانات أولاً!");
+      return;
     }
 
-    function startTimer() {
-        timerId = setInterval(() => {
-            timeLeft--;
-            let mins = Math.floor(timeLeft / 60), secs = timeLeft % 60;
-            document.getElementById('timer').innerText = `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
-            if(timeLeft <= 0) endQuiz();
-        }, 1000);
+    studentData = { name, grade, week };
+    currentQuestions = WEEKS_DATA[week] || [];
+
+    // ✅ شرط: لو ما فيه أسئلة
+    if(!currentQuestions.length){
+      alert("لا توجد أسئلة لهذا الأسبوع.");
+      return;
     }
 
-    function loadQuestion() {
-        const q = currentQuestions[currentIdx];
-        document.getElementById('currQNum').innerText = currentIdx + 1;
-        document.getElementById('totalQNum').innerText = currentQuestions.length;
-        document.getElementById('topQIndicator').innerText = `السؤال ${currentIdx + 1} من ${currentQuestions.length}`;
-        document.getElementById('questionText').innerText = q.q;
-        document.getElementById('progressFill').style.width = `${((currentIdx + 1) / currentQuestions.length) * 100}%`;
-        const grid = document.getElementById('optionsGrid'); grid.innerHTML = "";
-        const letters = ['أ', 'ب', 'ج', 'د'];
-        q.c.forEach((choice, i) => {
-            const card = document.createElement('div'); card.className = "option-card";
-            card.innerHTML = `<span>${choice}</span><span class="text-slate-300 font-black">${letters[i]}</span>`;
-            card.onclick = () => checkAnswer(i, card); grid.appendChild(card);
-        });
-        document.getElementById('nextBtn').classList.add('hidden');
+    // Reset
+    currentIdx = 0;
+    score = 0;
+    timeLeft = 600;
+    if(timerId) clearInterval(timerId);
+
+    document.getElementById('mainContainer').classList.add('hidden');
+    document.getElementById('pageFooter').classList.add('hidden');
+    document.getElementById('quizScreen').classList.remove('hidden');
+
+    document.getElementById('displayStudentName').innerText = name;
+
+    startTimer();
+    loadQuestion();
+  }
+
+  function startTimer() {
+    timerId = setInterval(() => {
+      timeLeft--;
+      let mins = Math.floor(timeLeft / 60), secs = timeLeft % 60;
+      document.getElementById('timer').innerText = `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+      if(timeLeft <= 0) endQuiz();
+    }, 1000);
+  }
+
+  function loadQuestion() {
+    const q = currentQuestions[currentIdx];
+    document.getElementById('currQNum').innerText = currentIdx + 1;
+    document.getElementById('totalQNum').innerText = currentQuestions.length;
+    document.getElementById('topQIndicator').innerText = `السؤال ${currentIdx + 1} من ${currentQuestions.length}`;
+    document.getElementById('questionText').innerText = q.q;
+
+    document.getElementById('progressFill').style.width = `${((currentIdx + 1) / currentQuestions.length) * 100}%`;
+
+    const grid = document.getElementById('optionsGrid');
+    grid.innerHTML = "";
+
+    const letters = ['أ', 'ب', 'ج', 'د'];
+    q.c.forEach((choice, i) => {
+      const card = document.createElement('div');
+      card.className = "option-card";
+      card.innerHTML = `<span>${choice}</span><span class="text-slate-300 font-black">${letters[i]}</span>`;
+      card.onclick = () => checkAnswer(i, card);
+      grid.appendChild(card);
+    });
+
+    document.getElementById('nextBtn').classList.add('hidden');
+  }
+
+  function checkAnswer(idx, card) {
+    const q = currentQuestions[currentIdx];
+    const toast = document.getElementById('feedback-toast');
+
+    if(idx === q.correct) {
+      score++;
+      card.classList.add('correct');
+      toast.innerText = "ممتاز! 🥳";
+      toast.style.background = "#22c55e";
+    } else {
+      card.classList.add('wrong');
+      toast.innerText = "خاطئة! 💔";
+      toast.style.background = "#ef4444";
     }
 
-    function checkAnswer(idx, card) {
-        const q = currentQuestions[currentIdx]; const toast = document.getElementById('feedback-toast');
-        if(idx === q.correct) { score++; card.classList.add('correct'); toast.innerText = "ممتاز! 🥳"; toast.style.background = "#22c55e"; }
-        else { card.classList.add('wrong'); toast.innerText = "خاطئة! 💔"; toast.style.background = "#ef4444"; }
-        toast.style.display = "block"; setTimeout(() => toast.style.display = "none", 1000);
-        document.querySelectorAll('.option-card').forEach(c => c.style.pointerEvents = "none");
-        document.getElementById('nextBtn').classList.remove('hidden');
-    }
+    toast.style.display = "block";
+    setTimeout(() => toast.style.display = "none", 1000);
 
-    function nextQuestion() {
-        currentIdx++; if(currentIdx < currentQuestions.length) loadQuestion(); else endQuiz();
-    }
+    document.querySelectorAll('.option-card').forEach(c => c.style.pointerEvents = "none");
+    document.getElementById('nextBtn').classList.remove('hidden');
+  }
 
-    function endQuiz() {
-        clearInterval(timerId);
-        document.getElementById('quizScreen').classList.add('hidden');
-        document.getElementById('resultScreen').classList.remove('hidden');
-        const p = Math.round((score / currentQuestions.length) * 100);
-        document.getElementById('resStudentName').innerText = studentData.name;
-        document.getElementById('resScoreText').innerText = `${score} من ${currentQuestions.length}`;
-        document.getElementById('resPercent').innerText = `${p}%`;
-        const options = { year: 'numeric', month: 'long', day: 'numeric', calendar: 'islamic-uma' };
-        const dateStr = new Date().toLocaleDateString('ar-SA', options);
-        document.getElementById('resGrade').innerText = p >= 90 ? "ممتاز" : p >= 75 ? "جيد جداً" : "يحتاج تحسين";
-        document.getElementById('resMsg').innerText = p >= 75 ? "أنت بطل حقيقي! استمر في الإبداع 🌟" : "نشجعك على المحاولة مرة أخرى لتحسين نتيجتك! 💪";
-        
-        document.getElementById('certName').innerText = studentData.name;
-        document.getElementById('certClass').innerText = studentData.grade;
-        document.getElementById('certPercent').innerText = p + "%";
-        document.getElementById('certDateVal').innerText = dateStr;
-    }
-function printCertificateOnly() {
-  // ✅ خذ البيانات من صفحة النتيجة (الموجودة عندك)
-  const name = (document.getElementById('resStudentName')?.innerText || '').trim();
-  const percent = (document.getElementById('resPercent')?.innerText || '').trim(); // مثل 85%
-  const scoreText = (document.getElementById('resScoreText')?.innerText || '').trim(); // مثل 8 من 10
+  function nextQuestion() {
+    currentIdx++;
+    if(currentIdx < currentQuestions.length) loadQuestion();
+    else endQuiz();
+  }
 
-  const cls = document.getElementById('gradeSelect')?.value || '';
-  const week = document.getElementById('weekSelect')?.value || '';
+  function endQuiz() {
+    if(timerId) clearInterval(timerId);
 
-  // تاريخ هجري (نفس طريقتك)
-  const options = { year: 'numeric', month: 'long', day: 'numeric', calendar: 'islamic-uma' };
-  const dateStr = new Date().toLocaleDateString('ar-SA', options);
+    document.getElementById('quizScreen').classList.add('hidden');
+    document.getElementById('resultScreen').classList.remove('hidden');
 
-  // ✅ الأفضل: ارفع الشعارات محليًا بدل الروابط (لكن خليتها كما هي مؤقتًا)
-  const ministryLogo = "https://iconape.com/wp-content/files/zz/389912/svg/389912.svg";
-  const nafsLogo     = "nafs.png";   // ارفعها بنفس المجلد
-  const schoolLogo   = "مدرسة.png";  // موجودة عندك
+    const p = Math.round((score / currentQuestions.length) * 100);
 
-  // صفحة طباعة مستقلة داخل iframe (أفضل حل لـ Safari الجوال)
-  const iframe = document.createElement('iframe');
-  iframe.style.position = 'fixed';
-  iframe.style.right = '0';
-  iframe.style.bottom = '0';
-  iframe.style.width = '0';
-  iframe.style.height = '0';
-  iframe.style.border = '0';
-  document.body.appendChild(iframe);
+    document.getElementById('resStudentName').innerText = studentData.name;
+    document.getElementById('resScoreText').innerText = `${score} من ${currentQuestions.length}`;
+    document.getElementById('resPercent').innerText = `${p}%`;
 
-  const doc = iframe.contentWindow.document;
-  doc.open();
-  doc.write(`<!doctype html>
+    document.getElementById('resGrade').innerText =
+      p >= 90 ? "ممتاز" : p >= 75 ? "جيد جداً" : "يحتاج تحسين";
+
+    document.getElementById('resMsg').innerText =
+      p >= 75 ? "أنت بطل حقيقي! استمر في الإبداع 🌟" : "نشجعك على المحاولة مرة أخرى لتحسين نتيجتك! 💪";
+  }
+
+  function printCertificateOnly() {
+    const name = (document.getElementById('resStudentName')?.innerText || '').trim();
+    const percent = (document.getElementById('resPercent')?.innerText || '').trim();
+    const scoreText = (document.getElementById('resScoreText')?.innerText || '').trim();
+
+    const cls = document.getElementById('gradeSelect')?.value || '';
+    const week = document.getElementById('weekSelect')?.value || '';
+
+    const options = { year: 'numeric', month: 'long', day: 'numeric', calendar: 'islamic-uma' };
+    const dateStr = new Date().toLocaleDateString('ar-SA', options);
+
+    const ministryLogo = "moe.png";
+    const nafsLogo     = "nafs.png";
+    const schoolLogo   = "مدرسة.png";
+
+    const iframe = document.createElement('iframe');
+    iframe.style.position = 'fixed';
+    iframe.style.right = '0';
+    iframe.style.bottom = '0';
+    iframe.style.width = '0';
+    iframe.style.height = '0';
+    iframe.style.border = '0';
+    document.body.appendChild(iframe);
+
+    const doc = iframe.contentWindow.document;
+    doc.open();
+    doc.write(`<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
@@ -272,8 +368,7 @@ function printCertificateOnly() {
   body { display:flex; }
 
   .cert-box{
-    width: 297mm;
-    height: 210mm;
+    width: 297mm; height: 210mm;
     box-sizing: border-box;
     padding: 14mm;
     border: 6mm double #1e3a8a;
@@ -287,8 +382,10 @@ function printCertificateOnly() {
 
   .top{ display:flex; justify-content:space-between; align-items:center; gap:10mm; }
   .top img{ height:26mm; width:auto; display:block; }
-  h1{ font-size:54px; color:#1e3a8a; font-weight:900; margin:0; }
-  p{ font-size:30px; margin-top:18mm; margin-bottom:6mm; }
+
+  h1{ font-size:54px; color:#1e3a8a; font-weight:900; margin:6mm 0 0; }
+  p{ font-size:30px; margin-top:12mm; margin-bottom:6mm; }
+
   h2{
     font-size:60px; color:#000;
     border-bottom:5px solid #d4af37;
@@ -297,6 +394,7 @@ function printCertificateOnly() {
     margin:6mm 0;
     min-height:1.2em;
   }
+
   .line{ font-size:28px; margin:8px 0; }
   .green{ font-size:26px; color:#059669; font-weight:900; margin-top:8px; }
   .date{ margin-top:10mm; font-weight:bold; font-size:22px; }
@@ -307,12 +405,12 @@ function printCertificateOnly() {
 <body>
   <div class="cert-box">
     <div class="top">
-      <img src="${moe.png}" alt="وزارة التعليم">
-      <img src="${nafss.png}" alt="نافس">
-      <img src="${مدرسة.png}" alt="المدرسة">
+      <img src="${ministryLogo}" alt="وزارة التعليم">
+      <img src="${nafsLogo}" alt="نافس">
+      <img src="${schoolLogo}" alt="المدرسة">
     </div>
 
-    <h1 style="margin-top:6mm;">شهادة شكر وتقدير</h1>
+    <h1>شهادة شكر وتقدير</h1>
 
     <p>يتقدم معلم الرياضيات بمدرسة علي بن أبي طالب بخالص الشكر للطالب:</p>
     <h2>${escapeHtml(name || "__________")}</h2>
@@ -333,68 +431,27 @@ function printCertificateOnly() {
   <\/script>
 </body>
 </html>`);
-  doc.close();
+    doc.close();
 
-  setTimeout(() => {
-    iframe.contentWindow.focus();
-    iframe.contentWindow.print();
-    setTimeout(() => document.body.removeChild(iframe), 1200);
-  }, 400);
-}
-
-function escapeHtml(str){
-  return String(str)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-}
-
-// ✅ مهم جدًا: نخلي الدالة متاحة للزر دائمًا
-window.printCertificateOnly = printCertificateOnly;
-
-  .top{ display:flex; justify-content:space-between; align-items:center; }
-  .top img{ height:26mm; width:auto; display:block; }
-  h1{ font-size:55px; color:#1e3a8a; font-weight:900; margin:0; }
-  p{ font-size:30px; margin-top:18mm; margin-bottom:6mm; }
-  h2{
-    font-size:60px; color:#000;
-    border-bottom:5px solid #d4af37;
-    display:inline-block;
-    padding:0 22mm;
-    margin:6mm 0;
-    min-height:1.2em;
+    setTimeout(() => {
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+      setTimeout(() => document.body.removeChild(iframe), 1200);
+    }, 400);
   }
-  .line{ font-size:28px; margin:6px 0; }
-  .green{ font-size:26px; color:#059669; font-weight:900; margin-top:6px; }
-  .date{ margin-top:10mm; font-weight:bold; font-size:22px; }
-  .sign{ margin-top:20mm; display:flex; justify-content:space-between; padding:0 22mm; }
-  .sign p{ margin:0 0 6px; }
-</style>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-</head>
 
-</body>
-</html>`);
-  doc.close();
+  function escapeHtml(str){
+    return String(str)
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
 
-  // نفّذ الطباعة ثم احذف iframe
-  setTimeout(() => {
-    iframe.contentWindow.focus();
-    iframe.contentWindow.print();
-    setTimeout(() => document.body.removeChild(iframe), 1000);
-  }, 300);
-}
-
-function escapeHtml(str){
-  return String(str)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-}
+  window.printCertificateOnly = printCertificateOnly;
+  window.startTraining = startTraining;
 </script>
+
 </body>
 </html>
