@@ -48,6 +48,44 @@
       0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
       100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
     }
+
+    .welcome-text{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* الأيقونة يسار */
+  gap: 8px;
+  animation: slideInLeft 1.2s ease-out;
+}
+
+.welcome-msg{
+  text-align: right;   /* النص يمين */
+  color: #1e3a8a;
+}
+
+.wave{
+  font-size: 1.4rem;
+  display: inline-block;
+  animation: waveHand 1.5s infinite;
+}
+
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes waveHand {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(15deg); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(-10deg); }
+  100% { transform: rotate(0deg); }
+}
   </style>
 </head>
 
@@ -82,7 +120,10 @@
 
     <div id="interactiveSection" class="p-10 flex flex-col justify-center">
       <div id="startScreen" class="space-y-6">
-        <div class="text-xl font-black">👋 أهلًا وسهلًا يا بطل!</div>
+<div class="text-xl font-black welcome-text">
+  <span class="wave">👋</span>
+  <span class="welcome-msg">أهلًا وسهلًا يا بطل</span>
+</div>    
         <p class="text-xs font-bold text-slate-400">اكتب بياناتك ثم اختر الأسبوع واضغط ابدأ التدريب 🚀</p>
 
         <input id="studentName" type="text" placeholder="اكتب اسمك هنا..."
