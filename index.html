@@ -147,19 +147,22 @@
             <option value="سادس ( ب )">سادس ( ب )</option>
           </select>
 
-          <select id="weekSelect" class="px-4 py-3 rounded-xl border border-slate-200 font-bold">
+         <select id="weekSelect" class="px-4 py-3 rounded-xl border border-slate-200 font-bold">
   <option value="">اختر الأسبوع</option>
 
   <option value="1">الأسبوع ١</option>
   <option value="2">الأسبوع ٢</option>
   <option value="3">الأسبوع ٣</option>
   <option value="4">الأسبوع ٤</option>
-  <option value="5">الأسبوع ٥ (مراجعة الأسبوع الأول والثاني)</option>
-  <option value="6">الأسبوع ٦ (مراجعة الأسبوع الثالث والرابع)</option>
+
+  <option value="5">⭐ الأسبوع ٥ (مراجعة ١–٢)</option>
+  <option value="6">⭐ الأسبوع ٦ (مراجعة ٣–٤)</option>
+
   <option value="7">الأسبوع ٧</option>
   <option value="8">الأسبوع ٨</option>
   <option value="9">الأسبوع ٩</option>
-  <option value="10">الأسبوع ١٠ (مراجعة الأسبوع السابع والثامن والتاسع)</option>
+
+  <option value="10">⭐ الأسبوع ١٠ (مراجعة ٧–٩)</option>
 </select>
           </select>
         </div>
@@ -182,6 +185,9 @@
         </div>
         <div class="font-bold text-slate-500" id="topQIndicator"></div>
       </div>
+      <div id="trainingBadge"
+     class="mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-black">
+</div>
       <div class="progress-bar"><div id="progressFill" class="progress-fill" style="width: 0%"></div></div>
     </div>
 
@@ -1007,7 +1013,30 @@
   }
 ],
   };
+const REVIEW_WEEKS = {
+  5: "مراجعة الأسبوع ١ و٢",
+  6: "مراجعة الأسبوع ٣ و٤",
+  10: "مراجعة الأسبوع ٧ و٨ و٩"
+};
 
+function updateTrainingBadge(week){
+  const badge = document.getElementById('trainingBadge');
+  if(!badge) return;
+
+  const note = REVIEW_WEEKS[Number(week)];
+
+  if(note){
+    badge.className =
+      "mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-black " +
+      "bg-amber-100 text-amber-900 border border-amber-200";
+    badge.innerHTML = `⭐ تدريب مراجعة — <span class="font-extrabold">${note}</span>`;
+  } else {
+    badge.className =
+      "mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-black " +
+      "bg-blue-50 text-blue-800 border border-blue-200";
+    badge.innerHTML = `📝 تدريب أسبوعي — <span class="font-extrabold">الأسبوع ${week}</span>`;
+  }
+}
   let currentQuestions = [];
   let currentIdx = 0;
   let score = 0;
@@ -1026,6 +1055,7 @@
     }
 
     studentData = { name, grade, week };
+    updateTrainingBadge(week);
     currentQuestions = WEEKS_DATA[week] || [];
 
     // ✅ شرط: لو ما فيه أسئلة
