@@ -1533,14 +1533,13 @@ function updateTimerDisplay() {
   toast.style.display = "block";
   setTimeout(() => toast.style.display = "none", 1000);
 
-  document.getElementById('nextBtn').classList.remove('hidden');
+  document.getElementById('nextBtn').classList.add('hidden');
+
+const box = document.getElementById('explainBox');
+if (box) {
+  box.classList.add('hidden');
+  box.innerHTML = '';
 }
-}
-    
-    const box = document.getElementById('explainBox');
-box.classList.add('hidden');
-box.innerHTML = '';
-  }
 
   function nextQuestion() {
     currentIdx++;
