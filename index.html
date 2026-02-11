@@ -164,7 +164,7 @@
 
   <option value="10">⭐ الأسبوع ١٠ (مراجعة ٧–٩)</option>
 </select>
-          </select>
+    
         </div>
 
         <!-- زر البداية -->
@@ -1495,6 +1495,9 @@ function updateTimerDisplay() {
     });
 
     document.getElementById('nextBtn').classList.add('hidden');
+    // ✅ إخفاء الشرح عند تحميل سؤال جديد
+const box = document.getElementById('explainBox');
+if (box) { box.classList.add('hidden'); box.innerHTML = ""; }
   }
 
   function checkAnswer(idx, card) {
@@ -1508,13 +1511,6 @@ function updateTimerDisplay() {
     toast.style.background = "#22c55e";
 
     // ✅ عرض الشرح فقط عند الإجابة الصحيحة
-    const box = document.getElementById('explainBox');
-    if (box) {
-      const explainText = (q.explain || "سيتم إضافة شرح لهذا السؤال لاحقًا.")
-        .replaceAll("\n", "<br>");
-      box.classList.remove('hidden');
-      box.innerHTML = `📘 <span class="font-black">شرح الحل بالتفصيل:</span><br>${explainText}`;
-    }
 
   } else {
     card.classList.add('wrong');
