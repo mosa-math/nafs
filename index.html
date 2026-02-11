@@ -109,7 +109,7 @@
       <p class="text-xs text-slate-400 font-bold">مادة الرياضيات للصف السادس الابتدائي</p>
 
       <!-- PDF: الأفضل تغيير الاسم للإنجليزية -->
-   <a href="./plan100.pdf" target="_blank" download
+   <a href="./plan100.pdf" target="_blank" rel="noopener"
    aria-label="تحميل توزيع مهارات خطة ١٠٠ يوم"
    class="mt-4 inline-flex flex-row-reverse items-center gap-2 px-4 py-2
           bg-red-50 text-red-700 border border-red-200
@@ -1496,13 +1496,16 @@ function updateTimerDisplay() {
 
     document.getElementById('nextBtn').classList.add('hidden');
     // ✅ إخفاء الشرح عند تحميل سؤال جديد
-const box = document.getElementById('explainBox');
-if (box) { box.classList.add('hidden'); box.innerHTML = ""; }
+
   }
 
   function checkAnswer(idx, card) {
   const q = currentQuestions[currentIdx];
   const toast = document.getElementById('feedback-toast');
+  const box = document.getElementById('explainBox');
+
+  // امنع تكرار الضغط
+  document.querySelectorAll('.option-card').forEach(c => c.style.pointerEvents = "none");
 
   if (idx === q.correct) {
     score++;
@@ -1510,21 +1513,28 @@ if (box) { box.classList.add('hidden'); box.innerHTML = ""; }
     toast.innerText = "ممتاز! 🥳";
     toast.style.background = "#22c55e";
 
-    // ✅ عرض الشرح فقط عند الإجابة الصحيحة
-
+    // ✅ اعرض الشرح فقط عند الصح
+    if (box && q.explain) {
+      box.innerText = q.explain;
+      box.classList.remove('hidden');
+    }
   } else {
     card.classList.add('wrong');
     toast.innerText = "خاطئة! 💔";
     toast.style.background = "#ef4444";
 
-    // ❌ لا تعرض الشرح هنا (عشان يظهر فقط عند الصح)
+    // ❌ لا تعرض الشرح هنا
+    if (box) {
+      box.classList.add('hidden');
+      box.innerHTML = '';
+    }
   }
 
   toast.style.display = "block";
   setTimeout(() => toast.style.display = "none", 1000);
 
-  document.querySelectorAll('.option-card').forEach(c => c.style.pointerEvents = "none");
   document.getElementById('nextBtn').classList.remove('hidden');
+}
 }
     
     const box = document.getElementById('explainBox');
