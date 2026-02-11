@@ -1385,29 +1385,30 @@
   ]
 };
 const REVIEW_WEEKS = {
-  5: "مراجعة الأسبوع ١ و٢",
-  6: "مراجعة الأسبوع ٣ و٤",
-  10: "مراجعة الأسبوع ٧ و٨ و٩"
-};
+    5: "مراجعة الأسبوع ١ و٢",
+    6: "مراجعة الأسبوع ٣ و٤",
+    10: "مراجعة الأسبوع ٧ و٨ و٩"
+  };
 
-function updateTrainingBadge(week){
-  const badge = document.getElementById('trainingBadge');
-  if(!badge) return;
+  function updateTrainingBadge(week){
+    const badge = document.getElementById('trainingBadge');
+    if(!badge) return;
 
-  const note = REVIEW_WEEKS[Number(week)];
+    const note = REVIEW_WEEKS[Number(week)];
 
-  if(note){
-    badge.className =
-      "mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-black " +
-      "bg-amber-100 text-amber-900 border border-amber-200";
-    badge.innerHTML = `⭐ تدريب مراجعة — <span class="font-extrabold">${note}</span>`;
-  } else {
-    badge.className =
-      "mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-black " +
-      "bg-blue-50 text-blue-800 border border-blue-200";
-    badge.innerHTML = `📝 تدريب أسبوعي — <span class="font-extrabold">الأسبوع ${week}</span>`;
+    if(note){
+      badge.className =
+        "mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-black " +
+        "bg-amber-100 text-amber-900 border border-amber-200";
+      badge.innerHTML = `⭐ تدريب مراجعة — <span class="font-extrabold">${note}</span>`;
+    } else {
+      badge.className =
+        "mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-black " +
+        "bg-blue-50 text-blue-800 border border-blue-200";
+      badge.innerHTML = `📝 تدريب أسبوعي — <span class="font-extrabold">الأسبوع ${week}</span>`;
+    }
   }
-}
+
   let currentQuestions = [];
   let currentIdx = 0;
   let score = 0;
@@ -1427,19 +1428,20 @@ function updateTrainingBadge(week){
 
     studentData = { name, grade, week };
     updateTrainingBadge(week);
-    currentQuestions = WEEKS_DATA[week] || [];
 
-    // ✅ شرط: لو ما فيه أسئلة
+    currentQuestions = WEEKS_DATA[Number(week)] || [];
+
     if(!currentQuestions.length){
       alert("لا توجد أسئلة لهذا الأسبوع.");
       return;
     }
 
-    // Reset
     currentIdx = 0;
     score = 0;
+
     const weekNum = Number(week);
-timeLeft = (weekNum === 10) ? 1800 : 600; // 30 دقيقة للأسبوع 10 فقط
+    timeLeft = (weekNum === 10) ? 1800 : 600; // 30 دقيقة للأسبوع 10 فقط
+
     if(timerId) clearInterval(timerId);
 
     document.getElementById('mainContainer').classList.add('hidden');
@@ -1453,34 +1455,36 @@ timeLeft = (weekNum === 10) ? 1800 : 600; // 30 دقيقة للأسبوع 10 ف�
   }
 
   function startTimer() {
-  // ✅ عرض الوقت مباشرة قبل بدء العد
-  updateTimerDisplay();
-
-  timerId = setInterval(() => {
-    timeLeft--;
     updateTimerDisplay();
 
-    if (timeLeft <= 0) {
-      endQuiz();
-    }
-  }, 1000);
-}
+    timerId = setInterval(() => {
+      timeLeft--;
+      updateTimerDisplay();
 
-function updateTimerDisplay() {
-  const mins = Math.floor(timeLeft / 60);
-  const secs = timeLeft % 60;
-  document.getElementById('timer').innerText =
-    `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
-}
+      if (timeLeft <= 0) {
+        endQuiz();
+      }
+    }, 1000);
+  }
+
+  function updateTimerDisplay() {
+    const mins = Math.floor(timeLeft / 60);
+    const secs = timeLeft % 60;
+    document.getElementById('timer').innerText =
+      `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+  }
 
   function loadQuestion() {
     const q = currentQuestions[currentIdx];
+
     document.getElementById('currQNum').innerText = currentIdx + 1;
     document.getElementById('totalQNum').innerText = currentQuestions.length;
-    document.getElementById('topQIndicator').innerText = `السؤال ${currentIdx + 1} من ${currentQuestions.length}`;
+    document.getElementById('topQIndicator').innerText =
+      `السؤال ${currentIdx + 1} من ${currentQuestions.length}`;
     document.getElementById('questionText').innerText = q.q;
 
-    document.getElementById('progressFill').style.width = `${((currentIdx + 1) / currentQuestions.length) * 100}%`;
+    document.getElementById('progressFill').style.width =
+      `${((currentIdx + 1) / currentQuestions.length) * 100}%`;
 
     const grid = document.getElementById('optionsGrid');
     grid.innerHTML = "";
@@ -1489,57 +1493,57 @@ function updateTimerDisplay() {
     q.c.forEach((choice, i) => {
       const card = document.createElement('div');
       card.className = "option-card";
-      card.innerHTML = `<span>${choice}</span><span class="text-slate-300 font-black">${letters[i]}</span>`;
+      card.innerHTML = `<span>${choice}</span><span class="text-slate-300 font-black">${letters[i] || ""}</span>`;
       card.onclick = () => checkAnswer(i, card);
       grid.appendChild(card);
     });
 
+    // ✅ إخفاء زر التالي والشرح عند تحميل سؤال جديد
     document.getElementById('nextBtn').classList.add('hidden');
-    // ✅ إخفاء الشرح عند تحميل سؤال جديد
 
-  }
-
-  function checkAnswer(idx, card) {
-  const q = currentQuestions[currentIdx];
-  const toast = document.getElementById('feedback-toast');
-  const box = document.getElementById('explainBox');
-
-  // امنع تكرار الضغط
-  document.querySelectorAll('.option-card').forEach(c => c.style.pointerEvents = "none");
-
-  if (idx === q.correct) {
-    score++;
-    card.classList.add('correct');
-    toast.innerText = "ممتاز! 🥳";
-    toast.style.background = "#22c55e";
-
-    // ✅ اعرض الشرح فقط عند الصح
-    if (box && q.explain) {
-      box.innerText = q.explain;
-      box.classList.remove('hidden');
-    }
-  } else {
-    card.classList.add('wrong');
-    toast.innerText = "خاطئة! 💔";
-    toast.style.background = "#ef4444";
-
-    // ❌ لا تعرض الشرح هنا
+    const box = document.getElementById('explainBox');
     if (box) {
       box.classList.add('hidden');
       box.innerHTML = '';
     }
   }
 
-  toast.style.display = "block";
-  setTimeout(() => toast.style.display = "none", 1000);
+  function checkAnswer(idx, card) {
+    const q = currentQuestions[currentIdx];
+    const toast = document.getElementById('feedback-toast');
+    const box = document.getElementById('explainBox');
 
-  document.getElementById('nextBtn').classList.add('hidden');
+    // امنع تكرار الضغط
+    document.querySelectorAll('.option-card').forEach(c => c.style.pointerEvents = "none");
 
-const box = document.getElementById('explainBox');
-if (box) {
-  box.classList.add('hidden');
-  box.innerHTML = '';
-}
+    if (idx === q.correct) {
+      score++;
+      card.classList.add('correct');
+      toast.innerText = "ممتاز! 🥳";
+      toast.style.background = "#22c55e";
+
+      // ✅ اعرض الشرح فقط عند الصح
+      if (box && q.explain) {
+        box.innerText = q.explain;
+        box.classList.remove('hidden');
+      }
+    } else {
+      card.classList.add('wrong');
+      toast.innerText = "خاطئة! 💔";
+      toast.style.background = "#ef4444";
+
+      // ❌ لا تعرض الشرح هنا
+      if (box) {
+        box.classList.add('hidden');
+        box.innerHTML = '';
+      }
+    }
+
+    toast.style.display = "block";
+    setTimeout(() => toast.style.display = "none", 1000);
+
+    document.getElementById('nextBtn').classList.remove('hidden');
+  }
 
   function nextQuestion() {
     currentIdx++;
@@ -1602,7 +1606,6 @@ if (box) {
   @page { size: A4 landscape; margin: 0; }
   html, body { margin:0; padding:0; background:#fff; }
   body { display:flex; }
-
   .cert-box{
     width: 297mm; height: 210mm;
     box-sizing: border-box;
@@ -1615,63 +1618,26 @@ if (box) {
     print-color-adjust: exact;
     font-family: "Tajawal", Tahoma, Arial, sans-serif;
   }
-
   .top{ display:flex; justify-content:space-between; align-items:center; gap:10mm; }
   .top img{ height:26mm; width:auto; display:block; }
-
-h1{
-  font-size: 42px;
-  color:#1e3a8a;
-  font-weight:900;
-  margin:4mm 0 0;
-}
-p{
-  font-size: 24px;
-  margin-top:10mm;
-  margin-bottom:4mm;
-}
-
+  h1{ font-size: 42px; color:#1e3a8a; font-weight:900; margin:4mm 0 0; }
+  p{ font-size: 24px; margin-top:10mm; margin-bottom:4mm; }
   h2{
-  font-size: 46px;
-  color:#000;
-  border-bottom:4px solid #d4af37;
-  display:inline-block;
-  padding:0 18mm;
-  margin:4mm 0;
-  min-height:1.2em;
-}
-
-.line{
-  font-size: 22px;
-  margin:6px 0;
-}
-.green{
-  font-size: 22px;
-  color:#059669;
-  font-weight:900;
-  margin-top:6px;
-}
-.date{
-  margin-top:8mm;
-  font-weight:bold;
-  font-size:18px;
-}
- .sign{
-  margin-top: 12mm;              /* كان 20mm */
-  display: flex;
-  justify-content: space-between;
-  padding: 0 16mm;               /* كان 22mm */
-  align-items: flex-start;
-}
-
-.sign p{
-  margin: 0 0 3px;               /* كان 6px */
-  font-size: 16px;               /* تصغير */
-}
-
-.sign b{
-  font-size: 18px;               /* تصغير */
-}
+    font-size: 46px; color:#000; border-bottom:4px solid #d4af37;
+    display:inline-block; padding:0 18mm; margin:4mm 0; min-height:1.2em;
+  }
+  .line{ font-size: 22px; margin:6px 0; }
+  .green{ font-size: 22px; color:#059669; font-weight:900; margin-top:6px; }
+  .date{ margin-top:8mm; font-weight:bold; font-size:18px; }
+  .sign{
+    margin-top: 12mm;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 16mm;
+    align-items: flex-start;
+  }
+  .sign p{ margin: 0 0 3px; font-size: 16px; }
+  .sign b{ font-size: 18px; }
 </style>
 </head>
 <body>
@@ -1721,8 +1687,10 @@ p{
       .replaceAll("'","&#039;");
   }
 
+  // اجعل الدوال متاحة للأزرار
   window.printCertificateOnly = printCertificateOnly;
   window.startTraining = startTraining;
+  window.nextQuestion = nextQuestion;
 </script>
 
 </body>
