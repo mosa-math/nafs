@@ -1537,132 +1537,140 @@
   ]
 };
 const REVIEW_WEEKS = {
-    5: "مراجعة الأسبوع ١ و٢",
-    6: "مراجعة الأسبوع ٣ و٤",
-    10: "مراجعة الأسبوع ٧ و٨ و٩"
-  };
+  5: "مراجعة الأسبوع ١ و٢",
+  6: "مراجعة الأسبوع ٣ و٤",
+  10: "مراجعة الأسبوع ٧ و٨ و٩"
+};
 
-  function updateTrainingBadge(week){
-    const badge = document.getElementById('trainingBadge');
-    if(!badge) return;
+function updateTrainingBadge(week){
+  const badge = document.getElementById('trainingBadge');
+  if(!badge) return;
 
-    const note = REVIEW_WEEKS[Number(week)];
-
-    if(note){
-      badge.className =
-        "mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-black " +
-        "bg-amber-100 text-amber-900 border border-amber-200";
-      badge.innerHTML = `⭐ تدريب مراجعة — <span class="font-extrabold">${note}</span>`;
-    } else {
-      badge.className =
-        "mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-black " +
-        "bg-blue-50 text-blue-800 border border-blue-200";
-      badge.innerHTML = `📝 تدريب أسبوعي — <span class="font-extrabold">الأسبوع ${week}</span>`;
-    }
-  }
-
-  let currentQuestions = [];
-  let currentIdx = 0;
-  let score = 0;
-  let timeLeft = 600;
-  let timerId = null;
-  let studentData = {};
-
-// ✅ رابط Google Apps Script Web App لتسجيل النتائجconst APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzDByVy1lcqU7z0zf4UA-hAY3YWiaRSe7b0d4SgPDvLGKCp4NJ5oSjFdIzgMOK1-zfb/exec";
-
-async function sendResultToSheet() {
-  try {
-    const payload = {
-      name: (studentData?.name || "").trim(),
-      grade: studentData?.grade || "",
-      week: String(studentData?.week || ""),
-      score: score,
-      total: currentQuestions.length,
-      percent: Math.round((score / currentQuestions.length) * 100),
-      ts: new Date().toISOString()
-    };
-
-    // نرسل كـ JSON
-    const res = await fetch(APPS_SCRIPT_URL, {
-      method: "POST",
-      mode: "no-cors", // عشان ما يوقف بسبب CORS في GitHub Pages
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-
-    // ما نقدر نقرأ الرد مع no-cors، لكن الإرسال يتم
-    console.log("Sent to sheet (no-cors).", res);
-  } catch (err) {
-    console.error("Failed to send:", err);
+  const note = REVIEW_WEEKS[Number(week)];
+  if(note){
+    badge.className =
+      "mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-black " +
+      "bg-amber-100 text-amber-900 border border-amber-200";
+    badge.innerHTML = `⭐ تدريب مراجعة — <span class="font-extrabold">${note}</span>`;
+  } else {
+    badge.className =
+      "mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-black " +
+      "bg-blue-50 text-blue-800 border border-blue-200";
+    badge.innerHTML = `📝 تدريب أسبوعي — <span class="font-extrabold">الأسبوع ${week}</span>`;
   }
 }
 
-  function startTraining() {
-    const name = document.getElementById('studentName').value.trim();
-    const grade = document.getElementById('gradeSelect').value;
-    const week = document.getElementById('weekSelect').value;
+/* =========================
+   ✅ ربط Google Apps Script
+========================= */
+const SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzDByVy1lcqU7z0zf4UA-hAY3YWiaRSe7b0d4SgPDvLGKCp4NJ5oSjFdIzgMOK1-zfb/exec";
 
-    if(!name || !grade || !week) {
-      alert("أكمل البيانات أولاً!");
-      return;
-    }
+// إرسال (دخول/نتيجة) إلى الشيت
+function logToSheet(payload){
+  try{
+    fetch(SHEET_WEB_APP_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify(payload)
+    });
+    console.log("✅ Sent", payload);
+  } catch(err){
+    console.error("❌ logToSheet error:", err);
+  }
+}
 
-    studentData = { name, grade, week };
-    updateTrainingBadge(week);
+/* =========================
+   ✅ متغيرات الاختبار
+========================= */
+let currentQuestions = [];
+let currentIdx = 0;
+let score = 0;
+let timeLeft = 600;
+let timerId = null;
+let studentData = {};
 
-    currentQuestions = WEEKS_DATA[Number(week)] || [];
+// محاولات الطالب داخل الاختبار (عدد ضغطات الإجابة)
+let answerClicks = 0;
 
-    if(!currentQuestions.length){
-      alert("لا توجد أسئلة لهذا الأسبوع.");
-      return;
-    }
+/* =========================
+   ✅ بدء التدريب
+========================= */
+function startTraining() {
+  const name = document.getElementById('studentName').value.trim();
+  const grade = document.getElementById('gradeSelect').value;
+  const week = document.getElementById('weekSelect').value;
 
-    currentIdx = 0;
-    score = 0;
-
-    const weekNum = Number(week);
-    timeLeft = (weekNum === 10) ? 1800 : 600; // 30 دقيقة للأسبوع 10 فقط
-
-    if(timerId) clearInterval(timerId);
-
-    document.getElementById('mainContainer').classList.add('hidden');
-    document.getElementById('pageFooter').classList.add('hidden');
-    document.getElementById('quizScreen').classList.remove('hidden');
-
-    document.getElementById('displayStudentName').innerText = name;
-
-    startTimer();
-    loadQuestion();
+  if(!name || !grade || !week) {
+    alert("أكمل البيانات أولاً!");
+    return;
   }
 
-  function startTimer() {
+  studentData = { name, grade, week };
+  updateTrainingBadge(week);
+
+  currentQuestions = WEEKS_DATA[Number(week)] || [];
+  if(!currentQuestions.length){
+    alert("لا توجد أسئلة لهذا الأسبوع.");
+    return;
+  }
+
+  currentIdx = 0;
+  score = 0;
+  answerClicks = 0;
+
+  const weekNum = Number(week);
+  timeLeft = (weekNum === 10) ? 1800 : 600;
+
+  if(timerId) clearInterval(timerId);
+
+  // ✅ سجل دخول الطالب للشيت (Start)
+  logToSheet({
+    action: "start",
+    name: studentData.name,
+    grade: studentData.grade,
+    week: String(studentData.week),
+    ts: new Date().toISOString()
+  });
+
+  document.getElementById('mainContainer').classList.add('hidden');
+  document.getElementById('pageFooter').classList.add('hidden');
+  document.getElementById('quizScreen').classList.remove('hidden');
+
+  document.getElementById('displayStudentName').innerText = name;
+
+  startTimer();
+  loadQuestion();
+}
+
+/* =========================
+   ✅ التايمر
+========================= */
+function startTimer() {
+  updateTimerDisplay();
+  timerId = setInterval(() => {
+    timeLeft--;
     updateTimerDisplay();
+    if (timeLeft <= 0) endQuiz();
+  }, 1000);
+}
 
-    timerId = setInterval(() => {
-      timeLeft--;
-      updateTimerDisplay();
+function updateTimerDisplay() {
+  const mins = Math.floor(timeLeft / 60);
+  const secs = timeLeft % 60;
+  document.getElementById('timer').innerText =
+    `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+}
 
-      if (timeLeft <= 0) {
-        endQuiz();
-      }
-    }, 1000);
-  }
-
-  function updateTimerDisplay() {
-    const mins = Math.floor(timeLeft / 60);
-    const secs = timeLeft % 60;
-    document.getElementById('timer').innerText =
-      `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
-  }
-
- // ✅ نظام محاولتين لكل سؤال
-let attemptsLeft = 2;        // محاولات السؤال الحالي
-let gotPointThisQ = false;   // عشان ما ينحسب سكورت مرتين
+/* =========================
+   ✅ نظام محاولتين لكل سؤال
+========================= */
+let attemptsLeft = 2;
+let gotPointThisQ = false;
 
 function loadQuestion() {
   const q = currentQuestions[currentIdx];
 
-  // reset attempts لكل سؤال
   attemptsLeft = 2;
   gotPointThisQ = false;
 
@@ -1687,13 +1695,11 @@ function loadQuestion() {
     grid.appendChild(card);
   });
 
-  // اخفاء زر التالي والشرح
   document.getElementById('nextBtn').classList.add('hidden');
   const box = document.getElementById('explainBox');
   if (box) { box.classList.add('hidden'); box.innerHTML = ''; }
 }
 
-// ✅ Toast helper
 function showToast(msg, bg) {
   const toast = document.getElementById('feedback-toast');
   if (!toast) return;
@@ -1707,15 +1713,15 @@ function checkAnswer(idx, card) {
   const q = currentQuestions[currentIdx];
   const box = document.getElementById('explainBox');
 
-  // امنع الضغط السريع المكرر على نفس الكرت
+  // ✅ احسب كل ضغطة إجابة
+  answerClicks++;
+
   if (card.dataset.locked === "1") return;
   card.dataset.locked = "1";
 
   const allCards = Array.from(document.querySelectorAll('.option-card'));
 
-  // ✅ لو صح
   if (idx === q.correct) {
-    // احسب الدرجة مرة واحدة فقط
     if (!gotPointThisQ) {
       score++;
       gotPointThisQ = true;
@@ -1724,133 +1730,121 @@ function checkAnswer(idx, card) {
     card.classList.add('correct');
     showToast("ممتاز! 🥳", "#22c55e");
 
-    // اعرض الشرح عند الصح
     if (box && q.explain) {
       box.innerText = q.explain;
       box.classList.remove('hidden');
     }
 
-    // اقفل باقي الخيارات وافتح التالي
     allCards.forEach(c => c.style.pointerEvents = "none");
     document.getElementById('nextBtn').classList.remove('hidden');
     return;
   }
 
-  // ❌ لو خطأ
+  // خطأ
   attemptsLeft--;
   card.classList.add('wrong');
 
-  // اول خطأ: بدون تلميح
   if (attemptsLeft > 0) {
-    showToast("خاطئة.. جرّب مرة ثانية 👀", "#f59e0b"); // amber
-    // خليه يقدر يجرب خيار ثاني: اقفل هذا فقط
+    showToast("خاطئة.. جرّب مرة ثانية 👀", "#f59e0b");
     card.style.pointerEvents = "none";
-    // لا تعرض شرح
     if (box) { box.classList.add('hidden'); box.innerHTML = ''; }
     return;
   }
 
-  // ثاني خطأ: اعرض التلميح/الشرح + (اختياري) بيّن الصح
   showToast("خاطئة 💔 — هذا التوضيح يساعدك ✅", "#ef4444");
 
-  // ✅ إظهار الشرح بعد المحاولة الثانية
   if (box) {
     box.innerText = q.explain || "التوضيح غير متوفر.";
     box.classList.remove('hidden');
   }
 
-  // ✅ (اختياري) تمييز الإجابة الصحيحة بعد المحاولة الثانية
   const correctCard = allCards[q.correct];
   if (correctCard) correctCard.classList.add('correct');
 
-  // اقفل الكل وافتح التالي
   allCards.forEach(c => c.style.pointerEvents = "none");
   document.getElementById('nextBtn').classList.remove('hidden');
 }
 
-  function nextQuestion() {
-    currentIdx++;
-    if(currentIdx < currentQuestions.length) loadQuestion();
-    else endQuiz();
-  }
-
-  function endQuiz() {
-    if(timerId) clearInterval(timerId);
-
-    document.getElementById('quizScreen').classList.add('hidden');
-    document.getElementById('resultScreen').classList.remove('hidden');
-
-    const p = Math.round((score / currentQuestions.length) * 100);
-
-    document.getElementById('resStudentName').innerText = studentData.name;
-    document.getElementById('resScoreText').innerText = `${score} من ${currentQuestions.length}`;
-    document.getElementById('resPercent').innerText = `${p}%`;
-
-    document.getElementById('resGrade').innerText =
-      p >= 90 ? "ممتاز" : p >= 75 ? "جيد جداً" : "يحتاج تحسين";
-
-    document.getElementById('resMsg').innerText =
-      p >= 75 ? "أنت بطل حقيقي! استمر في الإبداع 🌟" : "نشجعك على المحاولة مرة أخرى لتحسين نتيجتك! 💪";
-      // ✅ حفظ (الاسم + الصف + الأسبوع + الدرجة) في Google Sheet
-logResultToSheet({
-  name: studentData.name,
-  grade: studentData.grade,
-  week: studentData.week,
-  score: score,
-  total: currentQuestions.length,
-  percent: p
-});
- // ✅ ضع رابط الـ Apps Script هنا
-const SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzDByVy1lcqU7z0zf4UA-hAY3YWiaRSe7b0d4SgPDvLGKCp4NJ5oSjFdIzgMOK1-zfb/exec";
-
-// ✅ إرسال النتيجة إلى Google Sheet
-async function logResultToSheet(payload) {
-  try {
-    const res = await fetch(SHEET_WEB_APP_URL, {
-      method: "POST",
-      mode: "no-cors", // مهم في GitHub Pages
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    });
-
-    // ملاحظة: مع no-cors ما نقدر نقرأ الرد
-    console.log("✅ Sent to sheet", payload);
-  } catch (err) {
-    console.error("❌ Sheet logging error:", err);
-  }
+function nextQuestion() {
+  currentIdx++;
+  if(currentIdx < currentQuestions.length) loadQuestion();
+  else endQuiz();
 }
-   }
-  
 
-  function printCertificateOnly() {
-    const name = (document.getElementById('resStudentName')?.innerText || '').trim();
-    const percent = (document.getElementById('resPercent')?.innerText || '').trim();
-    const scoreText = (document.getElementById('resScoreText')?.innerText || '').trim();
+/* =========================
+   ✅ إنهاء الاختبار + حفظ النتيجة
+========================= */
+function endQuiz() {
+  if(timerId) clearInterval(timerId);
 
-    const cls = document.getElementById('gradeSelect')?.value || '';
-    const week = document.getElementById('weekSelect')?.value || '';
+  document.getElementById('quizScreen').classList.add('hidden');
+  document.getElementById('resultScreen').classList.remove('hidden');
 
-    const options = { year: 'numeric', month: 'long', day: 'numeric', calendar: 'islamic-uma' };
-    const dateStr = new Date().toLocaleDateString('ar-SA', options);
+  const p = Math.round((score / currentQuestions.length) * 100);
 
-    const ministryLogo = "moe.png";
-    const nafsLogo     = "nafss.png";
-    const schoolLogo   = "مدرسة.png";
+  document.getElementById('resStudentName').innerText = studentData.name;
+  document.getElementById('resScoreText').innerText = `${score} من ${currentQuestions.length}`;
+  document.getElementById('resPercent').innerText = `${p}%`;
 
-    const iframe = document.createElement('iframe');
-    iframe.style.position = 'fixed';
-    iframe.style.right = '0';
-    iframe.style.bottom = '0';
-    iframe.style.width = '0';
-    iframe.style.height = '0';
-    iframe.style.border = '0';
-    document.body.appendChild(iframe);
+  document.getElementById('resGrade').innerText =
+    p >= 90 ? "ممتاز" : p >= 75 ? "جيد جداً" : "يحتاج تحسين";
 
-    const doc = iframe.contentWindow.document;
-    doc.open();
-    doc.write(`<!doctype html>
+  document.getElementById('resMsg').innerText =
+    p >= 75 ? "أنت بطل حقيقي! استمر في الإبداع 🌟" : "نشجعك على المحاولة مرة أخرى لتحسين نتيجتك! 💪";
+
+  // ✅ حفظ (الاسم + الصف + الأسبوع + الدرجة) + attempts (ضغطات الإجابة)
+  logToSheet({
+    action: "finish",
+    name: studentData.name,
+    grade: studentData.grade,
+    week: String(studentData.week),
+    score: score,
+    total: currentQuestions.length,
+    percent: p,
+    attempts: answerClicks,
+    ts: new Date().toISOString()
+  });
+}
+
+/* =========================
+   ✅ طباعة الشهادة (كما هو عندك)
+========================= */
+function escapeHtml(str){
+  return String(str)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function printCertificateOnly() {
+  const name = (document.getElementById('resStudentName')?.innerText || '').trim();
+  const percent = (document.getElementById('resPercent')?.innerText || '').trim();
+  const scoreText = (document.getElementById('resScoreText')?.innerText || '').trim();
+
+  const cls = studentData.grade || '';
+  const week = studentData.week || '';
+
+  const options = { year: 'numeric', month: 'long', day: 'numeric', calendar: 'islamic-uma' };
+  const dateStr = new Date().toLocaleDateString('ar-SA', options);
+
+  const ministryLogo = "moe.png";
+  const nafsLogo     = "nafss.png";
+  const schoolLogo   = "مدرسة.png";
+
+  const iframe = document.createElement('iframe');
+  iframe.style.position = 'fixed';
+  iframe.style.right = '0';
+  iframe.style.bottom = '0';
+  iframe.style.width = '0';
+  iframe.style.height = '0';
+  iframe.style.border = '0';
+  document.body.appendChild(iframe);
+
+  const doc = iframe.contentWindow.document;
+  doc.open();
+  doc.write(`<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
@@ -1923,28 +1917,22 @@ async function logResultToSheet(payload) {
   <\/script>
 </body>
 </html>`);
-    doc.close();
+  doc.close();
 
-    setTimeout(() => {
-      iframe.contentWindow.focus();
-      iframe.contentWindow.print();
-      setTimeout(() => document.body.removeChild(iframe), 1200);
-    }, 400);
-  }
+  setTimeout(() => {
+    iframe.contentWindow.focus();
+    iframe.contentWindow.print();
+    setTimeout(() => document.body.removeChild(iframe), 1200);
+  }, 400);
+}
 
-  function escapeHtml(str){
-    return String(str)
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;")
-      .replaceAll("'","&#039;");
-  }
+/* =========================
+   ✅ ربط الدوال بالأزرار
+========================= */
+window.printCertificateOnly = printCertificateOnly;
+window.startTraining = startTraining;
+window.nextQuestion = nextQuestion;
 
-  // اجعل الدوال متاحة للأزرار
-  window.printCertificateOnly = printCertificateOnly;
-  window.startTraining = startTraining;
-  window.nextQuestion = nextQuestion;
 </script>
 
 </body>
