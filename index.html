@@ -8,11 +8,15 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 
+  <!-- (6) تحسين الطباعة للجوال: خيار تنزيل PDF عبر html2pdf (اختياري لكنه ممتاز) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+          integrity="sha512-YcsIPGdhPK4s2zKc6bCkLquvneV5bKpQvZf3iVw6G5jD7qGQ7+H0Q0n9b0qVZb5b7aQOq9t8mGm0bq8C2hE0xQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
   <style>
     * { font-family: 'Tajawal', sans-serif; }
     body { background-color: #e2e8f0; min-height: 100vh; display: flex; flex-direction: column; }
 
-    /* تنسيق منطقة السؤال */
     .quiz-container {
       background: white; border-radius: 2rem; box-shadow: 0 10px 25px rgba(0,0,0,0.05);
       width: 100%; max-width: 800px; padding: 2.5rem; position: relative;
@@ -22,13 +26,14 @@
       background: #dbeafe; color: #1e40af; padding: 8px 20px; border-radius: 1.5rem;
       font-weight: 800; font-size: 0.9rem; display: flex; align-items: center; gap: 5px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      white-space: nowrap;
     }
 
-    /* خيارات الإجابة */
     .option-card {
       width: 100%; padding: 1.2rem 2rem; background: #f8fafc; border: 2px solid #f1f5f9;
       border-radius: 1.2rem; display: flex; justify-content: space-between; align-items: center;
       font-weight: 700; color: #334155; transition: all 0.2s; cursor: pointer;
+      user-select: none;
     }
     .option-card:hover { border-color: #3b82f6; background: #eff6ff; }
     .option-card.correct { background: #22c55e !important; color: white !important; border-color: #16a34a !important; }
@@ -37,7 +42,6 @@
     .progress-bar { height: 8px; background: #e2e8f0; border-radius: 10px; overflow: hidden; margin-top: 10px; }
     .progress-fill { height: 100%; background: #1e3a8a; transition: width 0.3s; }
 
-    /* Toast */
     #feedback-toast {
       position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
       z-index: 9999; padding: 1.5rem 3rem; border-radius: 1.5rem; display: none;
@@ -50,42 +54,36 @@
     }
 
     .welcome-text{
-  display: flex;
-  align-items: center;
-  justify-content: flex-start; /* الأيقونة يمين */
-  gap: 8px;
-  animation: slideInLeft 1.2s ease-out;
-}
+      display: flex; align-items: center; justify-content: flex-start;
+      gap: 8px; animation: slideInLeft 1.2s ease-out;
+    }
+    .welcome-msg{ text-align: right; color: #1e3a8a; }
+    .wave{ font-size: 1.4rem; display: inline-block; animation: waveHand 1.5s infinite; }
 
-.welcome-msg{
-  text-align: right;   /* النص يسار */
-  color: #1e3a8a;
-}
+    @keyframes slideInLeft {
+      0% { transform: translateX(-30px); opacity: 0; }
+      100% { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes waveHand {
+      0% { transform: rotate(0deg); }
+      25% { transform: rotate(15deg); }
+      50% { transform: rotate(0deg); }
+      75% { transform: rotate(-10deg); }
+      100% { transform: rotate(0deg); }
+    }
 
-.wave{
-  font-size: 1.4rem;
-  display: inline-block;
-  animation: waveHand 1.5s infinite;
-}
-
-@keyframes slideInLeft {
-  0% {
-    transform: translateX(-30px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes waveHand {
-  0% { transform: rotate(0deg); }
-  25% { transform: rotate(15deg); }
-  50% { transform: rotate(0deg); }
-  75% { transform: rotate(-10deg); }
-  100% { transform: rotate(0deg); }
-}
+    /* لوحة المعلم (1) */
+    .admin-card{
+      background:#fff; border:1px solid #e2e8f0; border-radius: 1.25rem;
+      padding: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    }
+    .admin-grid{
+      display:grid; gap:12px;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+    }
+    @media (min-width: 768px){
+      .admin-grid{ grid-template-columns: repeat(4, minmax(0,1fr)); }
+    }
   </style>
 </head>
 
@@ -93,14 +91,83 @@
 
 <div id="app" class="flex-grow flex items-center justify-center">
 
+  <!-- (1) شاشة لوحة المعلم (مخفية افتراضيًا) -->
+  <div id="adminScreen" class="hidden w-full max-w-5xl">
+    <div class="flex items-center justify-between mb-4">
+      <div class="text-2xl font-black text-slate-800">لوحة المعلم</div>
+      <div class="flex gap-2">
+        <button onclick="refreshAdmin()"
+                class="px-4 py-2 rounded-xl bg-blue-600 text-white font-black text-sm">تحديث</button>
+        <button onclick="closeAdmin()"
+                class="px-4 py-2 rounded-xl bg-slate-800 text-white font-black text-sm">إغلاق</button>
+      </div>
+    </div>
+
+    <div class="admin-grid mb-4">
+      <div class="admin-card">
+        <div class="text-xs font-bold text-slate-400">عدد الداخلين اليوم</div>
+        <div id="admToday" class="text-3xl font-black text-slate-800">—</div>
+      </div>
+      <div class="admin-card">
+        <div class="text-xs font-bold text-slate-400">أكثر أسبوع اختيارًا</div>
+        <div id="admTopWeek" class="text-2xl font-black text-slate-800">—</div>
+      </div>
+      <div class="admin-card">
+        <div class="text-xs font-bold text-slate-400">متوسط النسبة</div>
+        <div id="admAvg" class="text-2xl font-black text-slate-800">—</div>
+      </div>
+      <div class="admin-card">
+        <div class="text-xs font-bold text-slate-400">أفضل نتيجة</div>
+        <div id="admBest" class="text-2xl font-black text-slate-800">—</div>
+      </div>
+    </div>
+
+    <div class="admin-card">
+      <div class="flex items-center justify-between mb-3">
+        <div class="text-lg font-black text-slate-800">أفضل ٥ طلاب</div>
+        <div id="admSource" class="text-xs font-bold text-slate-400">المصدر: محلي</div>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="text-slate-500 font-black">
+              <th class="text-right py-2">الطالب</th>
+              <th class="text-right py-2">الصف</th>
+              <th class="text-right py-2">الأسبوع</th>
+              <th class="text-right py-2">النسبة</th>
+              <th class="text-right py-2">المدة</th>
+              <th class="text-right py-2">المحاولات</th>
+            </tr>
+          </thead>
+          <tbody id="admTop5" class="font-bold text-slate-700"></tbody>
+        </table>
+      </div>
+
+      <div class="mt-4 flex flex-wrap gap-2">
+        <button onclick="exportLocalCSV()"
+                class="px-4 py-2 rounded-xl bg-emerald-600 text-white font-black text-sm">
+          تصدير CSV (محلي)
+        </button>
+        <button onclick="clearLocalLogs()"
+                class="px-4 py-2 rounded-xl bg-red-600 text-white font-black text-sm">
+          مسح السجل المحلي
+        </button>
+      </div>
+
+      <p class="mt-4 text-xs text-slate-400 font-bold leading-6">
+        ملاحظة: لوحة المعلم تقرأ افتراضيًا من السجل المحلي (على نفس الجهاز).  
+        إذا فعّلت GET في Google Apps Script (الكود آخر الرسالة) بيصير يعرض بيانات الشيت مباشرة.
+      </p>
+    </div>
+  </div>
+
   <div id="mainContainer" class="w-full max-w-5xl bg-white rounded-3xl shadow-xl overflow-hidden grid md:grid-cols-2">
 
     <section id="heroSection" class="p-8 bg-slate-50 flex flex-col items-center text-center border-l">
       <div class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-bold mb-4">⭐ تدريب تفاعلي</div>
 
-      <!-- الأفضل محليًا: moe.png / nafss.png / مدرسة.png -->
       <div class="flex items-center justify-center gap-4 mb-4">
-      <img src="nafss.png" class="w-32" alt="نافس">  <!-- كبير -->
+        <img src="nafss.png" class="w-32" alt="نافس">
       </div>
 
       <p class="text-slate-500 font-bold text-xs uppercase">الإدارة العامة للتعليم بمنطقة نجران</p>
@@ -108,37 +175,39 @@
       <h1 class="text-2xl font-black text-slate-800 mb-1">منصة تدريب اختبار نافس</h1>
       <p class="text-xs text-slate-400 font-bold">مادة الرياضيات للصف السادس الابتدائي</p>
 
-      <!-- PDF: الأفضل تغيير الاسم للإنجليزية -->
-   <a href="./plan100.pdf" target="_blank" rel="noopener"
-   aria-label="تحميل توزيع مهارات خطة ١٠٠ يوم"
-   class="mt-4 inline-flex flex-row-reverse items-center gap-2 px-4 py-2
-          bg-red-50 text-red-700 border border-red-200
-          rounded-lg text-xs font-bold
-          hover:bg-red-100 hover:border-red-300 hover:shadow
-          focus:outline-none focus:ring-2 focus:ring-red-300
-          transition-all duration-300 group">
+      <a href="./plan100.pdf" target="_blank" rel="noopener"
+         aria-label="تحميل توزيع مهارات خطة ١٠٠ يوم"
+         class="mt-4 inline-flex flex-row-reverse items-center gap-2 px-4 py-2
+                bg-red-50 text-red-700 border border-red-200
+                rounded-lg text-xs font-bold
+                hover:bg-red-100 hover:border-red-300 hover:shadow
+                focus:outline-none focus:ring-2 focus:ring-red-300
+                transition-all duration-300 group">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             class="h-5 w-5 transition-transform duration-300 group-hover:translate-y-1"
+             fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        تحميل توزيع مهارات خطة ١٠٠ يوم (PDF)
+      </a>
 
-  <svg xmlns="http://www.w3.org/2000/svg"
-       class="h-5 w-5 transition-transform duration-300 group-hover:translate-y-1"
-       fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-  </svg>
-
-  تحميل توزيع مهارات خطة ١٠٠ يوم (PDF)
-</a>
+      <!-- (1) دخول لوحة المعلم: دبل كلك على هذا السطر -->
+      <p id="openAdminHint" class="mt-6 text-[11px] font-black text-slate-400 select-none cursor-pointer">
+        للمعلم فقط — اضغط مرتين هنا لفتح لوحة المعلم
+      </p>
     </section>
 
     <div id="interactiveSection" class="p-10 flex flex-col justify-center">
       <div id="startScreen" class="space-y-6">
-<div class="text-xl font-black welcome-text">
-  <span class="welcome-msg">أهلًا وسهلًا يا بطل</span>
-  <span class="wave">👋</span>
-</div>    
+        <div class="text-xl font-black welcome-text">
+          <span class="welcome-msg">أهلًا وسهلًا يا بطل</span>
+          <span class="wave">👋</span>
+        </div>
         <p class="text-xs font-bold text-slate-400">اكتب بياناتك ثم اختر الأسبوع واضغط ابدأ التدريب 🚀</p>
 
         <input id="studentName" type="text" placeholder="اكتب اسمك هنا..."
-          class="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500">
+               class="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500">
 
         <div class="grid grid-cols-2 gap-3">
           <select id="gradeSelect" class="px-4 py-3 rounded-xl border border-slate-200 font-bold">
@@ -147,30 +216,46 @@
             <option value="سادس ( ب )">سادس ( ب )</option>
           </select>
 
-         <select id="weekSelect" class="px-4 py-3 rounded-xl border border-slate-200 font-bold">
-  <option value="">اختر الأسبوع</option>
-
-  <option value="1">الأسبوع ١</option>
-  <option value="2">الأسبوع ٢</option>
-  <option value="3">الأسبوع ٣</option>
-  <option value="4">الأسبوع ٤</option>
-
-  <option value="5">⭐ الأسبوع ٥ (مراجعة ١–٢)</option>
-  <option value="6">⭐ الأسبوع ٦ (مراجعة ٣–٤)</option>
-
-  <option value="7">الأسبوع ٧</option>
-  <option value="8">الأسبوع ٨</option>
-  <option value="9">الأسبوع ٩</option>
-
-  <option value="10">⭐ الأسبوع ١٠ (مراجعة ٧–٩)</option>
-</select>
-    
+          <select id="weekSelect" class="px-4 py-3 rounded-xl border border-slate-200 font-bold">
+            <option value="">اختر الأسبوع</option>
+            <option value="1">الأسبوع ١</option>
+            <option value="2">الأسبوع ٢</option>
+            <option value="3">الأسبوع ٣</option>
+            <option value="4">الأسبوع ٤</option>
+            <option value="5">⭐ الأسبوع ٥ (مراجعة ١–٢)</option>
+            <option value="6">⭐ الأسبوع ٦ (مراجعة ٣–٤)</option>
+            <option value="7">الأسبوع ٧</option>
+            <option value="8">الأسبوع ٨</option>
+            <option value="9">الأسبوع ٩</option>
+            <option value="10">⭐ الأسبوع ١٠ (مراجعة ٧–٩)</option>
+          </select>
         </div>
 
+        <!-- (10) وضع ولي الأمر -->
+        <label class="flex items-center gap-2 text-xs font-black text-slate-600">
+          <input id="parentMode" type="checkbox" class="scale-110">
+          وضع ولي الأمر (٥ أسئلة + شرح دائم)
+        </label>
+
         <!-- زر البداية -->
-        <button onclick="startTraining()" class="w-full py-4 bg-blue-600 text-white font-black rounded-xl text-lg shadow-lg">
+        <button onclick="startTraining()"
+                class="w-full py-4 bg-blue-600 text-white font-black rounded-xl text-lg shadow-lg">
           ابدأ التدريب 🚀
         </button>
+
+        <!-- (3) استئناف تلقائي يظهر فقط إذا فيه حفظ -->
+        <div id="resumeBox" class="hidden p-4 rounded-2xl bg-amber-50 border border-amber-200">
+          <div class="text-sm font-black text-amber-900 mb-2">وجدنا تدريب سابق محفوظ ✅</div>
+          <button onclick="resumeTraining()"
+                  class="w-full py-3 rounded-xl bg-amber-600 text-white font-black">
+            استئناف التدريب
+          </button>
+          <button onclick="discardSavedTraining()"
+                  class="w-full py-3 rounded-xl bg-slate-800 text-white font-black mt-2">
+            بدء جديد (حذف الحفظ)
+          </button>
+        </div>
+
       </div>
     </div>
   </div>
@@ -185,9 +270,10 @@
         </div>
         <div class="font-bold text-slate-500" id="topQIndicator"></div>
       </div>
+
       <div id="trainingBadge"
-     class="mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-black">
-</div>
+           class="mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-black"></div>
+
       <div class="progress-bar"><div id="progressFill" class="progress-fill" style="width: 0%"></div></div>
     </div>
 
@@ -195,14 +281,18 @@
       <div class="pill-container">
         <div class="pill-item"><span>السؤال</span> <span id="currQNum">1</span> من <span id="totalQNum">0</span></div>
         <div class="pill-item">⏱️ الوقت: <span id="timer">10:00</span></div>
+        <!-- (8) الزمن المستغرق يظهر كعداد -->
+        <div class="pill-item">🕒 مستغرق: <span id="elapsed">00:00</span></div>
       </div>
 
       <h2 id="questionText" class="text-2xl font-extrabold text-slate-800 text-center my-8"></h2>
       <div id="optionsGrid" class="space-y-4"></div>
-<div id="explainBox"
-     class="hidden mt-5 p-4 rounded-2xl border text-sm font-bold leading-7 bg-slate-50 text-slate-800">
-</div>
-      <button id="nextBtn" onclick="nextQuestion()" class="hidden w-full py-4 bg-slate-800 text-white font-black rounded-xl mt-8 text-lg">
+
+      <div id="explainBox"
+           class="hidden mt-5 p-4 rounded-2xl border text-sm font-bold leading-7 bg-slate-50 text-slate-800"></div>
+
+      <button id="nextBtn" onclick="nextQuestion()"
+              class="hidden w-full py-4 bg-slate-800 text-white font-black rounded-xl mt-8 text-lg">
         السؤال التالي ⬅️
       </button>
     </div>
@@ -217,13 +307,26 @@
       <div class="text-6xl font-black text-slate-800" id="resScoreText"></div>
       <div class="text-2xl font-black text-blue-600" id="resPercent"></div>
       <div class="text-xl font-bold text-slate-700">التقدير: <span id="resGrade"></span></div>
+
+      <!-- (9) رسالة ذكية حسب الأداء -->
       <div id="resMsg" class="bg-amber-50 p-3 rounded-xl text-amber-700 font-bold text-sm"></div>
+
+      <!-- (8) عرض زمن الحل -->
+      <div class="text-sm font-black text-slate-500">
+        مدة الحل: <span id="resDuration" class="text-slate-800">—</span>
+      </div>
     </div>
 
     <div class="grid grid-cols-3 gap-3 w-full mt-8">
-      <button onclick="printCertificateOnly()" class="bg-green-600 text-white p-3 rounded-xl font-bold text-sm">🖨️ طباعة الشهادة</button>
-      <button onclick="location.reload()" class="bg-blue-600 text-white p-3 rounded-xl font-bold text-sm">🔄 إعادة</button>
-      <button onclick="location.reload()" class="bg-slate-800 text-white p-3 rounded-xl font-bold text-sm">🏠 الرئيسية</button>
+      <button onclick="printCertificateOnly()"
+              class="bg-green-600 text-white p-3 rounded-xl font-bold text-sm">🖨️ طباعة الشهادة</button>
+
+      <!-- (6) تنزيل PDF بدل مشاكل الطباعة (خصوصًا سفاري) -->
+      <button onclick="downloadCertificatePDF()"
+              class="bg-emerald-600 text-white p-3 rounded-xl font-bold text-sm">⬇️ PDF</button>
+
+      <button onclick="goHome()"
+              class="bg-slate-800 text-white p-3 rounded-xl font-bold text-sm">🏠 الرئيسية</button>
     </div>
   </div>
 
@@ -236,8 +339,87 @@
 <div id="feedback-toast"></div>
 
 <script>
-  // بيانات الأسئلة
- const WEEKS_DATA = {
+/* =========================================================
+   ✅ إعدادات عامة (تضم الاقتراحات)
+========================================================= */
+
+/* (7) حماية بسيطة: توكن يتم إرساله مع كل طلب للشيت */
+const APP_TOKEN = "MOSAMATH-NAFS-2026";
+
+/* رابط WebApp */
+const SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzDByVy1lcqU7z0zf4UA-hAY3YWiaRSe7b0d4SgPDvLGKCp4NJ5oSjFdIzgMOK1-zfb/exec";
+
+/* (2) منع تكرار start لنفس الطالب+الأسبوع خلال دقائق */
+const START_DEDUP_MINUTES = 30;
+
+/* (1) رمز لوحة المعلم */
+const ADMIN_PASSCODE = "1122";
+
+/* مفاتيح التخزين */
+const LS_LOGS_KEY = "nafs_logs_local_v1";       // سجل محلي
+const LS_SAVE_PREFIX = "nafs_saved_state_v1::"; // حفظ التقدم
+
+/* أدوات */
+function nowIso(){ return new Date().toISOString(); }
+function todayYMD(){
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const da = String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${da}`;
+}
+function clampStr(s, max=60){
+  s = String(s || "").trim();
+  if(s.length > max) s = s.slice(0,max);
+  return s;
+}
+function sanitizeName(s){
+  // اسم فقط: أحرف/مسافات/أرقام عربية بسيطة
+  s = clampStr(s, 40);
+  s = s.replace(/[^\u0600-\u06FF0-9\s\(\)\-]/g, "");
+  s = s.replace(/\s+/g, " ").trim();
+  return s;
+}
+
+/* =========================================================
+   ✅ (7) إرسال للشيت + تسجيل محلي + ترويسة/توكن
+========================================================= */
+function logLocal(payload){
+  try{
+    const list = JSON.parse(localStorage.getItem(LS_LOGS_KEY) || "[]");
+    list.push(payload);
+    // حافظ على حجم معقول
+    if(list.length > 3000) list.splice(0, list.length - 3000);
+    localStorage.setItem(LS_LOGS_KEY, JSON.stringify(list));
+  }catch(e){}
+}
+
+function logToSheet(payload){
+  const safe = {...payload};
+  safe.token = APP_TOKEN;
+  safe.origin = location.origin || "";
+  safe.ua = navigator.userAgent || "";
+
+  // سجل محليًا (مفيد للوحة المعلم حتى لو الشيت ما رجع بيانات)
+  logLocal(safe);
+
+  try{
+    fetch(SHEET_WEB_APP_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify(safe)
+    });
+    console.log("✅ Sent", safe);
+  }catch(err){
+    console.error("❌ logToSheet error:", err);
+  }
+}
+
+/* =========================================================
+   ✅ بيانات الأسئلة (كما هي عندك)
+========================================================= */
+const WEEKS_DATA = {
   10: [
     {
       q: "ما ناتج جمع العددين\n٢٬٣٤٥٬٦٧٨ + ١٬٦٥٤٬٣٢٢ =",
@@ -1536,6 +1718,8 @@
     }
   ]
 };
+
+/* ملاحظات المراجعة */
 const REVIEW_WEEKS = {
   5: "مراجعة الأسبوع ١ و٢",
   6: "مراجعة الأسبوع ٣ و٤",
@@ -1560,47 +1744,176 @@ function updateTrainingBadge(week){
   }
 }
 
-/* =========================
-   ✅ ربط Google Apps Script
-========================= */
-const SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzDByVy1lcqU7z0zf4UA-hAY3YWiaRSe7b0d4SgPDvLGKCp4NJ5oSjFdIzgMOK1-zfb/exec";
-
-// إرسال (دخول/نتيجة) إلى الشيت
-function logToSheet(payload){
-  try{
-    const body = new URLSearchParams();
-    Object.keys(payload).forEach(k => body.append(k, payload[k]));
-
-    fetch(SHEET_WEB_APP_URL, {
-      method: "POST",
-      mode: "no-cors",
-      body: body
-    });
-
-    console.log("✅ Sent (form)", payload);
-  } catch(err){
-    console.error("❌ logToSheet error:", err);
+/* =========================================================
+   ✅ (4) عشوائية الأسئلة + اختيار عدد معين
+========================================================= */
+function shuffleArray(arr){
+  const a = arr.slice();
+  for(let i=a.length-1; i>0; i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i], a[j]] = [a[j], a[i]];
   }
+  return a;
+}
+function pickRandom(arr, n){
+  const s = shuffleArray(arr);
+  return s.slice(0, Math.min(n, s.length));
 }
 
-/* =========================
+/* =========================================================
    ✅ متغيرات الاختبار
-========================= */
+========================================================= */
 let currentQuestions = [];
 let currentIdx = 0;
 let score = 0;
 let timeLeft = 600;
 let timerId = null;
 let studentData = {};
-
-// محاولات الطالب داخل الاختبار (عدد ضغطات الإجابة)
 let answerClicks = 0;
 
-/* =========================
+/* (8) الزمن المستغرق */
+let quizStartMs = 0;
+let elapsedId = null;
+
+/* (10) وضع ولي الأمر */
+let isParentMode = false;
+
+/* (3) حفظ التقدم */
+function saveKey(){
+  if(!studentData.name || !studentData.grade || !studentData.week) return "";
+  return LS_SAVE_PREFIX + [studentData.name, studentData.grade, String(studentData.week)].join("::");
+}
+function saveProgress(extra = {}){
+  try{
+    const key = saveKey();
+    if(!key) return;
+    const payload = {
+      v: 1,
+      ts: Date.now(),
+      studentData,
+      currentIdx,
+      score,
+      timeLeft,
+      answerClicks,
+      quizStartMs,
+      isParentMode,
+      // نثبت ترتيب الأسئلة عبر حفظ نسخة مبسطة
+      questions: currentQuestions,
+      ...extra
+    };
+    localStorage.setItem(key, JSON.stringify(payload));
+  }catch(e){}
+}
+function loadProgressIfExists(name, grade, week){
+  try{
+    const key = LS_SAVE_PREFIX + [name, grade, String(week)].join("::");
+    const raw = localStorage.getItem(key);
+    if(!raw) return null;
+    const data = JSON.parse(raw);
+    // صلاحية 24 ساعة
+    if(Date.now() - (data.ts || 0) > 24*60*60*1000) return null;
+    return data;
+  }catch(e){ return null; }
+}
+function clearSavedProgress(name, grade, week){
+  try{
+    const key = LS_SAVE_PREFIX + [name, grade, String(week)].join("::");
+    localStorage.removeItem(key);
+  }catch(e){}
+}
+
+/* =========================================================
+   ✅ (2) منع تكرار start خلال 30 دقيقة لنفس الطالب+الأسبوع
+========================================================= */
+function startDedupeKey(name, grade, week){
+  return `nafs_start_dedupe_v1::${name}::${grade}::${week}`;
+}
+function canLogStart(name, grade, week){
+  try{
+    const k = startDedupeKey(name, grade, week);
+    const last = Number(localStorage.getItem(k) || "0");
+    const diffMin = (Date.now() - last) / 60000;
+    if(last && diffMin < START_DEDUP_MINUTES) return false;
+    localStorage.setItem(k, String(Date.now()));
+    return true;
+  }catch(e){ return true; }
+}
+
+/* =========================================================
+   ✅ شاشة الاستئناف (3)
+========================================================= */
+let pendingResume = null;
+
+function maybeShowResumeBox(){
+  const name = sanitizeName(document.getElementById('studentName').value);
+  const grade = document.getElementById('gradeSelect').value;
+  const week = document.getElementById('weekSelect').value;
+
+  const box = document.getElementById('resumeBox');
+  if(!box) return;
+
+  if(!name || !grade || !week){
+    box.classList.add('hidden');
+    pendingResume = null;
+    return;
+  }
+
+  const saved = loadProgressIfExists(name, grade, week);
+  if(saved){
+    pendingResume = saved;
+    box.classList.remove('hidden');
+  } else {
+    pendingResume = null;
+    box.classList.add('hidden');
+  }
+}
+document.addEventListener("input", (e)=>{
+  if(e.target && (e.target.id === "studentName" || e.target.id === "gradeSelect" || e.target.id === "weekSelect")){
+    maybeShowResumeBox();
+  }
+});
+
+function resumeTraining(){
+  if(!pendingResume) return;
+  const s = pendingResume;
+
+  studentData = s.studentData || {};
+  currentQuestions = s.questions || [];
+  currentIdx = s.currentIdx || 0;
+  score = s.score || 0;
+  timeLeft = s.timeLeft || 600;
+  answerClicks = s.answerClicks || 0;
+  quizStartMs = s.quizStartMs || Date.now();
+  isParentMode = !!s.isParentMode;
+
+  updateTrainingBadge(studentData.week);
+
+  document.getElementById('mainContainer').classList.add('hidden');
+  document.getElementById('pageFooter').classList.add('hidden');
+  document.getElementById('quizScreen').classList.remove('hidden');
+  document.getElementById('displayStudentName').innerText = studentData.name;
+
+  startTimer();
+  startElapsed();
+  loadQuestion(true);
+}
+
+function discardSavedTraining(){
+  const name = sanitizeName(document.getElementById('studentName').value);
+  const grade = document.getElementById('gradeSelect').value;
+  const week = document.getElementById('weekSelect').value;
+  if(name && grade && week) clearSavedProgress(name, grade, week);
+  pendingResume = null;
+  document.getElementById('resumeBox')?.classList.add('hidden');
+  showToast("تم حذف الحفظ ✅", "#0ea5e9");
+}
+
+/* =========================================================
    ✅ بدء التدريب
-========================= */
+========================================================= */
 function startTraining() {
-  const name = document.getElementById('studentName').value.trim();
+  const nameRaw = document.getElementById('studentName').value;
+  const name = sanitizeName(nameRaw);
   const grade = document.getElementById('gradeSelect').value;
   const week = document.getElementById('weekSelect').value;
 
@@ -1609,13 +1922,23 @@ function startTraining() {
     return;
   }
 
+  isParentMode = !!document.getElementById('parentMode')?.checked;
+
   studentData = { name, grade, week };
   updateTrainingBadge(week);
 
-  currentQuestions = WEEKS_DATA[Number(week)] || [];
-  if(!currentQuestions.length){
+  const weekQuestions = (WEEKS_DATA && WEEKS_DATA[Number(week)]) ? WEEKS_DATA[Number(week)] : [];
+  if(!weekQuestions.length){
     alert("لا توجد أسئلة لهذا الأسبوع.");
     return;
+  }
+
+  /* (4) عشوائية + (10) وضع ولي الأمر 5 أسئلة */
+  if(isParentMode){
+    currentQuestions = pickRandom(weekQuestions, 5);
+  } else {
+    // عشوائية ترتيب كل مرة (تقدر تلغيها لو تبي)
+    currentQuestions = shuffleArray(weekQuestions);
   }
 
   currentIdx = 0;
@@ -1624,17 +1947,27 @@ function startTraining() {
 
   const weekNum = Number(week);
   timeLeft = (weekNum === 10) ? 1800 : 600;
+  if(isParentMode) timeLeft = 600; // ثابت 10 دقائق لولي الأمر
 
   if(timerId) clearInterval(timerId);
+  if(elapsedId) clearInterval(elapsedId);
 
-  // ✅ سجل دخول الطالب للشيت (Start)
-  logToSheet({
-    action: "start",
-    name: studentData.name,
-    grade: studentData.grade,
-    week: String(studentData.week),
-    ts: new Date().toISOString()
-  });
+  quizStartMs = Date.now();
+
+  // (2) سجل start بشرط عدم التكرار
+  if(canLogStart(name, grade, week)){
+    logToSheet({
+      action: "start",
+      name: studentData.name,
+      grade: studentData.grade,
+      week: String(studentData.week),
+      parentMode: isParentMode ? "1" : "0",
+      ts: nowIso()
+    });
+  }
+
+  // (3) احذف أي حفظ قديم لنفس الثلاثي عند بدء جديد
+  clearSavedProgress(name, grade, week);
 
   document.getElementById('mainContainer').classList.add('hidden');
   document.getElementById('pageFooter').classList.add('hidden');
@@ -1643,17 +1976,20 @@ function startTraining() {
   document.getElementById('displayStudentName').innerText = name;
 
   startTimer();
+  startElapsed();
   loadQuestion();
 }
 
-/* =========================
+/* =========================================================
    ✅ التايمر
-========================= */
+========================================================= */
 function startTimer() {
   updateTimerDisplay();
   timerId = setInterval(() => {
     timeLeft--;
     updateTimerDisplay();
+    // (3) حفظ تلقائي كل ثانية
+    saveProgress();
     if (timeLeft <= 0) endQuiz();
   }, 1000);
 }
@@ -1665,14 +2001,30 @@ function updateTimerDisplay() {
     `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
 }
 
-/* =========================
+/* (8) عداد الزمن المستغرق */
+function startElapsed(){
+  updateElapsedDisplay();
+  elapsedId = setInterval(updateElapsedDisplay, 1000);
+}
+function updateElapsedDisplay(){
+  const el = document.getElementById('elapsed');
+  if(!el) return;
+  const ms = Math.max(0, Date.now() - (quizStartMs || Date.now()));
+  const totalSec = Math.floor(ms/1000);
+  const m = Math.floor(totalSec/60);
+  const s = totalSec%60;
+  el.innerText = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+
+/* =========================================================
    ✅ نظام محاولتين لكل سؤال
-========================= */
+========================================================= */
 let attemptsLeft = 2;
 let gotPointThisQ = false;
 
-function loadQuestion() {
+function loadQuestion(isResume=false) {
   const q = currentQuestions[currentIdx];
+  if(!q){ endQuiz(); return; }
 
   attemptsLeft = 2;
   gotPointThisQ = false;
@@ -1701,6 +2053,10 @@ function loadQuestion() {
   document.getElementById('nextBtn').classList.add('hidden');
   const box = document.getElementById('explainBox');
   if (box) { box.classList.add('hidden'); box.innerHTML = ''; }
+
+  // (10) وضع ولي الأمر: الشرح يظهر دائمًا بعد أي إجابة
+  // (3) حفظ عند تحميل السؤال
+  saveProgress({ lastLoaded: nowIso(), isResume: isResume ? "1" : "0" });
 }
 
 function showToast(msg, bg) {
@@ -1716,7 +2072,6 @@ function checkAnswer(idx, card) {
   const q = currentQuestions[currentIdx];
   const box = document.getElementById('explainBox');
 
-  // ✅ احسب كل ضغطة إجابة
   answerClicks++;
 
   if (card.dataset.locked === "1") return;
@@ -1740,17 +2095,27 @@ function checkAnswer(idx, card) {
 
     allCards.forEach(c => c.style.pointerEvents = "none");
     document.getElementById('nextBtn').classList.remove('hidden');
+
+    saveProgress({ lastAnswer: "correct", at: nowIso() });
     return;
   }
 
-  // خطأ
   attemptsLeft--;
   card.classList.add('wrong');
 
   if (attemptsLeft > 0) {
     showToast("خاطئة.. جرّب مرة ثانية 👀", "#f59e0b");
     card.style.pointerEvents = "none";
-    if (box) { box.classList.add('hidden'); box.innerHTML = ''; }
+
+    // (10) ولي الأمر: خله يشوف الشرح حتى من أول خطأ
+    if (isParentMode && box) {
+      box.innerText = q.explain || "التوضيح غير متوفر.";
+      box.classList.remove('hidden');
+    } else {
+      if (box) { box.classList.add('hidden'); box.innerHTML = ''; }
+    }
+
+    saveProgress({ lastAnswer: "wrong_try", at: nowIso() });
     return;
   }
 
@@ -1766,19 +2131,23 @@ function checkAnswer(idx, card) {
 
   allCards.forEach(c => c.style.pointerEvents = "none");
   document.getElementById('nextBtn').classList.remove('hidden');
+
+  saveProgress({ lastAnswer: "wrong_final", at: nowIso() });
 }
 
 function nextQuestion() {
   currentIdx++;
+  saveProgress({ movedNext: nowIso() });
   if(currentIdx < currentQuestions.length) loadQuestion();
   else endQuiz();
 }
 
-/* =========================
-   ✅ إنهاء الاختبار + حفظ النتيجة
-========================= */
+/* =========================================================
+   ✅ (5)(8)(9) إنهاء الاختبار + حفظ النتيجة + مدة الحل
+========================================================= */
 function endQuiz() {
   if(timerId) clearInterval(timerId);
+  if(elapsedId) clearInterval(elapsedId);
 
   document.getElementById('quizScreen').classList.add('hidden');
   document.getElementById('resultScreen').classList.remove('hidden');
@@ -1789,13 +2158,25 @@ function endQuiz() {
   document.getElementById('resScoreText').innerText = `${score} من ${currentQuestions.length}`;
   document.getElementById('resPercent').innerText = `${p}%`;
 
-  document.getElementById('resGrade').innerText =
-    p >= 90 ? "ممتاز" : p >= 75 ? "جيد جداً" : "يحتاج تحسين";
+  const gradeTxt = p >= 90 ? "ممتاز" : p >= 75 ? "جيد جداً" : "يحتاج تحسين";
+  document.getElementById('resGrade').innerText = gradeTxt;
 
-  document.getElementById('resMsg').innerText =
-    p >= 75 ? "أنت بطل حقيقي! استمر في الإبداع 🌟" : "نشجعك على المحاولة مرة أخرى لتحسين نتيجتك! 💪";
+  // (8) مدة الحل
+  const ms = Math.max(0, Date.now() - (quizStartMs || Date.now()));
+  const mins = Math.floor(ms/60000);
+  const secs = Math.floor((ms%60000)/1000);
+  const dur = `${mins} دقيقة ${secs} ثانية`;
+  document.getElementById('resDuration').innerText = dur;
 
-  // ✅ حفظ (الاسم + الصف + الأسبوع + الدرجة) + attempts (ضغطات الإجابة)
+  // (9) رسالة ذكية
+  let msg = "";
+  if(p >= 95) msg = "ما شاء الله! مستوى مُبهر 🌟 جرّب أسبوع مراجعة للتحدي 💪";
+  else if(p >= 85) msg = "ممتاز جدًا 👏 كمّل تدريبك وبتوصل للكامل بإذن الله";
+  else if(p >= 75) msg = "شغلك طيب 👍 ركّز على الأخطاء وشوف التوضيح وبتتحسن سريع";
+  else msg = "لا تشيل هم 💛 جرّب مرة ثانية وركّز على التوضيح بعد كل سؤال";
+  document.getElementById('resMsg').innerText = msg;
+
+  // (5) حفظ للشيت + (8) الزمن + (10) وضع ولي الأمر
   logToSheet({
     action: "finish",
     name: studentData.name,
@@ -1805,13 +2186,18 @@ function endQuiz() {
     total: currentQuestions.length,
     percent: p,
     attempts: answerClicks,
-    ts: new Date().toISOString()
+    duration_ms: ms,
+    parentMode: isParentMode ? "1" : "0",
+    ts: nowIso()
   });
+
+  // (3) احذف الحفظ بعد الانتهاء
+  clearSavedProgress(studentData.name, studentData.grade, studentData.week);
 }
 
-/* =========================
-   ✅ طباعة الشهادة (كما هو عندك)
-========================= */
+/* =========================================================
+   ✅ (6) طباعة الشهادة + تنزيل PDF
+========================================================= */
 function escapeHtml(str){
   return String(str)
     .replaceAll("&","&amp;")
@@ -1821,7 +2207,7 @@ function escapeHtml(str){
     .replaceAll("'","&#039;");
 }
 
-function printCertificateOnly() {
+function certificateHTML(){
   const name = (document.getElementById('resStudentName')?.innerText || '').trim();
   const percent = (document.getElementById('resPercent')?.innerText || '').trim();
   const scoreText = (document.getElementById('resScoreText')?.innerText || '').trim();
@@ -1836,22 +2222,11 @@ function printCertificateOnly() {
   const nafsLogo     = "nafss.png";
   const schoolLogo   = "مدرسة.png";
 
-  const iframe = document.createElement('iframe');
-  iframe.style.position = 'fixed';
-  iframe.style.right = '0';
-  iframe.style.bottom = '0';
-  iframe.style.width = '0';
-  iframe.style.height = '0';
-  iframe.style.border = '0';
-  document.body.appendChild(iframe);
-
-  const doc = iframe.contentWindow.document;
-  doc.open();
-  doc.write(`<!doctype html>
+  return `<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
-<title>طباعة شهادة</title>
+<title>شهادة</title>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
   @page { size: A4 landscape; margin: 0; }
@@ -1892,7 +2267,7 @@ function printCertificateOnly() {
 </style>
 </head>
 <body>
-  <div class="cert-box">
+  <div class="cert-box" id="cert">
     <div class="top">
       <img src="${ministryLogo}" alt="وزارة التعليم">
       <img src="${nafsLogo}" alt="نافس">
@@ -1914,27 +2289,235 @@ function printCertificateOnly() {
       <div><p>مدير المدرسة</p><b>أ/ نواف آل جافلة</b></div>
     </div>
   </div>
-
-  <script>
-    window.onload = () => { window.print(); };
-  <\/script>
 </body>
-</html>`);
-  doc.close();
-
-  setTimeout(() => {
-    iframe.contentWindow.focus();
-    iframe.contentWindow.print();
-    setTimeout(() => document.body.removeChild(iframe), 1200);
-  }, 400);
+</html>`;
 }
 
-/* =========================
+function printCertificateOnly() {
+  // (6) بدل iframe: نافذة جديدة — أفضل لسفاري
+  const w = window.open("", "_blank");
+  if(!w){ alert("اسمح بفتح النوافذ المنبثقة للطباعة"); return; }
+  w.document.open();
+  w.document.write(certificateHTML());
+  w.document.close();
+  w.onload = () => w.print();
+}
+
+function downloadCertificatePDF(){
+  // (6) تنزيل PDF عبر html2pdf
+  try{
+    const temp = document.createElement("div");
+    temp.style.position = "fixed";
+    temp.style.left = "-99999px";
+    temp.style.top = "0";
+    temp.innerHTML = certificateHTML();
+    document.body.appendChild(temp);
+
+    const cert = temp.querySelector("#cert");
+    if(!cert){ document.body.removeChild(temp); return; }
+
+    const name = (document.getElementById('resStudentName')?.innerText || 'طالب').trim();
+    const opt = {
+      margin:       0,
+      filename:     `شهادة-${name}.pdf`,
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 2, useCORS: true },
+      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' }
+    };
+
+    html2pdf().set(opt).from(cert).save().then(()=> {
+      document.body.removeChild(temp);
+    }).catch(()=>{
+      document.body.removeChild(temp);
+      alert("تعذر إنشاء PDF — جرّب الطباعة");
+    });
+  }catch(e){
+    alert("تعذر إنشاء PDF — جرّب الطباعة");
+  }
+}
+
+/* =========================================================
+   ✅ العودة للرئيسية
+========================================================= */
+function goHome(){
+  location.reload();
+}
+
+/* =========================================================
+   ✅ (1) لوحة المعلم — فتح/إغلاق/إحصائيات
+========================================================= */
+function openAdmin(){
+  const pass = prompt("أدخل رمز لوحة المعلم:");
+  if(pass !== ADMIN_PASSCODE){
+    showToast("رمز غير صحيح", "#ef4444");
+    return;
+  }
+  document.getElementById('mainContainer').classList.add('hidden');
+  document.getElementById('pageFooter').classList.add('hidden');
+  document.getElementById('quizScreen').classList.add('hidden');
+  document.getElementById('resultScreen').classList.add('hidden');
+
+  document.getElementById('adminScreen').classList.remove('hidden');
+  refreshAdmin();
+}
+function closeAdmin(){
+  document.getElementById('adminScreen').classList.add('hidden');
+  document.getElementById('mainContainer').classList.remove('hidden');
+  document.getElementById('pageFooter').classList.remove('hidden');
+}
+function getLocalLogs(){
+  try{ return JSON.parse(localStorage.getItem(LS_LOGS_KEY) || "[]"); }
+  catch(e){ return []; }
+}
+
+async function tryFetchAdminFromSheet(){
+  // يحتاج دعم GET في Apps Script (كود آخر الرسالة)
+  try{
+    const url = `${SHEET_WEB_APP_URL}?action=admin&token=${encodeURIComponent(APP_TOKEN)}`;
+    const res = await fetch(url, { method: "GET" });
+    if(!res.ok) throw new Error("bad");
+    const data = await res.json();
+    return data;
+  }catch(e){
+    return null;
+  }
+}
+
+function calcStatsFromRows(rows){
+  // rows: قائمة finish فقط
+  const today = todayYMD();
+  const starts = getLocalLogs().filter(x => x.action === "start" && (x.ts || "").slice(0,10) === today).length;
+
+  const weekCount = {};
+  let sum = 0, n = 0;
+  let best = null;
+
+  rows.forEach(r=>{
+    const w = String(r.week || "");
+    if(w) weekCount[w] = (weekCount[w] || 0) + 1;
+    const p = Number(r.percent || 0);
+    sum += p; n++;
+    if(!best || p > Number(best.percent||0)) best = r;
+  });
+
+  let topWeek = "—";
+  let topWeekN = 0;
+  Object.entries(weekCount).forEach(([w,c])=>{
+    if(c > topWeekN){ topWeekN = c; topWeek = `الأسبوع ${w}`; }
+  });
+
+  const avg = n ? Math.round(sum/n) : 0;
+
+  return { starts, topWeek, avg, best };
+}
+
+function renderTop5(rows){
+  const tbody = document.getElementById("admTop5");
+  tbody.innerHTML = "";
+  const top5 = rows
+    .slice()
+    .sort((a,b)=> Number(b.percent||0) - Number(a.percent||0))
+    .slice(0,5);
+
+  top5.forEach(r=>{
+    const tr = document.createElement("tr");
+    tr.className = "border-t border-slate-100";
+    tr.innerHTML = `
+      <td class="py-2">${escapeHtml(r.name||"—")}</td>
+      <td class="py-2">${escapeHtml(r.grade||"—")}</td>
+      <td class="py-2">${escapeHtml("الأسبوع " + (r.week||"—"))}</td>
+      <td class="py-2">${escapeHtml((r.percent||0) + "%")}</td>
+      <td class="py-2">${escapeHtml(formatMs(r.duration_ms||0))}</td>
+      <td class="py-2">${escapeHtml(String(r.attempts||0))}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function formatMs(ms){
+  ms = Number(ms||0);
+  const m = Math.floor(ms/60000);
+  const s = Math.floor((ms%60000)/1000);
+  return `${m}د ${s}ث`;
+}
+
+async function refreshAdmin(){
+  document.getElementById("admSource").innerText = "المصدر: جاري التحميل...";
+  let finishRows = [];
+
+  // حاول تجيب من الشيت
+  const sheetData = await tryFetchAdminFromSheet();
+  if(sheetData && Array.isArray(sheetData.finish)){
+    finishRows = sheetData.finish;
+    document.getElementById("admSource").innerText = "المصدر: الشيت";
+  } else {
+    // محلي
+    finishRows = getLocalLogs().filter(x => x.action === "finish");
+    document.getElementById("admSource").innerText = "المصدر: محلي";
+  }
+
+  const stats = calcStatsFromRows(finishRows);
+
+  document.getElementById("admToday").innerText = stats.starts ?? "—";
+  document.getElementById("admTopWeek").innerText = stats.topWeek ?? "—";
+  document.getElementById("admAvg").innerText = (stats.avg ? (stats.avg + "%") : "—");
+  document.getElementById("admBest").innerText = stats.best ? (stats.best.percent + "%") : "—";
+
+  renderTop5(finishRows);
+}
+
+function exportLocalCSV(){
+  const rows = getLocalLogs().filter(x => x.action === "finish");
+  const header = ["name","grade","week","score","total","percent","attempts","duration_ms","ts"].join(",");
+  const lines = rows.map(r=>{
+    return [
+      JSON.stringify(r.name||""),
+      JSON.stringify(r.grade||""),
+      JSON.stringify(r.week||""),
+      JSON.stringify(r.score||0),
+      JSON.stringify(r.total||0),
+      JSON.stringify(r.percent||0),
+      JSON.stringify(r.attempts||0),
+      JSON.stringify(r.duration_ms||0),
+      JSON.stringify(r.ts||"")
+    ].join(",");
+  });
+  const csv = [header, ...lines].join("\n");
+
+  const blob = new Blob([csv], {type:"text/csv;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "nafs-results-local.csv";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+function clearLocalLogs(){
+  if(!confirm("أكيد تبغى تمسح السجل المحلي؟")) return;
+  localStorage.removeItem(LS_LOGS_KEY);
+  showToast("تم المسح ✅", "#22c55e");
+  refreshAdmin();
+}
+
+/* فتح لوحة المعلم بالدبل كلك */
+document.getElementById("openAdminHint")?.addEventListener("dblclick", openAdmin);
+
+/* =========================================================
    ✅ ربط الدوال بالأزرار
-========================= */
+========================================================= */
 window.printCertificateOnly = printCertificateOnly;
+window.downloadCertificatePDF = downloadCertificatePDF;
 window.startTraining = startTraining;
 window.nextQuestion = nextQuestion;
+window.goHome = goHome;
+window.resumeTraining = resumeTraining;
+window.discardSavedTraining = discardSavedTraining;
+window.refreshAdmin = refreshAdmin;
+window.closeAdmin = closeAdmin;
+window.exportLocalCSV = exportLocalCSV;
+window.clearLocalLogs = clearLocalLogs;
 
 </script>
 
