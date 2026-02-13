@@ -1568,30 +1568,32 @@ const REVIEW_WEEKS = {
   let timerId = null;
   let studentData = {};
 
-// ✅ رابط Google Apps Script Web App لتسجيل النتائج
-const LOG_URL = "https://script.google.com/macros/s/AKfycbyXLiIxhbLVS9hT0qIzP2plQEQie7dcweBV5bhoTA7k8CRMN9t7VC2_hbFzIlMu3oo/exec";
+// ✅ رابط Google Apps Script Web App لتسجيل النتائجconst APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzDByVy1lcqU7z0zf4UA-hAY3YWiaRSe7b0d4SgPDvLGKCp4NJ5oSjFdIzgMOK1-zfb/exec";
 
-// ✅ إرسال النتيجة إلى Google Sheet (بدون تكرار لنفس الاسم+الصف+الأسبوع)
-async function logResultToSheet({ name, grade, week, score, total, percent }) {
+async function sendResultToSheet() {
   try {
     const payload = {
-      name,
-      grade,
-      week,
-      score,
-      total,
-      percent,
-      mode: "best" // best = يحفظ الأعلى، latest = يحفظ آخر نتيجة
+      name: (studentData?.name || "").trim(),
+      grade: studentData?.grade || "",
+      week: String(studentData?.week || ""),
+      score: score,
+      total: currentQuestions.length,
+      percent: Math.round((score / currentQuestions.length) * 100),
+      ts: new Date().toISOString()
     };
 
-    await fetch(LOG_URL, {
+    // نرسل كـ JSON
+    const res = await fetch(APPS_SCRIPT_URL, {
       method: "POST",
+      mode: "no-cors", // عشان ما يوقف بسبب CORS في GitHub Pages
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     });
-  } catch (e) {
-    // لا نوقف الاختبار لو فشل التسجيل
-    console.warn("Logging failed:", e);
+
+    // ما نقدر نقرأ الرد مع no-cors، لكن الإرسال يتم
+    console.log("Sent to sheet (no-cors).", res);
+  } catch (err) {
+    console.error("Failed to send:", err);
   }
 }
 
@@ -1798,7 +1800,29 @@ logResultToSheet({
   total: currentQuestions.length,
   percent: p
 });
+ // ✅ ضع رابط الـ Apps Script هنا
+const SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzDByVy1lcqU7z0zf4UA-hAY3YWiaRSe7b0d4SgPDvLGKCp4NJ5oSjFdIzgMOK1-zfb/exec";
+
+// ✅ إرسال النتيجة إلى Google Sheet
+async function logResultToSheet(payload) {
+  try {
+    const res = await fetch(SHEET_WEB_APP_URL, {
+      method: "POST",
+      mode: "no-cors", // مهم في GitHub Pages
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    // ملاحظة: مع no-cors ما نقدر نقرأ الرد
+    console.log("✅ Sent to sheet", payload);
+  } catch (err) {
+    console.error("❌ Sheet logging error:", err);
   }
+}
+   }
+  
 
   function printCertificateOnly() {
     const name = (document.getElementById('resStudentName')?.innerText || '').trim();
