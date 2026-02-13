@@ -1629,15 +1629,7 @@ async function logResultToSheet({ name, grade, week, score, total, percent }) {
       updateTimerDisplay();
 
       if (timeLeft <= 0) {
-        endQuiz();// ✅ حفظ (الاسم + الصف + الأسبوع + الدرجة) في Google Sheet
-logResultToSheet({
-  name: studentData.name,
-  grade: studentData.grade,
-  week: studentData.week,
-  score: score,
-  total: currentQuestions.length,
-  percent: p
-});
+        endQuiz();
       }
     }, 1000);
   }
@@ -1785,6 +1777,15 @@ function checkAnswer(idx, card) {
 
     document.getElementById('resMsg').innerText =
       p >= 75 ? "أنت بطل حقيقي! استمر في الإبداع 🌟" : "نشجعك على المحاولة مرة أخرى لتحسين نتيجتك! 💪";
+      // ✅ حفظ (الاسم + الصف + الأسبوع + الدرجة) في Google Sheet
+logResultToSheet({
+  name: studentData.name,
+  grade: studentData.grade,
+  week: studentData.week,
+  score: score,
+  total: currentQuestions.length,
+  percent: p
+});
   }
 
   function printCertificateOnly() {
