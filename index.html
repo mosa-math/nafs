@@ -79,22 +79,27 @@
                class="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500">
 
         <!-- أيقونات المواد -->
-        <div class="grid grid-cols-3 gap-3">
-          <button onclick="selectSubject('math')"
-                  class="px-4 py-4 rounded-2xl border font-black hover:shadow transition bg-blue-50 border-blue-200 text-blue-900">
-            📐 رياضيات
-          </button>
+        <div class="grid grid-cols-3 gap-4 mt-4">
 
-          <button onclick="selectSubject('arabic')"
-                  class="px-4 py-4 rounded-2xl border font-black hover:shadow transition bg-amber-50 border-amber-200 text-amber-900">
-            📖 لغتي
-          </button>
+  <!-- رياضيات -->
+  <button onclick="selectSubject('math')"
+    class="subject-btn bg-orange-500 hover:bg-orange-600 text-white font-black py-4 rounded-2xl shadow-lg text-lg">
+    📐 رياضيات
+  </button>
 
-          <button onclick="selectSubject('science')"
-                  class="px-4 py-4 rounded-2xl border font-black hover:shadow transition bg-emerald-50 border-emerald-200 text-emerald-900">
-            🔬 علوم
-          </button>
-        </div>
+  <!-- لغتي -->
+  <button onclick="selectSubject('arabic')"
+    class="subject-btn bg-yellow-400 hover:bg-yellow-500 text-black font-black py-4 rounded-2xl shadow-lg text-lg">
+    📖 لغتي
+  </button>
+
+  <!-- علوم -->
+  <button onclick="selectSubject('science')"
+    class="subject-btn bg-purple-600 hover:bg-purple-700 text-white font-black py-4 rounded-2xl shadow-lg text-lg">
+    🔬 علوم
+  </button>
+
+</div>
 
         <!-- شريط يظهر اسم المعلم حسب المادة -->
         <div id="teacherLine"
