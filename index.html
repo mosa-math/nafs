@@ -31,6 +31,72 @@
 
     .subject-btn:active {
   transform: scale(0.97);
+
+/* شبكة المواد: صف واحد دائمًا + بطاقات متساوية */
+.subjects-grid{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 14px;
+}
+
+/* البطاقة الرسمية */
+.subject-card{
+  width: 100%;
+  aspect-ratio: 1 / 1;           /* يخليها مربّع متساوي */
+  border-radius: 12px;           /* زوايا أقل (رسمي) */
+  border: 2px solid #CBD5E1;     /* رمادي رسمي */
+  background: #FFFFFF;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap: 6px;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  user-select:none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* الأيقونة والنص */
+.subject-card .icon{
+  font-size: 24px;
+  line-height: 1;
+}
+
+.subject-card .label{
+  font-size: 14px;               /* ثابت ومناسب للجوال */
+  font-weight: 800;
+  color: #0F172A;
+  line-height: 1.2;
+  text-align:center;
+  white-space: nowrap;           /* يمنع النزول لسطر ثاني */
+}
+
+/* تمييز رسمي حسب المادة (ألوان هادئة) */
+.subject-math{ border-color:#F59E0B; background:#FFFBEB; }
+.subject-arabic{ border-color:#10B981; background:#ECFDF5; }
+.subject-science{ border-color:#6366F1; background:#EEF2FF; }
+
+/* تأثير ضغط (احترافي) */
+.subject-card:active{
+  transform: scale(.97);
+  box-shadow: 0 1px 6px rgba(0,0,0,.08);
+}
+
+/* حالة التحديد (إذا عندك JS يضيف class selected) */
+.subject-card.selected{
+  border-color:#0B5FFF;
+  box-shadow: 0 0 0 3px rgba(11,95,255,.18);
+}
+
+/* للجوال الصغير جدًا: يصغر النص شوي */
+@media (max-width: 360px){
+  .subjects-grid{ gap: 10px; }
+  .subject-card .label{ font-size: 13px; }
+  .subject-card .icon{ font-size: 22px; }
+}
+      
 }
   </style>
 </head>
@@ -99,39 +165,27 @@
                class="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500">
 
         <!-- أيقونات المواد -->
-       <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-4">
+       <div class="subjects-grid">
 
-  <!-- رياضيات -->
-  <button onclick="selectSubject('math')"
-    class="subject-btn flex flex-col items-center justify-center
-           bg-orange-50 border-2 border-orange-500
-           hover:bg-orange-100 text-orange-800
-           font-bold py-5 rounded-2xl shadow-md
-           text-base sm:text-lg transition-all">
-    <span class="text-2xl mb-2">📐</span>
-    <span>رياضيات</span>
+  <button type="button"
+          class="subject-card subject-science"
+          onclick="selectSubject('science', this)">
+    <div class="icon">🔬</div>
+    <div class="label">علوم</div>
   </button>
 
-  <!-- لغتي -->
-  <button onclick="selectSubject('arabic')"
-    class="subject-btn flex flex-col items-center justify-center
-           bg-yellow-50 border-2 border-yellow-500
-           hover:bg-yellow-100 text-yellow-800
-           font-bold py-5 rounded-2xl shadow-md
-           text-base sm:text-lg transition-all">
-    <span class="text-2xl mb-2">📖</span>
-    <span>لغتي</span>
+  <button type="button"
+          class="subject-card subject-arabic"
+          onclick="selectSubject('arabic', this)">
+    <div class="icon">📖</div>
+    <div class="label">لغتي</div>
   </button>
 
-  <!-- علوم -->
-  <button onclick="selectSubject('science')"
-    class="subject-btn flex flex-col items-center justify-center
-           bg-purple-50 border-2 border-purple-600
-           hover:bg-purple-100 text-purple-800
-           font-bold py-5 rounded-2xl shadow-md
-           text-base sm:text-lg transition-all">
-    <span class="text-2xl mb-2">🔬</span>
-    <span>علوم</span>
+  <button type="button"
+          class="subject-card subject-math"
+          onclick="selectSubject('math', this)">
+    <div class="icon">📐</div>
+    <div class="label">رياضيات</div>
   </button>
 
 </div>
