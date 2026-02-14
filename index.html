@@ -305,10 +305,15 @@ const SUBJECTS = {
 
 let selectedSubject = ""; // math / arabic / science
 
-function selectSubject(key){
+function selectSubject(key, btn){
   selectedSubject = key;
 
-  // إظهار سطر المعلم تحت أيقونات المواد
+  // إزالة التحديد من الجميع
+  document.querySelectorAll(".subject-card").forEach(b => b.classList.remove("selected"));
+  // تحديد البطاقة المختارة
+  if(btn) btn.classList.add("selected");
+
+  // سطر المعلم
   const t = SUBJECTS[key];
   const line = document.getElementById("teacherLine");
   line.classList.remove("hidden");
