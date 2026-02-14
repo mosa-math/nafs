@@ -74,9 +74,23 @@
 }
 
 /* تمييز رسمي حسب المادة (ألوان هادئة) */
-.subject-math{ border-color:#F59E0B; background:#FFFBEB; }
-.subject-arabic{ border-color:#10B981; background:#ECFDF5; }
-.subject-science{ border-color:#6366F1; background:#EEF2FF; }
+/* رياضيات برتقالي رسمي */
+.subject-math{
+  border-color:#F97316;
+  background:#FFF7ED;
+}
+
+/* لغتي أصفر رسمي */
+.subject-arabic{
+  border-color:#EAB308;
+  background:#FEFCE8;
+}
+
+/* علوم بنفسجي رسمي */
+.subject-science{
+  border-color:#7C3AED;
+  background:#F3E8FF;
+}
 
 /* تأثير ضغط (احترافي) */
 .subject-card:active{
@@ -164,15 +178,17 @@
                class="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500">
 
         <!-- أيقونات المواد -->
-       <div class="subjects-grid">
+      <div class="subjects-grid">
 
+  <!-- رياضيات (يمين) -->
   <button type="button"
-          class="subject-card subject-science"
-          onclick="selectSubject('science', this)">
-    <div class="icon">🔬</div>
-    <div class="label">علوم</div>
+          class="subject-card subject-math"
+          onclick="selectSubject('math', this)">
+    <div class="icon">📐</div>
+    <div class="label">رياضيات</div>
   </button>
 
+  <!-- لغتي -->
   <button type="button"
           class="subject-card subject-arabic"
           onclick="selectSubject('arabic', this)">
@@ -180,11 +196,12 @@
     <div class="label">لغتي</div>
   </button>
 
+  <!-- علوم (يسار) -->
   <button type="button"
-          class="subject-card subject-math"
-          onclick="selectSubject('math', this)">
-    <div class="icon">📐</div>
-    <div class="label">رياضيات</div>
+          class="subject-card subject-science"
+          onclick="selectSubject('science', this)">
+    <div class="icon">🔬</div>
+    <div class="label">علوم</div>
   </button>
 
 </div>
