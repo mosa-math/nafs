@@ -182,27 +182,28 @@
 
   <!-- رياضيات (يمين) -->
   <button type="button"
-          class="subject-card subject-math"
-          onclick="selectSubject('math', this)">
-    <div class="icon">📐</div>
-    <div class="label">رياضيات</div>
-  </button>
+        class="subject-card subject-math"
+        data-subject="math"
+        onclick="selectSubject('math', this)">
+  <div class="icon">📐</div>
+  <div class="label">رياضيات</div>
+</button>
 
-  <!-- لغتي -->
-  <button type="button"
-          class="subject-card subject-arabic"
-          onclick="selectSubject('arabic', this)">
-    <div class="icon">📖</div>
-    <div class="label">لغتي</div>
-  </button>
+<button type="button"
+        class="subject-card subject-arabic"
+        data-subject="arabic"
+        onclick="selectSubject('arabic', this)">
+  <div class="icon">📖</div>
+  <div class="label">لغتي</div>
+</button>
 
-  <!-- علوم (يسار) -->
-  <button type="button"
-          class="subject-card subject-science"
-          onclick="selectSubject('science', this)">
-    <div class="icon">🔬</div>
-    <div class="label">علوم</div>
-  </button>
+<button type="button"
+        class="subject-card subject-science"
+        data-subject="science"
+        onclick="selectSubject('science', this)">
+  <div class="icon">🔬</div>
+  <div class="label">علوم</div>
+</button>
 
 </div>
 
@@ -320,31 +321,36 @@ const SUBJECTS = {
   science: { label: "علوم",    icon:"🔬", teacher:"حسين آل عباس" },
 };
 
-let selectedSubject = ""; // math / arabic / science
+ let selectedSubject = ""; // مهم
 
-function selectSubject(key){
-  if(!SUBJECTS[key]) {
-    console.warn("Subject key not found:", key);
-    return;
-  }
+function selectSubject(key, el){
+  if(!SUBJECTS[key]) return;
 
   selectedSubject = key;
 
-  // تمييز المادة المختارة بالواجهة (اختياري)
-  document.querySelectorAll(".subject-card").forEach(el => {
-    el.classList.remove("ring-4","ring-green-500");
+  // شيل التحديد من الكل
+  document.querySelectorAll(".subject-card").forEach(card=>{
+    card.classList.remove("selected","ring-4","ring-green-500");
   });
 
-  const chosen = document.querySelector(`[data-subject="${key}"]`);
-  if(chosen) chosen.classList.add("ring-4","ring-green-500");
+  // حط التحديد على اللي ضغطه
+  if(el){
+    el.classList.add("selected","ring-4","ring-green-500");
+  }
 
-  // تفعيل زر ابدأ بعد اختيار مادة
+  // عرض سطر المعلم
+  const teacherLine = document.getElementById("teacherLine");
+  if(teacherLine){
+    teacherLine.classList.remove("hidden");
+    teacherLine.textContent = `المادة: ${SUBJECTS[key].label} — المعلم: ${SUBJECTS[key].teacher}`;
+  }
+
+  // تفعيل زر ابدأ (إذا عندك له id)
   const btn = document.getElementById("startBtn");
-  if(btn) btn.disabled = false;
-
-  // (اختياري) عرض رسالة تحت المواد بدل alert
-  const msg = document.getElementById("subjectMsg");
-  if(msg) msg.textContent = `تم اختيار مادة: ${SUBJECTS[key].label}`;
+  if(btn){
+    btn.disabled = false;
+    btn.classList.remove("opacity-50","cursor-not-allowed");
+  }
 }
 
 /* =========================
