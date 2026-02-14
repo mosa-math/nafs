@@ -120,7 +120,7 @@
             <option value="7">الأسبوع ٧</option>
             <option value="8">الأسبوع ٨</option>
             <option value="9">الأسبوع ٩</option>
-            <option value="10">⭐ الأسبوع ١٠ (مراجعة ٧–٩)</option>
+            <option value="10">الأسبوع ١٠</option>
             <option value="11">الأسبوع ١١</option>
           </select>
         </div>
@@ -195,7 +195,7 @@
 </div>
 
 <footer id="pageFooter" class="p-6 text-center text-slate-400 font-bold">
-  ‏ إعداد الأستاذ : <span class="text-blue-900">موسى الصبحي</span>
+  ‏ إعداد : <span class="text-blue-900">موسى الصبحي</span>
 </footer>
 
 <div id="feedback-toast"></div>
@@ -219,7 +219,7 @@ function selectSubject(key){
   const t = SUBJECTS[key];
   const line = document.getElementById("teacherLine");
   line.classList.remove("hidden");
-  line.innerHTML = `معلم ${t.label} : <span class="text-slate-900 font-black">${t.teacher}</span>`;
+  line.innerHTML = ` ‏معلم المادة : <span class="text-slate-900 font-black">${t.teacher}</span>`;
 }
 
 /* =========================
