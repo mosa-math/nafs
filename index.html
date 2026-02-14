@@ -28,6 +28,10 @@
     .wave{font-size:1.4rem;display:inline-block;animation:waveHand 1.5s infinite;}
     @keyframes slideInLeft{0%{transform:translateX(-30px);opacity:0;}100%{transform:translateX(0);opacity:1;}}
     @keyframes waveHand{0%{transform:rotate(0deg);}25%{transform:rotate(15deg);}50%{transform:rotate(0deg);}75%{transform:rotate(-10deg);}100%{transform:rotate(0deg);}}
+
+    .subject-btn:active {
+  transform: scale(0.97);
+}
   </style>
 </head>
 
@@ -83,19 +87,25 @@
 
   <!-- رياضيات -->
   <button onclick="selectSubject('math')"
-    class="subject-btn bg-orange-500 hover:bg-orange-600 text-white font-black py-4 rounded-2xl shadow-lg text-lg">
+    class="subject-btn bg-orange-50 border-4 border-orange-500 
+           hover:bg-orange-100 text-orange-800 
+           font-black py-4 rounded-2xl shadow-md text-lg transition-all">
     📐 رياضيات
   </button>
 
   <!-- لغتي -->
   <button onclick="selectSubject('arabic')"
-    class="subject-btn bg-yellow-400 hover:bg-yellow-500 text-black font-black py-4 rounded-2xl shadow-lg text-lg">
+    class="subject-btn bg-yellow-50 border-4 border-yellow-500 
+           hover:bg-yellow-100 text-yellow-800 
+           font-black py-4 rounded-2xl shadow-md text-lg transition-all">
     📖 لغتي
   </button>
 
   <!-- علوم -->
   <button onclick="selectSubject('science')"
-    class="subject-btn bg-purple-600 hover:bg-purple-700 text-white font-black py-4 rounded-2xl shadow-lg text-lg">
+    class="subject-btn bg-purple-50 border-4 border-purple-600 
+           hover:bg-purple-100 text-purple-800 
+           font-black py-4 rounded-2xl shadow-md text-lg transition-all">
     🔬 علوم
   </button>
 
