@@ -325,16 +325,20 @@ let selectedSubject = ""; // math / arabic / science
 function selectSubject(key, btn){
   selectedSubject = key;
 
-  // إزالة التحديد من الجميع
-  document.querySelectorAll(".subject-card").forEach(b => b.classList.remove("selected"));
-  // تحديد البطاقة المختارة
+  document.querySelectorAll(".subject-card")
+          .forEach(b => b.classList.remove("selected"));
+
   if(btn) btn.classList.add("selected");
 
-  // سطر المعلم
   const t = SUBJECTS[key];
   const line = document.getElementById("teacherLine");
-  line.classList.remove("hidden");
-  line.innerHTML = ` ‏معلم المادة : <span class="text-slate-900 font-black">${t.teacher}</span>`;
+
+  if(line && t){
+    line.classList.remove("hidden");
+    line.innerHTML =
+      ` معلم المادة :
+       <span class="font-black text-slate-900">${t.teacher}</span>`;
+  }
 }
 
 /* =========================
