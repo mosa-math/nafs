@@ -4386,6 +4386,15 @@ window.selectSubject = selectSubject;
 window.startTraining = startTraining;
 window.nextQuestion = nextQuestion;
 window.printCertificateOnly = printCertificateOnly;
+
+function selectSubject(subject, el){
+  // خزّن المادة المختارة
+  window.selectedSubject = subject;
+
+  // شكّل التحديد
+  document.querySelectorAll('.subject-card').forEach(b => b.classList.remove('selected'));
+  if(el) el.classList.add('selected');
+}
 </script>
 
 </body>
