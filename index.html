@@ -322,23 +322,29 @@ const SUBJECTS = {
 
 let selectedSubject = ""; // math / arabic / science
 
-function selectSubject(key, btn){
+function selectSubject(key){
+  if(!SUBJECTS[key]) {
+    console.warn("Subject key not found:", key);
+    return;
+  }
+
   selectedSubject = key;
 
-  document.querySelectorAll(".subject-card")
-          .forEach(b => b.classList.remove("selected"));
+  // تمييز المادة المختارة بالواجهة (اختياري)
+  document.querySelectorAll(".subject-card").forEach(el => {
+    el.classList.remove("ring-4","ring-green-500");
+  });
 
-  if(btn) btn.classList.add("selected");
+  const chosen = document.querySelector(`[data-subject="${key}"]`);
+  if(chosen) chosen.classList.add("ring-4","ring-green-500");
 
-  const t = SUBJECTS[key];
-  const line = document.getElementById("teacherLine");
+  // تفعيل زر ابدأ بعد اختيار مادة
+  const btn = document.getElementById("startBtn");
+  if(btn) btn.disabled = false;
 
-  if(line && t){
-    line.classList.remove("hidden");
-    line.innerHTML =
-      ` معلم المادة :
-       <span class="font-black text-slate-900">${t.teacher}</span>`;
-  }
+  // (اختياري) عرض رسالة تحت المواد بدل alert
+  const msg = document.getElementById("subjectMsg");
+  if(msg) msg.textContent = `تم اختيار مادة: ${SUBJECTS[key].label}`;
 }
 
 /* =========================
@@ -4090,7 +4096,7 @@ function logToSheet(payload){
 let currentQuestions = [];
 let currentIdx = 0;
 let score = 0;
-let timeLeft = 600;
+let timeLeft = 0;
 let timerId = null;
 let studentData = {};
 let answerClicks = 0;
@@ -4106,8 +4112,16 @@ function startTraining(){
   const grade = document.getElementById('gradeSelect').value;
   const week = document.getElementById('weekSelect').value;
 
-  if(!name || !selectedSubject){
+  if(!name){
+    alert("اكتب اسم الطالب أولاً ✍️");
+    return;
+  }
+  if(!selectedSubject){
     alert("اختر المادة أولاً ✨");
+    return;
+  }
+  if(!SUBJECTS[selectedSubject]){
+    alert("المادة المختارة غير معرّفة بالنظام.");
     return;
   }
   if(!grade || !week){
@@ -4115,9 +4129,9 @@ function startTraining(){
     return;
   }
 
-  // جلب الأسئلة حسب المادة
   const DATA = getDataBySubject();
-  currentQuestions = DATA[Number(week)] || [];
+  const keyWeek = String(week);
+  currentQuestions = DATA[keyWeek] || DATA[Number(week)] || [];
 
   if(!currentQuestions.length){
     alert("لا توجد أسئلة لهذه المادة في هذا الأسبوع حالياً.");
@@ -4132,12 +4146,10 @@ function startTraining(){
 
   currentIdx = 0; score = 0; answerClicks = 0;
 
-  // وقت الاختبار (عدل مثل نظامك)
   const weekNum = Number(week);
   timeLeft = (weekNum === 10) ? 1800 : 600;
   if(timerId) clearInterval(timerId);
 
-  // سجل start
   logToSheet({
     action: "start",
     name, grade, week: String(week),
@@ -4150,7 +4162,6 @@ function startTraining(){
 
   document.getElementById('displayStudentName').innerText = name;
 
-  // Badge للمادة والمعلم
   const sb = document.getElementById("subjectBadge");
   const s = SUBJECTS[selectedSubject];
   sb.innerHTML = `${s.icon} ${s.label} — معلم المادة: <span class="font-black">${s.teacher}</span> • الأسبوع ${week}`;
