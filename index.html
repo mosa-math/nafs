@@ -180,8 +180,8 @@
         <!-- أيقونات المواد -->
       <div class="subjects-grid">
 
-  <!-- رياضيات (يمين) -->
-  <button type="button"
+<!-- رياضيات -->
+<button type="button"
         class="subject-card subject-math"
         data-subject="math"
         onclick="selectSubject('math', this)">
@@ -189,6 +189,7 @@
   <div class="label">رياضيات</div>
 </button>
 
+<!-- لغتي -->
 <button type="button"
         class="subject-card subject-arabic"
         data-subject="arabic"
@@ -197,6 +198,7 @@
   <div class="label">لغتي</div>
 </button>
 
+<!-- علوم -->
 <button type="button"
         class="subject-card subject-science"
         data-subject="science"
@@ -321,7 +323,7 @@ const SUBJECTS = {
   science: { label: "علوم",    icon:"🔬", teacher:"حسين آل عباس" },
 };
 
- let selectedSubject = ""; // مهم
+let selectedSubject = ""; // مهم
 
 function selectSubject(key, el){
   if(!SUBJECTS[key]) return;
@@ -329,30 +331,21 @@ function selectSubject(key, el){
   selectedSubject = key;
 
   // شيل التحديد من الكل
-  document.querySelectorAll(".subject-card").forEach(card=>{
-    card.classList.remove("selected","ring-4","ring-green-500");
+  document.querySelectorAll(".subject-card").forEach(card => {
+    card.classList.remove("selected");
   });
 
-  // حط التحديد على اللي ضغطه
-  if(el){
-    el.classList.add("selected","ring-4","ring-green-500");
-  }
+  // حط تحديد على المختار
+  if(el) el.classList.add("selected");
 
-  // عرض سطر المعلم
+  // اظهر سطر المعلم + المادة
   const teacherLine = document.getElementById("teacherLine");
   if(teacherLine){
     teacherLine.classList.remove("hidden");
     teacherLine.textContent = `المادة: ${SUBJECTS[key].label} — المعلم: ${SUBJECTS[key].teacher}`;
   }
-
-  // تفعيل زر ابدأ (إذا عندك له id)
-  const btn = document.getElementById("startBtn");
-  if(btn){
-    btn.disabled = false;
-    btn.classList.remove("opacity-50","cursor-not-allowed");
-  }
 }
-
+  
 /* =========================
    ✅ بيانات الأسئلة (ضع أسئلة كل مادة هنا)
    - مثال: MATH_DATA / ARABIC_DATA / SCIENCE_DATA
