@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="ar" dir="rtl" class="h-full">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>منصة تدريب اختبار نافس للصف السادس</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
@@ -12,39 +12,25 @@
     * { font-family: 'Tajawal', sans-serif; }
     body { background-color: #e2e8f0; min-height: 100vh; display:flex; flex-direction:column; }
 
-    .quiz-container{
-      background:#fff;border-radius:2rem;box-shadow:0 10px 25px rgba(0,0,0,0.05);
-      width:100%;max-width:800px;padding:2.5rem;position:relative;
-    }
+    .quiz-container{ background:#fff;border-radius:2rem;box-shadow:0 10px 25px rgba(0,0,0,0.05);width:100%;max-width:800px;padding:2.5rem;position:relative;}
     .pill-container{display:flex;gap:8px;position:absolute;top:-20px;left:40px;}
-    .pill-item{
-      background:#dbeafe;color:#1e40af;padding:8px 20px;border-radius:1.5rem;font-weight:800;
-      font-size:.9rem;display:flex;align-items:center;gap:5px;box-shadow:0 4px 6px rgba(0,0,0,0.05);
-    }
-
-    .option-card{
-      width:100%;padding:1.2rem 2rem;background:#f8fafc;border:2px solid #f1f5f9;border-radius:1.2rem;
-      display:flex;justify-content:space-between;align-items:center;font-weight:700;color:#334155;transition:.2s;cursor:pointer;
-    }
+    .pill-item{background:#dbeafe;color:#1e40af;padding:8px 20px;border-radius:1.5rem;font-weight:800;font-size:.9rem;display:flex;align-items:center;gap:5px;box-shadow:0 4px 6px rgba(0,0,0,0.05);}
+    .option-card{width:100%;padding:1.2rem 2rem;background:#f8fafc;border:2px solid #f1f5f9;border-radius:1.2rem;display:flex;justify-content:space-between;align-items:center;font-weight:700;color:#334155;transition:.2s;cursor:pointer;}
     .option-card:hover{border-color:#3b82f6;background:#eff6ff;}
     .option-card.correct{background:#22c55e!important;color:#fff!important;border-color:#16a34a!important;}
     .option-card.wrong{background:#ef4444!important;color:#fff!important;border-color:#dc2626!important;}
-
     .progress-bar{height:8px;background:#e2e8f0;border-radius:10px;overflow:hidden;margin-top:10px;}
     .progress-fill{height:100%;background:#1e3a8a;transition:width .3s;}
 
-    #feedback-toast{
-      position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
-      z-index:9999;padding:1.5rem 3rem;border-radius:1.5rem;display:none;text-align:center;
-      color:#fff;font-weight:900;font-size:1.5rem;animation:pop .4s cubic-bezier(0.175,0.885,0.32,1.275);
-    }
+    #feedback-toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9999;padding:1.5rem 3rem;border-radius:1.5rem;display:none;text-align:center;color:#fff;font-weight:900;font-size:1.5rem;animation:pop .4s cubic-bezier(0.175,0.885,0.32,1.275);}
     @keyframes pop{0%{transform:translate(-50%,-50%) scale(.5);opacity:0;}100%{transform:translate(-50%,-50%) scale(1);opacity:1;}}
-
     .welcome-text{display:flex;align-items:center;justify-content:flex-start;gap:8px;animation:slideInLeft 1.2s ease-out;}
     .welcome-msg{text-align:right;color:#1e3a8a;}
     .wave{font-size:1.4rem;display:inline-block;animation:waveHand 1.5s infinite;}
     @keyframes slideInLeft{0%{transform:translateX(-30px);opacity:0;}100%{transform:translateX(0);opacity:1;}}
     @keyframes waveHand{0%{transform:rotate(0deg);}25%{transform:rotate(15deg);}50%{transform:rotate(0deg);}75%{transform:rotate(-10deg);}100%{transform:rotate(0deg);}}
+
+    .subject-btn:active { transform: scale(0.97); }
 
     /* شبكة المواد */
     .subjects-grid{
@@ -53,6 +39,7 @@
       gap: 12px;
       margin-top: 14px;
     }
+
     .subject-card{
       width: 100%;
       aspect-ratio: 1 / 1;
@@ -69,61 +56,102 @@
       user-select:none;
       -webkit-tap-highlight-color: transparent;
     }
+
     .subject-card .icon{ font-size: 24px; line-height: 1; }
     .subject-card .label{
-      font-size: 14px;font-weight: 800;color: #0F172A;line-height: 1.2;text-align:center;white-space: nowrap;
+      font-size: 14px;
+      font-weight: 800;
+      color: #0F172A;
+      line-height: 1.2;
+      text-align:center;
+      white-space: nowrap;
     }
+
     .subject-math{ border-color:#F97316; background:#FFF7ED; }
     .subject-arabic{ border-color:#EAB308; background:#FEFCE8; }
     .subject-science{ border-color:#7C3AED; background:#F3E8FF; }
-    .subject-card:active{ transform: scale(.97); box-shadow: 0 1px 6px rgba(0,0,0,.08); }
-    .subject-card.selected{ border-color:#0B5FFF; box-shadow: 0 0 0 3px rgba(11,95,255,.18); }
+
+    .subject-card:active{
+      transform: scale(.97);
+      box-shadow: 0 1px 6px rgba(0,0,0,.08);
+    }
+
+    .subject-card.selected{
+      border-color:#0B5FFF;
+      box-shadow: 0 0 0 3px rgba(11,95,255,.18);
+    }
+
     @media (max-width: 360px){
       .subjects-grid{ gap: 10px; }
       .subject-card .label{ font-size: 13px; }
       .subject-card .icon{ font-size: 22px; }
     }
 
-    /* ✅ Countdown */
+    /* ====== مؤقت (نفس تصميم الصورة) ====== */
     .countdown{
       width:100%;
-      max-width: 420px;
-      margin-inline:auto;
-      background:#ffffff;
-      border:2px solid #e2e8f0;
-      border-radius:18px;
-      padding:14px 14px 12px;
-      box-shadow:0 6px 18px rgba(0,0,0,.06);
+      max-width: 520px;
+      margin: 18px auto 0;
+      background:#fff;
+      border: 2px solid #E5E7EB;
+      border-radius: 22px;
+      box-shadow: 0 12px 30px rgba(0,0,0,.07);
+      padding: 16px 16px 14px;
     }
     .countdown-title{
-      font-weight:900;
-      color:#0f172a;
-      font-size:13px;
-      margin-bottom:10px;
+      font-weight: 900;
+      color:#9A6B1D;
+      font-size: 22px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      margin-bottom: 12px;
     }
     .countdown-grid{
       display:grid;
       grid-template-columns: repeat(4, 1fr);
-      gap:10px;
+      gap: 14px;
+      align-items: stretch;
     }
     .countdown-box{
-      background:#f8fafc;
-      border:2px solid #e2e8f0;
-      border-radius:14px;
-      padding:10px 6px;
-      text-align:center;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap: 8px;
     }
-    .countdown-box .num{
-      font-weight:900;
-      font-size:20px;
-      color:#1e3a8a;
-      line-height:1;
+    .countdown-num{
+      width: 100%;
+      height: 64px;
+      border-radius: 18px;
+      background:#9A6B1D;
+      color:#fff;
+      font-weight: 900;
+      font-size: 34px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      letter-spacing: 1px;
     }
-    .countdown-box .label{
-      margin-top:6px;
-      font-weight:800;
-      font-size:11px;
-      color:#64748b;
+    .countdown-label{
+      font-weight: 800;
+      color:#6B7280;
+      font-size: 14px;
+    }
+    @media (max-width: 420px){
+      .countdown-title{ font-size: 18px; }
+      .countdown-num{ height: 56px; font-size: 28px; border-radius: 16px; }
+      .countdown-grid{ gap: 10px; }
+    }
+
+    /* تاريخ الشهادة (شكله بسيط) */
+    .date{
+      margin-top: 10px;
+      font-size: 12px;
+      font-weight: 800;
+      color: #64748b;
+      text-align: center;
     }
   </style>
 </head>
@@ -175,37 +203,40 @@
         </span>
       </a>
 
-      <!-- ✅ مؤقت العد التنازلي تحت PDF -->
-      <div class="countdown mt-6">
+      <!-- ✅ مؤقت اختبار نافس (نفس شكل الصورة) -->
+      <div class="countdown">
         <div class="countdown-title">⏰ باقي على اختبار نافس</div>
 
         <div class="countdown-grid">
           <div class="countdown-box">
-            <div class="num" id="d">٠٠</div>
-            <div class="label">يوم</div>
+            <div class="countdown-num" id="d">٠٠</div>
+            <div class="countdown-label">يوم</div>
           </div>
 
           <div class="countdown-box">
-            <div class="num" id="h">٠٠</div>
-            <div class="label">ساعة</div>
+            <div class="countdown-num" id="h">٠٠</div>
+            <div class="countdown-label">ساعة</div>
           </div>
 
           <div class="countdown-box">
-            <div class="num" id="m">٠٠</div>
-            <div class="label">دقيقة</div>
+            <div class="countdown-num" id="m">٠٠</div>
+            <div class="countdown-label">دقيقة</div>
           </div>
 
           <div class="countdown-box">
-            <div class="num" id="s">٠٠</div>
-            <div class="label">ثانية</div>
+            <div class="countdown-num" id="s">٠٠</div>
+            <div class="countdown-label">ثانية</div>
           </div>
         </div>
       </div>
 
+      <!-- (اختياري) تاريخ اليوم للهجري: يظهر هـ مرة واحدة فقط -->
+      <div class="date">بتاريخ: <span id="todayHijri">—</span> هـ</div>
+
     </section>
 
-    <!-- ✅ القسم التفاعلي (منفصل عن heroSection) -->
-    <div id="interactiveSection" class="p-10 flex flex-col justify-center">
+    <!-- القسم التفاعلي -->
+    <section id="interactiveSection" class="p-10 flex flex-col justify-center">
       <div id="startScreen" class="space-y-6">
 
         <div class="text-xl font-black welcome-text">
@@ -280,7 +311,7 @@
         </button>
 
       </div>
-    </div>
+    </section>
 
   </div>
 
@@ -349,62 +380,95 @@
 
 <div id="feedback-toast"></div>
 
+<!-- =========================
+     ✅ كل السكربتات هنا فقط
+     (عشان ما ينطبع كود تحت الصفحة)
+========================= -->
 <script>
-/* =========================================
-   ✅ أدوات عامة
-========================================= */
-function escapeHtml(str){
-  return String(str)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-}
-
-function toArabicDigits(num){
-  const map = ["٠","١","٢","٣","٤","٥","٦","٧","٨","٩"];
-  return String(num).split("").map(x => map[x] ?? x).join("");
-}
-
-/* ✅ حل مشكلة (هـ يطلع مرتين)
-   لأن بعض صيغ ar-SA الهجرية تضيف "هـ" تلقائيًا
-   فنحذف أي "هـ" من الناتج ثم نضيفها نحن مرة واحدة */
-function getHijriDateString(){
-  const options = { year:'numeric', month:'numeric', day:'numeric', calendar:'islamic-umalqura' };
-  let dateStr = new Date().toLocaleDateString('ar-SA', options);
-  dateStr = dateStr.replace(/هـ/g, "").trim();   // حذف هـ لو موجودة
-  return dateStr + " هـ";                        // إضافة مرة واحدة
-}
-
-/* =========================================
+/* =========================
    ✅ إعداد المواد والمعلمين
-========================================= */
+========================= */
 const SUBJECTS = {
   math:    { label: "رياضيات", icon:"📐", teacher:"موسى الصبحي" },
   arabic:  { label: "لغتي",    icon:"📖", teacher:"رمزي شعيري" },
   science: { label: "علوم",    icon:"🔬", teacher:"حسين آل عباس" },
 };
 
-let selectedSubject = ""; // مهم
+let selectedSubject = "";
 
 function selectSubject(key, el){
   if(!SUBJECTS[key]) return;
-
   selectedSubject = key;
 
-  document.querySelectorAll(".subject-card").forEach(card => {
-    card.classList.remove("selected");
-  });
-
+  document.querySelectorAll(".subject-card").forEach(card => card.classList.remove("selected"));
   if(el) el.classList.add("selected");
 
   const teacherLine = document.getElementById("teacherLine");
   if(teacherLine){
     teacherLine.classList.remove("hidden");
-    teacherLine.textContent = ` ‏معلم المادة : ${SUBJECTS[key].teacher}`;
+    teacherLine.textContent = `‏معلم المادة : ${SUBJECTS[key].teacher}`;
   }
 }
+
+/* =========================
+   ✅ المؤقت (نفس تصميم الصورة)
+========================= */
+/* 🔥 عدّل تاريخ الاختبار هنا */
+const TARGET_DATE = new Date("2026-03-20T09:00:00");
+
+function toArabicDigits(num){
+  const map = ["٠","١","٢","٣","٤","٥","٦","٧","٨","٩"];
+  return String(num).split("").map(ch => map[ch] ?? ch).join("");
+}
+function pad2(n){ return n < 10 ? "0"+n : String(n); }
+
+function updateCountdown(){
+  const dEl = document.getElementById("d");
+  const hEl = document.getElementById("h");
+  const mEl = document.getElementById("m");
+  const sEl = document.getElementById("s");
+  if(!dEl || !hEl || !mEl || !sEl) return;
+
+  const now = new Date();
+  const diff = TARGET_DATE - now;
+
+  if(diff <= 0){
+    dEl.textContent = "٠٠";
+    hEl.textContent = "٠٠";
+    mEl.textContent = "٠٠";
+    sEl.textContent = "٠٠";
+    return;
+  }
+
+  const totalSec = Math.floor(diff/1000);
+  const days = Math.floor(totalSec / 86400);
+  const hours = Math.floor((totalSec % 86400) / 3600);
+  const minutes = Math.floor((totalSec % 3600) / 60);
+  const seconds = totalSec % 60;
+
+  dEl.textContent = toArabicDigits(days);
+  hEl.textContent = toArabicDigits(pad2(hours));
+  mEl.textContent = toArabicDigits(pad2(minutes));
+  sEl.textContent = toArabicDigits(pad2(seconds));
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+/* =========================
+   ✅ تاريخ هجري (هـ لا تتكرر)
+========================= */
+(function setHijriDate(){
+  const el = document.getElementById("todayHijri");
+  if(!el) return;
+
+  const options = { day: "numeric", month: "numeric", year: "numeric" };
+  const raw = new Date().toLocaleDateString("ar-SA-u-ca-islamic", options);
+
+  // يشيل "هـ" لو كانت موجودة بالنهاية عشان ما تطلع مرتين
+  const clean = raw.replace(/\s*هـ\s*$/,'').trim();
+  el.textContent = clean;
+})();
   
 /* =========================
    ✅ بيانات الأسئلة لكل مادة
