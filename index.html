@@ -11,25 +11,40 @@
   <style>
     * { font-family: 'Tajawal', sans-serif; }
     body { background-color: #e2e8f0; min-height: 100vh; display:flex; flex-direction:column; }
-    .quiz-container{ background:#fff;border-radius:2rem;box-shadow:0 10px 25px rgba(0,0,0,0.05);width:100%;max-width:800px;padding:2.5rem;position:relative;}
+
+    .quiz-container{
+      background:#fff;border-radius:2rem;box-shadow:0 10px 25px rgba(0,0,0,0.05);
+      width:100%;max-width:800px;padding:2.5rem;position:relative;
+    }
     .pill-container{display:flex;gap:8px;position:absolute;top:-20px;left:40px;}
-    .pill-item{background:#dbeafe;color:#1e40af;padding:8px 20px;border-radius:1.5rem;font-weight:800;font-size:.9rem;display:flex;align-items:center;gap:5px;box-shadow:0 4px 6px rgba(0,0,0,0.05);}
-    .option-card{width:100%;padding:1.2rem 2rem;background:#f8fafc;border:2px solid #f1f5f9;border-radius:1.2rem;display:flex;justify-content:space-between;align-items:center;font-weight:700;color:#334155;transition:.2s;cursor:pointer;}
+    .pill-item{
+      background:#dbeafe;color:#1e40af;padding:8px 20px;border-radius:1.5rem;font-weight:800;
+      font-size:.9rem;display:flex;align-items:center;gap:5px;box-shadow:0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    .option-card{
+      width:100%;padding:1.2rem 2rem;background:#f8fafc;border:2px solid #f1f5f9;border-radius:1.2rem;
+      display:flex;justify-content:space-between;align-items:center;font-weight:700;color:#334155;transition:.2s;cursor:pointer;
+    }
     .option-card:hover{border-color:#3b82f6;background:#eff6ff;}
     .option-card.correct{background:#22c55e!important;color:#fff!important;border-color:#16a34a!important;}
     .option-card.wrong{background:#ef4444!important;color:#fff!important;border-color:#dc2626!important;}
+
     .progress-bar{height:8px;background:#e2e8f0;border-radius:10px;overflow:hidden;margin-top:10px;}
     .progress-fill{height:100%;background:#1e3a8a;transition:width .3s;}
 
-    #feedback-toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9999;padding:1.5rem 3rem;border-radius:1.5rem;display:none;text-align:center;color:#fff;font-weight:900;font-size:1.5rem;animation:pop .4s cubic-bezier(0.175,0.885,0.32,1.275);}
+    #feedback-toast{
+      position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+      z-index:9999;padding:1.5rem 3rem;border-radius:1.5rem;display:none;text-align:center;
+      color:#fff;font-weight:900;font-size:1.5rem;animation:pop .4s cubic-bezier(0.175,0.885,0.32,1.275);
+    }
     @keyframes pop{0%{transform:translate(-50%,-50%) scale(.5);opacity:0;}100%{transform:translate(-50%,-50%) scale(1);opacity:1;}}
+
     .welcome-text{display:flex;align-items:center;justify-content:flex-start;gap:8px;animation:slideInLeft 1.2s ease-out;}
     .welcome-msg{text-align:right;color:#1e3a8a;}
     .wave{font-size:1.4rem;display:inline-block;animation:waveHand 1.5s infinite;}
     @keyframes slideInLeft{0%{transform:translateX(-30px);opacity:0;}100%{transform:translateX(0);opacity:1;}}
     @keyframes waveHand{0%{transform:rotate(0deg);}25%{transform:rotate(15deg);}50%{transform:rotate(0deg);}75%{transform:rotate(-10deg);}100%{transform:rotate(0deg);}}
-
-    .subject-btn:active { transform: scale(0.97); }
 
     /* شبكة المواد */
     .subjects-grid{
@@ -38,7 +53,6 @@
       gap: 12px;
       margin-top: 14px;
     }
-
     .subject-card{
       width: 100%;
       aspect-ratio: 1 / 1;
@@ -55,35 +69,61 @@
       user-select:none;
       -webkit-tap-highlight-color: transparent;
     }
-
     .subject-card .icon{ font-size: 24px; line-height: 1; }
     .subject-card .label{
-      font-size: 14px;
-      font-weight: 800;
-      color: #0F172A;
-      line-height: 1.2;
-      text-align:center;
-      white-space: nowrap;
+      font-size: 14px;font-weight: 800;color: #0F172A;line-height: 1.2;text-align:center;white-space: nowrap;
     }
-
     .subject-math{ border-color:#F97316; background:#FFF7ED; }
     .subject-arabic{ border-color:#EAB308; background:#FEFCE8; }
     .subject-science{ border-color:#7C3AED; background:#F3E8FF; }
-
-    .subject-card:active{
-      transform: scale(.97);
-      box-shadow: 0 1px 6px rgba(0,0,0,.08);
-    }
-
-    .subject-card.selected{
-      border-color:#0B5FFF;
-      box-shadow: 0 0 0 3px rgba(11,95,255,.18);
-    }
-
+    .subject-card:active{ transform: scale(.97); box-shadow: 0 1px 6px rgba(0,0,0,.08); }
+    .subject-card.selected{ border-color:#0B5FFF; box-shadow: 0 0 0 3px rgba(11,95,255,.18); }
     @media (max-width: 360px){
       .subjects-grid{ gap: 10px; }
       .subject-card .label{ font-size: 13px; }
       .subject-card .icon{ font-size: 22px; }
+    }
+
+    /* ✅ Countdown */
+    .countdown{
+      width:100%;
+      max-width: 420px;
+      margin-inline:auto;
+      background:#ffffff;
+      border:2px solid #e2e8f0;
+      border-radius:18px;
+      padding:14px 14px 12px;
+      box-shadow:0 6px 18px rgba(0,0,0,.06);
+    }
+    .countdown-title{
+      font-weight:900;
+      color:#0f172a;
+      font-size:13px;
+      margin-bottom:10px;
+    }
+    .countdown-grid{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:10px;
+    }
+    .countdown-box{
+      background:#f8fafc;
+      border:2px solid #e2e8f0;
+      border-radius:14px;
+      padding:10px 6px;
+      text-align:center;
+    }
+    .countdown-box .num{
+      font-weight:900;
+      font-size:20px;
+      color:#1e3a8a;
+      line-height:1;
+    }
+    .countdown-box .label{
+      margin-top:6px;
+      font-weight:800;
+      font-size:11px;
+      color:#64748b;
     }
   </style>
 </head>
@@ -96,6 +136,7 @@
 
     <!-- القسم التعريفي -->
     <section id="heroSection" class="p-8 bg-slate-50 flex flex-col items-center text-center border-l">
+
       <div class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-bold mb-4">⭐ تدريب تفاعلي</div>
 
       <div class="flex items-center justify-center gap-4 mb-4">
@@ -108,118 +149,74 @@
       <h1 class="text-2xl font-black text-slate-800 mb-1">منصة تدريب اختبار نافس</h1>
       <p class="text-xs text-slate-400 font-bold">الصف السادس الابتدائي</p>
 
-     <!-- زر تحميل PDF -->
-<a href="./plan100.pdf" target="_blank" rel="noopener"
-   aria-label="تحميل توزيع مهارات خطة ١٠٠ يوم"
-   class="mt-4 inline-flex flex-row-reverse items-center gap-2 px-4 py-2
-          bg-green-50 text-green-700 border-2 border-green-400
-          rounded-lg text-xs font-bold
-          shadow-sm hover:shadow-md
-          hover:bg-green-100 hover:border-green-500
-          hover:scale-105 transform
-          focus:outline-none focus:ring-2 focus:ring-green-300
-          transition-all duration-300 group">
+      <!-- زر تحميل PDF -->
+      <a href="./plan100.pdf" target="_blank" rel="noopener"
+         aria-label="تحميل توزيع مهارات خطة ١٠٠ يوم"
+         class="mt-4 inline-flex flex-row-reverse items-center gap-2 px-4 py-2
+                bg-green-50 text-green-700 border-2 border-green-400
+                rounded-lg text-xs font-bold
+                shadow-sm hover:shadow-md
+                hover:bg-green-100 hover:border-green-500
+                hover:scale-105 transform
+                focus:outline-none focus:ring-2 focus:ring-green-300
+                transition-all duration-300 group">
 
-  <svg xmlns="http://www.w3.org/2000/svg"
-       class="h-5 w-5 transition-transform duration-300 group-hover:translate-y-1"
-       fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-  </svg>
+        <svg xmlns="http://www.w3.org/2000/svg"
+             class="h-5 w-5 transition-transform duration-300 group-hover:translate-y-1"
+             fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
 
-  تحميل توزيع مهارات (خطة ١٠٠ يوم)
+        تحميل توزيع مهارات (خطة ١٠٠ يوم)
 
-  <span class="text-[10px] bg-green-600 text-white px-2 py-0.5 rounded-md font-bold">
-    PDF
-  </span>
-</a>
+        <span class="text-[10px] bg-green-600 text-white px-2 py-0.5 rounded-md font-bold">
+          PDF
+        </span>
+      </a>
 
-<!-- ✅ المؤقت (لازم يكون داخل الصفحة، خارج script) -->
-<div class="countdown mt-6">
-  <div class="countdown-title">⏰ باقي على اختبار نافس</div>
+      <!-- ✅ مؤقت العد التنازلي تحت PDF -->
+      <div class="countdown mt-6">
+        <div class="countdown-title">⏰ باقي على اختبار نافس</div>
 
-  <div class="grid">
-    <div class="box">
-      <div class="num" id="d">٠٠</div>
-      <div class="label">يوم</div>
-    </div>
+        <div class="countdown-grid">
+          <div class="countdown-box">
+            <div class="num" id="d">٠٠</div>
+            <div class="label">يوم</div>
+          </div>
 
-    <div class="box">
-      <div class="num" id="h">٠٠</div>
-      <div class="label">ساعة</div>
-    </div>
+          <div class="countdown-box">
+            <div class="num" id="h">٠٠</div>
+            <div class="label">ساعة</div>
+          </div>
 
-    <div class="box">
-      <div class="num" id="m">٠٠</div>
-      <div class="label">دقيقة</div>
-    </div>
+          <div class="countdown-box">
+            <div class="num" id="m">٠٠</div>
+            <div class="label">دقيقة</div>
+          </div>
 
-    <div class="box">
-      <div class="num" id="s">٠٠</div>
-      <div class="label">ثانية</div>
-    </div>
-  </div>
-</div>
+          <div class="countdown-box">
+            <div class="num" id="s">٠٠</div>
+            <div class="label">ثانية</div>
+          </div>
+        </div>
+      </div>
 
-<script>
-/* 🔥 عدل تاريخ الاختبار هنا */
-const TARGET_DATE = new Date("2026-03-20T09:00:00");
+    </section>
 
-const d = document.getElementById("d");
-const h = document.getElementById("h");
-const m = document.getElementById("m");
-const s = document.getElementById("s");
+    <!-- ✅ القسم التفاعلي (منفصل عن heroSection) -->
+    <div id="interactiveSection" class="p-10 flex flex-col justify-center">
+      <div id="startScreen" class="space-y-6">
 
-function toArabic(num){
-  const map = ["٠","١","٢","٣","٤","٥","٦","٧","٨","٩"];
-  return String(num).split("").map(x => map[x] ?? x).join("");
-}
-function pad(n){ return n < 10 ? "0"+n : n; }
+        <div class="text-xl font-black welcome-text">
+          <span class="welcome-msg">أهلًا وسهلًا يا بطل</span>
+          <span class="wave">👋</span>
+        </div>
 
-function updateTimer(){
-  const now = new Date();
-  const diff = TARGET_DATE - now;
+        <p class="text-xs font-bold text-slate-400">
+          اكتب اسمك ثم اختر المادة، بعدها اختر الصف والأسبوع واضغط ابدأ 🚀
+        </p>
 
-  if(diff <= 0){
-    d.textContent = "٠٠";
-    h.textContent = "٠٠";
-    m.textContent = "٠٠";
-    s.textContent = "٠٠";
-    return;
-  }
-
-  const totalSec = Math.floor(diff/1000);
-  const days = Math.floor(totalSec / 86400);
-  const hours = Math.floor((totalSec % 86400) / 3600);
-  const minutes = Math.floor((totalSec % 3600) / 60);
-  const seconds = totalSec % 60;
-
-  d.textContent = toArabic(days);
-  h.textContent = toArabic(pad(hours));
-  m.textContent = toArabic(pad(minutes));
-  s.textContent = toArabic(pad(seconds));
-}
-
-updateTimer();
-setInterval(updateTimer, 1000);
-</script>
-
-<!-- ✅ الآن حط قسمك التفاعلي هنا (خارج script) -->
-<div id="interactiveSection" class="p-10 flex flex-col justify-center">
-  <div id="startScreen" class="space-y-6">
-
-    <div class="text-xl font-black welcome-text">
-      <span class="welcome-msg">أهلًا وسهلًا يا بطل</span>
-      <span class="wave">👋</span>
-    </div>
-
-    <p class="text-xs font-bold text-slate-400">
-      اكتب اسمك ثم اختر المادة، بعدها اختر الصف والأسبوع واضغط ابدأ 🚀
-    </p>
-
-  </div>
-</div>
-      
         <!-- الاسم -->
         <input id="studentName" type="text" placeholder="اكتب اسمك هنا..."
                class="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500">
@@ -284,6 +281,7 @@ setInterval(updateTimer, 1000);
 
       </div>
     </div>
+
   </div>
 
   <!-- شاشة الاختبار -->
@@ -352,9 +350,36 @@ setInterval(updateTimer, 1000);
 <div id="feedback-toast"></div>
 
 <script>
-/* =========================
+/* =========================================
+   ✅ أدوات عامة
+========================================= */
+function escapeHtml(str){
+  return String(str)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+function toArabicDigits(num){
+  const map = ["٠","١","٢","٣","٤","٥","٦","٧","٨","٩"];
+  return String(num).split("").map(x => map[x] ?? x).join("");
+}
+
+/* ✅ حل مشكلة (هـ يطلع مرتين)
+   لأن بعض صيغ ar-SA الهجرية تضيف "هـ" تلقائيًا
+   فنحذف أي "هـ" من الناتج ثم نضيفها نحن مرة واحدة */
+function getHijriDateString(){
+  const options = { year:'numeric', month:'numeric', day:'numeric', calendar:'islamic-umalqura' };
+  let dateStr = new Date().toLocaleDateString('ar-SA', options);
+  dateStr = dateStr.replace(/هـ/g, "").trim();   // حذف هـ لو موجودة
+  return dateStr + " هـ";                        // إضافة مرة واحدة
+}
+
+/* =========================================
    ✅ إعداد المواد والمعلمين
-========================= */
+========================================= */
 const SUBJECTS = {
   math:    { label: "رياضيات", icon:"📐", teacher:"موسى الصبحي" },
   arabic:  { label: "لغتي",    icon:"📖", teacher:"رمزي شعيري" },
@@ -368,15 +393,12 @@ function selectSubject(key, el){
 
   selectedSubject = key;
 
-  // شيل التحديد من الكل
   document.querySelectorAll(".subject-card").forEach(card => {
     card.classList.remove("selected");
   });
 
-  // حط تحديد على المختار
   if(el) el.classList.add("selected");
 
-  // اظهر سطر المعلم + المادة
   const teacherLine = document.getElementById("teacherLine");
   if(teacherLine){
     teacherLine.classList.remove("hidden");
@@ -4584,355 +4606,293 @@ const SCIENCE_DATA = {
 };  
 
 function getDataBySubject(){
-  if(selectedSubject === "math") return MATH_DATA;
   if(selectedSubject === "arabic") return ARABIC_DATA;
+  if(selectedSubject === "math") return MATH_DATA;
   if(selectedSubject === "science") return SCIENCE_DATA;
-  return {};
+  return null;
 }
 
-/* =========================
-   ✅ ربط Google Apps Script
-========================= */
-const SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzDByVy1lcqU7z0zf4UA-hAY3YWiaRSe7b0d4SgPDvLGKCp4NJ5oSjFdIzgMOK1-zfb/exec";
-
-function logToSheet(payload){
-  try{
-    payload.subject = selectedSubject;
-    payload.subject_label = SUBJECTS[selectedSubject]?.label || "";
-    payload.teacher = SUBJECTS[selectedSubject]?.teacher || "";
-
-    fetch(SHEET_WEB_APP_URL, {
-      method:"POST",
-      mode:"no-cors",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify(payload)
-    });
-  } catch(e){}
-}
-
-/* =========================
-   ✅ متغيرات الاختبار
-========================= */
-let currentQuestions = [];
-let currentIdx = 0;
+/* =========================================
+   ✅ منطق الاختبار
+========================================= */
+let questions = [];
+let qIndex = 0;
 let score = 0;
-let timeLeft = 0;
-let timerId = null;
-let studentData = {};
-let answerClicks = 0;
 
-let attemptsLeft = 2;
-let gotPointThisQ = false;
+let perQuestionSeconds = 600; // 10:00
+let timerInterval = null;
 
-/* =========================
-   ✅ بدء التدريب
-========================= */
+function showToast(msg, ok=true){
+  const t = document.getElementById("feedback-toast");
+  t.style.display = "block";
+  t.style.background = ok ? "#16a34a" : "#dc2626";
+  t.textContent = msg;
+  setTimeout(()=>{ t.style.display="none"; }, 900);
+}
+
 function startTraining(){
-  const name = document.getElementById('studentName').value.trim();
-  const grade = document.getElementById('gradeSelect').value;
-  const week = document.getElementById('weekSelect').value;
+  const name = document.getElementById("studentName").value.trim();
+  const grade = document.getElementById("gradeSelect").value;
+  const week = document.getElementById("weekSelect").value;
 
-  if(!name){ alert("اكتب اسم الطالب أولاً ✍️"); return; }
-  if(!selectedSubject){ alert("اختر المادة أولاً ✨"); return; }
-  if(!SUBJECTS[selectedSubject]){ alert("المادة المختارة غير معرّفة بالنظام."); return; }
-  if(!grade || !week){ alert("اختر الصف والأسبوع ✨"); return; }
+  if(!name){ showToast("اكتب اسمك أولًا ✍️", false); return; }
+  if(!selectedSubject){ showToast("اختر المادة 📚", false); return; }
+  if(!grade){ showToast("اختر الصف 🎯", false); return; }
+  if(!week){ showToast("اختر الأسبوع 📅", false); return; }
 
   const DATA = getDataBySubject();
-  const keyWeek = String(week);
-  currentQuestions = DATA[keyWeek] || DATA[Number(week)] || [];
+  if(!DATA || !DATA[week]){ showToast("لا توجد أسئلة لهذا الأسبوع", false); return; }
 
-  if(!currentQuestions.length){
-    alert("لا توجد أسئلة لهذه المادة في هذا الأسبوع حالياً.");
-    return;
-  }
+  questions = DATA[week];
+  qIndex = 0;
+  score = 0;
 
-  studentData = {
-    name, grade, week,
-    subject: selectedSubject,
-    teacher: SUBJECTS[selectedSubject].teacher
-  };
+  document.getElementById("displayStudentName").textContent = name;
+  document.getElementById("resStudentName").textContent = name;
 
-  currentIdx = 0; score = 0; answerClicks = 0;
+  document.getElementById("totalQNum").textContent = questions.length;
+  document.getElementById("currQNum").textContent = 1;
 
-  const weekNum = Number(week);
-  timeLeft = (weekNum === 10) ? 1800 : 600;
-  if(timerId) clearInterval(timerId);
+  const subjectBadge = document.getElementById("subjectBadge");
+  subjectBadge.textContent = `${SUBJECTS[selectedSubject].icon} ${SUBJECTS[selectedSubject].label} — معلم المادة: ${SUBJECTS[selectedSubject].teacher}`;
 
-  logToSheet({
-    action: "start",
-    name, grade, week: String(week),
-    ts: new Date().toISOString()
+  // إخفاء شاشة البداية وإظهار شاشة الاختبار
+  document.getElementById("mainContainer").classList.add("hidden");
+  document.getElementById("quizScreen").classList.remove("hidden");
+  document.getElementById("resultScreen").classList.add("hidden");
+
+  renderQuestion();
+  startPerQuestionTimer();
+}
+
+function renderQuestion(){
+  const q = questions[qIndex];
+  document.getElementById("questionText").innerHTML = escapeHtml(q.q).replace(/\n/g,"<br>");
+  document.getElementById("topQIndicator").textContent = `الأسبوع ${toArabicDigits(document.getElementById("weekSelect").value)} — السؤال ${toArabicDigits(qIndex+1)}/${toArabicDigits(questions.length)}`;
+
+  document.getElementById("currQNum").textContent = qIndex+1;
+
+  const explainBox = document.getElementById("explainBox");
+  explainBox.classList.add("hidden");
+  explainBox.textContent = "";
+
+  const optionsGrid = document.getElementById("optionsGrid");
+  optionsGrid.innerHTML = "";
+
+  q.c.forEach((choice, idx) => {
+    const btn = document.createElement("button");
+    btn.className = "option-card";
+    btn.type = "button";
+    btn.innerHTML = `
+      <span>${escapeHtml(choice)}</span>
+      <span class="text-slate-400 font-black">${toArabicDigits(idx+1)}</span>
+    `;
+    btn.onclick = () => pickAnswer(idx, btn);
+    optionsGrid.appendChild(btn);
   });
 
-  document.getElementById('mainContainer').classList.add('hidden');
-  document.getElementById('pageFooter').classList.add('hidden');
-  document.getElementById('quizScreen').classList.remove('hidden');
+  document.getElementById("nextBtn").classList.add("hidden");
 
-  document.getElementById('displayStudentName').innerText = name;
-
-  const sb = document.getElementById("subjectBadge");
-  const s = SUBJECTS[selectedSubject];
-  sb.innerHTML = `${s.icon} ${s.label} — معلم المادة: <span class="font-black">${s.teacher}</span> • الأسبوع ${week}`;
-
-  startTimer();
-  loadQuestion();
+  updateProgress();
 }
 
-/* =========================
-   ✅ التايمر
-========================= */
-function startTimer(){
-  updateTimerDisplay();
-  timerId = setInterval(()=>{
-    timeLeft--;
-    updateTimerDisplay();
-    if(timeLeft <= 0) endQuiz();
-  },1000);
-}
+let locked = false;
+function pickAnswer(idx, btnEl){
+  if(locked) return;
+  locked = true;
 
-function updateTimerDisplay(){
-  const mins = Math.floor(timeLeft/60);
-  const secs = timeLeft%60;
-  document.getElementById('timer').innerText =
-    `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
-}
+  const q = questions[qIndex];
+  const cards = document.querySelectorAll(".option-card");
 
-/* =========================
-   ✅ عرض السؤال + نظام محاولتين
-========================= */
-function loadQuestion(){
-  const q = currentQuestions[currentIdx];
-  attemptsLeft = 2;
-  gotPointThisQ = false;
-
-  document.getElementById('currQNum').innerText = currentIdx + 1;
-  document.getElementById('totalQNum').innerText = currentQuestions.length;
-  document.getElementById('topQIndicator').innerText = `السؤال ${currentIdx+1} من ${currentQuestions.length}`;
-  document.getElementById('questionText').innerText = q.q;
-
-  document.getElementById('progressFill').style.width =
-    `${((currentIdx+1)/currentQuestions.length)*100}%`;
-
-  const grid = document.getElementById('optionsGrid');
-  grid.innerHTML = "";
-  const letters = ['أ','ب','ج','د'];
-
-  q.c.forEach((choice,i)=>{
-    const card = document.createElement('div');
-    card.className = "option-card";
-    card.innerHTML = `<span>${choice}</span><span class="text-slate-300 font-black">${letters[i]||""}</span>`;
-    card.onclick = ()=> checkAnswer(i, card);
-    grid.appendChild(card);
+  cards.forEach((c, i) => {
+    c.onclick = null;
+    if(i === q.correct) c.classList.add("correct");
   });
-
-  document.getElementById('nextBtn').classList.add('hidden');
-  const box = document.getElementById('explainBox');
-  box.classList.add('hidden'); box.innerHTML = '';
-}
-
-function showToast(msg,bg){
-  const t=document.getElementById('feedback-toast');
-  t.innerText=msg; t.style.background=bg; t.style.display="block";
-  setTimeout(()=> t.style.display="none", 1000);
-}
-
-function checkAnswer(idx, card){
-  const q = currentQuestions[currentIdx];
-  const box = document.getElementById('explainBox');
-
-  answerClicks++;
-
-  if(card.dataset.locked === "1") return;
-  card.dataset.locked = "1";
-
-  const allCards = Array.from(document.querySelectorAll('.option-card'));
 
   if(idx === q.correct){
-    if(!gotPointThisQ){ score++; gotPointThisQ=true; }
-    card.classList.add('correct');
-    showToast("ممتاز! 🥳","#22c55e");
-
-    if(q.explain){
-      box.innerText = q.explain;
-      box.classList.remove('hidden');
-    }
-    allCards.forEach(c=> c.style.pointerEvents="none");
-    document.getElementById('nextBtn').classList.remove('hidden');
-    return;
+    score++;
+    showToast("✅ إجابة صحيحة", true);
+  }else{
+    btnEl.classList.add("wrong");
+    showToast("❌ إجابة خطأ", false);
   }
 
-  attemptsLeft--;
-  card.classList.add('wrong');
-
-  if(attemptsLeft > 0){
-    showToast("خاطئة.. جرّب مرة ثانية 👀","#f59e0b");
-    card.style.pointerEvents="none";
-    box.classList.add('hidden'); box.innerHTML='';
-    return;
+  const explainBox = document.getElementById("explainBox");
+  if(q.explain){
+    explainBox.classList.remove("hidden");
+    explainBox.innerHTML = `📌 ${escapeHtml(q.explain)}`;
   }
 
-  showToast("خاطئة 💔 — هذا التوضيح يساعدك ✅","#ef4444");
+  document.getElementById("nextBtn").classList.remove("hidden");
 
-  box.innerText = q.explain || "التوضيح غير متوفر.";
-  box.classList.remove('hidden');
-
-  const correctCard = allCards[q.correct];
-  if(correctCard) correctCard.classList.add('correct');
-
-  allCards.forEach(c=> c.style.pointerEvents="none");
-  document.getElementById('nextBtn').classList.remove('hidden');
+  stopPerQuestionTimer();
 }
 
 function nextQuestion(){
-  currentIdx++;
-  if(currentIdx < currentQuestions.length) loadQuestion();
-  else endQuiz();
+  locked = false;
+
+  qIndex++;
+  if(qIndex >= questions.length){
+    finishQuiz();
+    return;
+  }
+
+  renderQuestion();
+  resetPerQuestionTimer();
+  startPerQuestionTimer();
 }
 
-/* =========================
-   ✅ إنهاء الاختبار + حفظ النتيجة
-========================= */
-function endQuiz(){
-  if(timerId) clearInterval(timerId);
-
-  document.getElementById('quizScreen').classList.add('hidden');
-  document.getElementById('resultScreen').classList.remove('hidden');
-
-  const p = Math.round((score/currentQuestions.length)*100);
-
-  document.getElementById('resStudentName').innerText = studentData.name;
-  document.getElementById('resScoreText').innerText = `${score} من ${currentQuestions.length}`;
-  document.getElementById('resPercent').innerText = `${p}%`;
-
-  document.getElementById('resGrade').innerText =
-    p>=90 ? "ممتاز" : p>=75 ? "جيد جداً" : "يحتاج تحسين";
-
-  document.getElementById('resMsg').innerText =
-    p>=75 ? "أنت بطل حقيقي! استمر في الإبداع 🌟" : "نشجعك على المحاولة مرة أخرى لتحسين نتيجتك! 💪";
-
-  logToSheet({
-    action:"finish",
-    name: studentData.name,
-    grade: studentData.grade,
-    week: String(studentData.week),
-    score, total: currentQuestions.length,
-    percent: p,
-    attempts: answerClicks,
-    ts: new Date().toISOString()
-  });
+function updateProgress(){
+  const pct = ((qIndex) / questions.length) * 100;
+  document.getElementById("progressFill").style.width = pct + "%";
 }
 
-/* =========================
-   ✅ طباعة الشهادة باسم معلم المادة
-========================= */
-function escapeHtml(str){
-  return String(str)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+function finishQuiz(){
+  stopPerQuestionTimer();
+
+  document.getElementById("quizScreen").classList.add("hidden");
+  document.getElementById("resultScreen").classList.remove("hidden");
+
+  const total = questions.length;
+  const percent = Math.round((score / total) * 100);
+
+  document.getElementById("resScoreText").textContent = `${toArabicDigits(score)} / ${toArabicDigits(total)}`;
+  document.getElementById("resPercent").textContent = `${toArabicDigits(percent)}٪`;
+
+  let grade = "محتاج تدريب أكثر";
+  let msg = "شد حيلك يا بطل 💪";
+  if(percent >= 90){ grade="ممتاز"; msg="وحش يا بطل 🔥 استمر!"; }
+  else if(percent >= 75){ grade="جيد جدًا"; msg="ممتاز! باقي خطوة وتوصل للأعلى 👏"; }
+  else if(percent >= 60){ grade="جيد"; msg="كويس… نحتاج تركيز أكثر شوي 👍"; }
+
+  document.getElementById("resGrade").textContent = grade;
+  document.getElementById("resMsg").textContent = msg;
+
+  document.getElementById("progressFill").style.width = "100%";
 }
 
+/* =========================================
+   ✅ مؤقّت السؤال (10:00)
+========================================= */
+function formatMMSS(sec){
+  const m = Math.floor(sec/60);
+  const s = sec % 60;
+  const mm = m < 10 ? "0"+m : ""+m;
+  const ss = s < 10 ? "0"+s : ""+s;
+  // أبقيه 10:00 بالأرقام العادية داخل العداد (مثل ما كان عندك)
+  return `${mm}:${ss}`;
+}
+
+function startPerQuestionTimer(){
+  let remaining = perQuestionSeconds;
+  document.getElementById("timer").textContent = formatMMSS(remaining);
+
+  timerInterval = setInterval(()=>{
+    remaining--;
+    document.getElementById("timer").textContent = formatMMSS(Math.max(0, remaining));
+    if(remaining <= 0){
+      clearInterval(timerInterval);
+      timerInterval = null;
+      showToast("انتهى الوقت ⏱️", false);
+      // اعتبرها خطأ وانتقل
+      locked = true;
+      document.getElementById("nextBtn").classList.remove("hidden");
+    }
+  }, 1000);
+}
+
+function stopPerQuestionTimer(){
+  if(timerInterval){
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+}
+function resetPerQuestionTimer(){
+  stopPerQuestionTimer();
+  document.getElementById("timer").textContent = "10:00";
+}
+
+/* =========================================
+   ✅ طباعة الشهادة (مثال بسيط)
+========================================= */
 function printCertificateOnly(){
-  const name = (document.getElementById('resStudentName')?.innerText || '').trim();
-  const percent = (document.getElementById('resPercent')?.innerText || '').trim();
-  const scoreText = (document.getElementById('resScoreText')?.innerText || '').trim();
+  const name = document.getElementById("resStudentName").textContent || "";
+  const dateStr = getHijriDateString();
 
-  const cls = studentData.grade || '';
-  const week = studentData.week || '';
-  const subj = SUBJECTS[selectedSubject]?.label || '';
-  const teacher = SUBJECTS[selectedSubject]?.teacher || '';
+  const html = `
+  <html lang="ar" dir="rtl">
+    <head>
+      <meta charset="UTF-8"/>
+      <title>شهادة إنجاز</title>
+      <style>
+        body{font-family:Tajawal,Arial; padding:30px;}
+        .card{border:3px solid #0f172a; border-radius:18px; padding:24px; text-align:center;}
+        .t1{font-size:28px; font-weight:900; margin-bottom:10px;}
+        .t2{font-size:18px; font-weight:700; color:#334155;}
+        .date{margin-top:16px; font-weight:800; color:#0f172a;}
+      </style>
+    </head>
+    <body>
+      <div class="card">
+        <div class="t1">شهادة إنجاز</div>
+        <div class="t2">نُبارك للطالب/ة: <b>${escapeHtml(name)}</b></div>
+        <div class="t2">إتمام التدريب بنجاح في منصة نافس</div>
+        <div class="date">بتاريخ: <span>${escapeHtml(dateStr)}</span></div>
+      </div>
+      <script>window.print();</script>
+    </body>
+  </html>`;
 
-  const options = { year:'numeric', month:'long', day:'numeric', calendar:'islamic-uma' };
-  const dateStr = new Date().toLocaleDateString('ar-SA', options);
-
-  const ministryLogo="moe.png";
-  const nafsLogo="nafss.png";
-  const schoolLogo="مدرسة.png";
-
-  const iframe=document.createElement('iframe');
-  iframe.style.position='fixed';
-  iframe.style.right='0';
-  iframe.style.bottom='0';
-  iframe.style.width='0';
-  iframe.style.height='0';
-  iframe.style.border='0';
-  document.body.appendChild(iframe);
-
-  const doc=iframe.contentWindow.document;
-  doc.open();
-  doc.write(`<!doctype html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="utf-8">
-<title>طباعة شهادة</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-<style>
-  @page { size: A4 landscape; margin:0; }
-  html,body{margin:0;padding:0;background:#fff;}
-  body{display:flex;}
-  .cert-box{width:297mm;height:210mm;box-sizing:border-box;padding:14mm;border:6mm double #1e3a8a;background:#fff;text-align:center;direction:rtl;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-family:"Tajawal",Tahoma,Arial,sans-serif;}
-  .top{display:flex;justify-content:space-between;align-items:center;gap:10mm;}
-  .top img{height:26mm;width:auto;display:block;}
-  h1{font-size:42px;color:#1e3a8a;font-weight:900;margin:4mm 0 0;}
-  p{font-size:24px;margin-top:10mm;margin-bottom:4mm;}
-  h2{font-size:46px;color:#000;border-bottom:4px solid #d4af37;display:inline-block;padding:0 18mm;margin:4mm 0;min-height:1.2em;}
-  .line{font-size:22px;margin:6px 0;}
-  .green{font-size:22px;color:#059669;font-weight:900;margin-top:6px;}
-  .date{margin-top:8mm;font-weight:bold;font-size:18px;}
-  .sign{margin-top:12mm;display:flex;justify-content:space-between;padding:0 16mm;align-items:flex-start;}
-  .sign p{margin:0 0 3px;font-size:16px;}
-  .sign b{font-size:18px;}
-</style>
-</head>
-<body>
-  <div class="cert-box">
-    <div class="top">
-      <img src="${ministryLogo}" alt="وزارة التعليم">
-      <img src="${nafsLogo}" alt="نافس">
-      <img src="${schoolLogo}" alt="المدرسة">
-    </div>
-
-    <h1>شهادة شكر وتقدير</h1>
-
-    <div class="line">المادة: <b>${escapeHtml(subj)}</b></div>
-
-    <p>يتقدم معلم المادة بخالص الشكر للطالب:</p>
-    <h2>${escapeHtml(name || "__________")}</h2>
-
-    <div class="line">بالصف: <b>${escapeHtml(cls || "__________")}</b> • الأسبوع: <b>${escapeHtml(week || "—")}</b></div>
-    <div class="green">لاجتيازه تدريبات نافس بنسبة إنجاز: <span>${escapeHtml(percent || "—")}</span></div>
-    <div class="line">الدرجة: <b>${escapeHtml(scoreText || "—")}</b></div>
-    <div class="date">بتاريخ: <span>${escapeHtml(dateStr)}</span></div>
-
-    <div class="sign">
-      <div><p>معلم المادة</p><b>${escapeHtml(teacher || "__________")}</b></div>
-      <div><p>مدير المدرسة</p><b>أ/ نواف آل جافلة</b></div>
-    </div>
-  </div>
-
-  <script>
-    window.onload = () => { window.print(); };
-  <\/script>
-</body>
-</html>`);
-  doc.close();
-
-  setTimeout(()=>{
-    iframe.contentWindow.focus();
-    iframe.contentWindow.print();
-    setTimeout(()=> document.body.removeChild(iframe), 1200);
-  }, 400);
+  const w = window.open("", "_blank");
+  w.document.open();
+  w.document.write(html);
+  w.document.close();
 }
 
-/* =========================
-   ✅ تصدير الدوال للـ HTML
-========================= */
-window.selectSubject = selectSubject;
-window.startTraining = startTraining;
-window.nextQuestion = nextQuestion;
-window.printCertificateOnly = printCertificateOnly;
+/* =========================================
+   ✅ مؤقّت العد التنازلي لاختبار نافس (تحت PDF)
+========================================= */
+/* 🔥 عدل تاريخ الاختبار هنا */
+const TARGET_DATE = new Date("2026-03-20T09:00:00");
+
+function toArabic(num){
+  const map = ["٠","١","٢","٣","٤","٥","٦","٧","٨","٩"];
+  return String(num).split("").map(x => map[x] ?? x).join("");
+}
+function pad(n){ return n < 10 ? "0"+n : n; }
+
+function updateCountdown(){
+  const dEl = document.getElementById("d");
+  const hEl = document.getElementById("h");
+  const mEl = document.getElementById("m");
+  const sEl = document.getElementById("s");
+  if(!dEl || !hEl || !mEl || !sEl) return;
+
+  const now = new Date();
+  const diff = TARGET_DATE - now;
+
+  if(diff <= 0){
+    dEl.textContent = "٠٠";
+    hEl.textContent = "٠٠";
+    mEl.textContent = "٠٠";
+    sEl.textContent = "٠٠";
+    return;
+  }
+
+  const totalSec = Math.floor(diff/1000);
+  const days = Math.floor(totalSec / 86400);
+  const hours = Math.floor((totalSec % 86400) / 3600);
+  const minutes = Math.floor((totalSec % 3600) / 60);
+  const seconds = totalSec % 60;
+
+  dEl.textContent = toArabic(days);
+  hEl.textContent = toArabic(pad(hours));
+  mEl.textContent = toArabic(pad(minutes));
+  sEl.textContent = toArabic(pad(seconds));
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
 </script>
 
 </body>
