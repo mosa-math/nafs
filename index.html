@@ -102,7 +102,7 @@
       <p class="text-xs text-slate-400 font-bold">الصف السادس الابتدائي</p>
 
       <!-- زر تحميل PDF -->
-     <a href="./plan100.pdf" ...>
+    <a href="./plan100.pdf" ...>
     ... تحميل توزيع مهارات ...
 </a>
 
@@ -140,6 +140,7 @@
         </div>
 </div>
 
+<script>
   // تأكد من وضع هذا السكربت في الأسفل ليعمل بشكل صحيح
   const countToDate = new Date("May 1, 2026 08:00:00").getTime();
   const updateCountdown = setInterval(() => {
@@ -162,6 +163,8 @@
       document.getElementById("countdown-timer").innerHTML = "<p class='text-orange-600 font-bold'>بدأ الاختبار!</p>";
     }
   }, 1000);
+</script>
+
 
         <!-- الاسم -->
         <input id="studentName" type="text" placeholder="اكتب اسمك هنا..."
