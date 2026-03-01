@@ -134,6 +134,77 @@
       </a>
     </section>
 
+<!-- مؤقت اختبار نافس -->
+<div class="countdown">
+  <div class="countdown-title">⏰ باقي على اختبار نافس</div>
+
+  <div class="grid">
+    <div class="box">
+      <div class="num" id="d">٠٠</div>
+      <div class="label">يوم</div>
+    </div>
+
+    <div class="box">
+      <div class="num" id="h">٠٠</div>
+      <div class="label">ساعة</div>
+    </div>
+
+    <div class="box">
+      <div class="num" id="m">٠٠</div>
+      <div class="label">دقيقة</div>
+    </div>
+
+    <div class="box">
+      <div class="num" id="s">٠٠</div>
+      <div class="label">ثانية</div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+/* 🔥 عدل تاريخ الاختبار هنا */
+const TARGET_DATE = new Date("2026-03-20T09:00:00");
+
+const d = document.getElementById("d");
+const h = document.getElementById("h");
+const m = document.getElementById("m");
+const s = document.getElementById("s");
+
+function toArabic(num){
+  const map = ["٠","١","٢","٣","٤","٥","٦","٧","٨","٩"];
+  return String(num).split("").map(x => map[x] ?? x).join("");
+}
+
+function pad(n){ return n < 10 ? "0"+n : n; }
+
+function updateTimer(){
+  const now = new Date();
+  let diff = TARGET_DATE - now;
+
+  if(diff <= 0){
+    d.textContent = "٠٠";
+    h.textContent = "٠٠";
+    m.textContent = "٠٠";
+    s.textContent = "٠٠";
+    return;
+  }
+
+  const totalSec = Math.floor(diff/1000);
+  const days = Math.floor(totalSec / 86400);
+  const hours = Math.floor((totalSec % 86400) / 3600);
+  const minutes = Math.floor((totalSec % 3600) / 60);
+  const seconds = totalSec % 60;
+
+  d.textContent = toArabic(days);
+  h.textContent = toArabic(pad(hours));
+  m.textContent = toArabic(pad(minutes));
+  s.textContent = toArabic(pad(seconds));
+}
+
+updateTimer();
+setInterval(updateTimer,1000);
+    
     <!-- القسم التفاعلي -->
     <div id="interactiveSection" class="p-10 flex flex-col justify-center">
       <div id="startScreen" class="space-y-6">
@@ -4831,7 +4902,7 @@ function printCertificateOnly(){
     <div class="line">بالصف: <b>${escapeHtml(cls || "__________")}</b> • الأسبوع: <b>${escapeHtml(week || "—")}</b></div>
     <div class="green">لاجتيازه تدريبات نافس بنسبة إنجاز: <span>${escapeHtml(percent || "—")}</span></div>
     <div class="line">الدرجة: <b>${escapeHtml(scoreText || "—")}</b></div>
-    <div class="date">بتاريخ: <span>${escapeHtml(dateStr)}</span> هـ</div>
+    <div class="date">بتاريخ: <span>${escapeHtml(dateStr)}</span></div>
 
     <div class="sign">
       <div><p>معلم المادة</p><b>${escapeHtml(teacher || "__________")}</b></div>
