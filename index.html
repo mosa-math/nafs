@@ -394,36 +394,28 @@ const SUBJECTS = {
   science: { label: "علوم",    icon:"🔬", teacher:"حسين آل عباس" },
 };
 
-let selectedSubject = "";
+let selectedSubject = ""; // مهم
 
 function selectSubject(key, el){
   if(!SUBJECTS[key]) return;
+
   selectedSubject = key;
 
-  document.querySelectorAll(".subject-card").forEach(card => card.classList.remove("selected"));
+  // شيل التحديد من الكل
+  document.querySelectorAll(".subject-card").forEach(card => {
+    card.classList.remove("selected");
+  });
+
+  // حط تحديد على المختار
   if(el) el.classList.add("selected");
 
+  // اظهر سطر المعلم + المادة
   const teacherLine = document.getElementById("teacherLine");
   if(teacherLine){
     teacherLine.classList.remove("hidden");
-    teacherLine.textContent = `‏معلم المادة : ${SUBJECTS[key].teacher}`;
+    teacherLine.textContent = ` ‏معلم المادة : ${SUBJECTS[key].teacher}`;
   }
 }
-
-/* =========================
-   ✅ تاريخ هجري (هـ لا تتكرر)
-========================= */
-(function setHijriDate(){
-  const el = document.getElementById("todayHijri");
-  if(!el) return;
-
-  const options = { day: "numeric", month: "numeric", year: "numeric" };
-  const raw = new Date().toLocaleDateString("ar-SA-u-ca-islamic", options);
-
-  // يشيل "هـ" لو كانت موجودة بالنهاية عشان ما تطلع مرتين
-  const clean = raw.replace(/\s*هـ\s*$/,'').trim();
-  el.textContent = clean;
-})();
   
 /* =========================
    ✅ بيانات الأسئلة لكل مادة
