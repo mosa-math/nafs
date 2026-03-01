@@ -29,8 +29,6 @@
     @keyframes slideInLeft{0%{transform:translateX(-30px);opacity:0;}100%{transform:translateX(0);opacity:1;}}
     @keyframes waveHand{0%{transform:rotate(0deg);}25%{transform:rotate(15deg);}50%{transform:rotate(0deg);}75%{transform:rotate(-10deg);}100%{transform:rotate(0deg);}}
 
-    .subject-btn:active { transform: scale(0.97); }
-
     /* شبكة المواد */
     .subjects-grid{
       display:grid;
@@ -38,7 +36,6 @@
       gap: 12px;
       margin-top: 14px;
     }
-
     .subject-card{
       width: 100%;
       aspect-ratio: 1 / 1;
@@ -55,7 +52,6 @@
       user-select:none;
       -webkit-tap-highlight-color: transparent;
     }
-
     .subject-card .icon{ font-size: 24px; line-height: 1; }
     .subject-card .label{
       font-size: 14px;
@@ -65,7 +61,6 @@
       text-align:center;
       white-space: nowrap;
     }
-
     .subject-math{ border-color:#F97316; background:#FFF7ED; }
     .subject-arabic{ border-color:#EAB308; background:#FEFCE8; }
     .subject-science{ border-color:#7C3AED; background:#F3E8FF; }
@@ -74,7 +69,6 @@
       transform: scale(.97);
       box-shadow: 0 1px 6px rgba(0,0,0,.08);
     }
-
     .subject-card.selected{
       border-color:#0B5FFF;
       box-shadow: 0 0 0 3px rgba(11,95,255,.18);
@@ -91,7 +85,6 @@
 <body class="bg-slate-100 p-4">
 
 <div id="app" class="flex-grow flex items-center justify-center">
-
   <div id="mainContainer" class="w-full max-w-5xl bg-white rounded-3xl shadow-xl overflow-hidden grid md:grid-cols-2">
 
     <!-- القسم التعريفي -->
@@ -108,77 +101,67 @@
       <h1 class="text-2xl font-black text-slate-800 mb-1">منصة تدريب اختبار نافس</h1>
       <p class="text-xs text-slate-400 font-bold">الصف السادس الابتدائي</p>
 
-     <!-- زر تحميل PDF -->
-<a href="./plan100.pdf" target="_blank" rel="noopener"
-   aria-label="تحميل توزيع مهارات خطة ١٠٠ يوم"
-   class="mt-4 inline-flex flex-row-reverse items-center gap-2 px-4 py-2
-          bg-green-50 text-green-700 border-2 border-green-400
-          rounded-lg text-xs font-bold
-          shadow-sm hover:shadow-md
-          hover:bg-green-100 hover:border-green-500
-          hover:scale-105 transform
-          focus:outline-none focus:ring-2 focus:ring-green-300
-          transition-all duration-300 group">
+      <!-- زر تحميل PDF -->
+      <a href="./plan100.pdf" target="_blank" rel="noopener"
+         aria-label="تحميل توزيع مهارات خطة ١٠٠ يوم"
+         class="mt-4 inline-flex flex-row-reverse items-center gap-2 px-4 py-2
+                bg-green-50 text-green-700 border-2 border-green-400
+                rounded-lg text-xs font-bold
+                shadow-sm hover:shadow-md
+                hover:bg-green-100 hover:border-green-500
+                hover:scale-105 transform
+                focus:outline-none focus:ring-2 focus:ring-green-300
+                transition-all duration-300 group">
 
-  <svg xmlns="http://www.w3.org/2000/svg"
-       class="h-5 w-5 transition-transform duration-300 group-hover:translate-y-1"
-       fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-  </svg>
+        <svg xmlns="http://www.w3.org/2000/svg"
+             class="h-5 w-5 transition-transform duration-300 group-hover:translate-y-1"
+             fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
 
-  تحميل توزيع مهارات (خطة ١٠٠ يوم)
+        تحميل توزيع مهارات (خطة ١٠٠ يوم)
+        <span class="text-[10px] bg-green-600 text-white px-2 py-0.5 rounded-md font-bold">PDF</span>
+      </a>
+    </section>
 
-  <span class="text-[10px] bg-green-600 text-white px-2 py-0.5 rounded-md font-bold">
-    PDF
-  </span>
-</a>
-    
-<!-- ✅ الآن حط قسمك التفاعلي هنا (خارج script) -->
-<div id="interactiveSection" class="p-10 flex flex-col justify-center">
-  <div id="startScreen" class="space-y-6">
+    <!-- القسم التفاعلي -->
+    <section id="interactiveSection" class="p-10 flex flex-col justify-center">
+      <div id="startScreen" class="space-y-6">
 
-    <div class="text-xl font-black welcome-text">
-      <span class="welcome-msg">أهلًا وسهلًا يا بطل</span>
-      <span class="wave">👋</span>
-    </div>
+        <div class="text-xl font-black welcome-text">
+          <span class="welcome-msg">أهلًا وسهلًا يا بطل</span>
+          <span class="wave">👋</span>
+        </div>
 
-    <p class="text-xs font-bold text-slate-400">
-      اكتب اسمك ثم اختر المادة، بعدها اختر الصف والأسبوع واضغط ابدأ 🚀
-    </p>
+        <p class="text-xs font-bold text-slate-400">
+          اكتب اسمك ثم اختر المادة، بعدها اختر الصف والأسبوع واضغط ابدأ 🚀
+        </p>
 
-  </div>
-</div>
-      
         <!-- الاسم -->
         <input id="studentName" type="text" placeholder="اكتب اسمك هنا..."
                class="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500">
 
         <!-- أيقونات المواد -->
         <div class="subjects-grid">
-          <button type="button" class="subject-card subject-math" data-subject="math"
-                  onclick="selectSubject('math', this)">
+          <button type="button" class="subject-card subject-math" data-subject="math" onclick="selectSubject('math', this)">
             <div class="icon">📐</div>
             <div class="label">رياضيات</div>
           </button>
 
-          <button type="button" class="subject-card subject-arabic" data-subject="arabic"
-                  onclick="selectSubject('arabic', this)">
+          <button type="button" class="subject-card subject-arabic" data-subject="arabic" onclick="selectSubject('arabic', this)">
             <div class="icon">📖</div>
             <div class="label">لغتي</div>
           </button>
 
-          <button type="button" class="subject-card subject-science" data-subject="science"
-                  onclick="selectSubject('science', this)">
+          <button type="button" class="subject-card subject-science" data-subject="science" onclick="selectSubject('science', this)">
             <div class="icon">🔬</div>
             <div class="label">علوم</div>
           </button>
         </div>
 
         <!-- شريط يظهر اسم المعلم حسب المادة -->
-        <div id="teacherLine"
-             class="hidden text-xs font-bold rounded-xl px-4 py-3 border bg-slate-50 text-slate-700">
-        </div>
+        <div id="teacherLine" class="hidden text-xs font-bold rounded-xl px-4 py-3 border bg-slate-50 text-slate-700"></div>
 
         <!-- الصف + الأسبوع -->
         <div class="grid grid-cols-2 gap-3">
@@ -213,66 +196,9 @@
         </button>
 
       </div>
-    </div>
+    </section>
+
   </div>
-
-  <!-- شاشة الاختبار -->
-  <div id="quizScreen" class="hidden w-full flex flex-col items-center">
-    <div class="w-full max-w-3xl mb-8">
-      <div class="flex justify-between items-center mb-2">
-        <div class="flex items-center gap-2 font-bold text-slate-700">
-          <span class="bg-slate-200 p-2 rounded-full">👤</span>
-          <span id="displayStudentName"></span>
-        </div>
-        <div class="font-bold text-slate-500" id="topQIndicator"></div>
-      </div>
-
-      <!-- يظهر اسم المادة + المعلم -->
-      <div id="subjectBadge"
-           class="mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-black bg-slate-50 text-slate-800 border border-slate-200">
-      </div>
-
-      <div class="progress-bar"><div id="progressFill" class="progress-fill" style="width:0%"></div></div>
-    </div>
-
-    <div class="quiz-container">
-      <div class="pill-container">
-        <div class="pill-item"><span>السؤال</span> <span id="currQNum">1</span> من <span id="totalQNum">0</span></div>
-        <div class="pill-item">⏱️ الوقت: <span id="timer">10:00</span></div>
-      </div>
-
-      <h2 id="questionText" class="text-2xl font-extrabold text-slate-800 text-center my-8"></h2>
-      <div id="optionsGrid" class="space-y-4"></div>
-
-      <div id="explainBox"
-           class="hidden mt-5 p-4 rounded-2xl border text-sm font-bold leading-7 bg-slate-50 text-slate-800"></div>
-
-      <button id="nextBtn" onclick="nextQuestion()"
-              class="hidden w-full py-4 bg-slate-800 text-white font-black rounded-xl mt-8 text-lg">
-        السؤال التالي ⬅️
-      </button>
-    </div>
-  </div>
-
-  <!-- شاشة النتيجة -->
-  <div id="resultScreen" class="hidden w-full max-w-md flex flex-col items-center text-center">
-    <div class="text-6xl mb-4">🏆</div>
-    <h2 id="resStudentName" class="text-3xl font-black text-blue-900 mb-6"></h2>
-
-    <div class="bg-white w-full rounded-3xl p-8 shadow-xl space-y-6">
-      <div class="text-6xl font-black text-slate-800" id="resScoreText"></div>
-      <div class="text-2xl font-black text-blue-600" id="resPercent"></div>
-      <div class="text-xl font-bold text-slate-700">التقدير: <span id="resGrade"></span></div>
-      <div id="resMsg" class="bg-amber-50 p-3 rounded-xl text-amber-700 font-bold text-sm"></div>
-    </div>
-
-    <div class="grid grid-cols-3 gap-3 w-full mt-8">
-      <button onclick="printCertificateOnly()" class="bg-green-600 text-white p-3 rounded-xl font-bold text-sm">🖨️ طباعة الشهادة</button>
-      <button onclick="location.reload()" class="bg-blue-600 text-white p-3 rounded-xl font-bold text-sm">🔄 إعادة</button>
-      <button onclick="location.reload()" class="bg-slate-800 text-white p-3 rounded-xl font-bold text-sm">🏠 الرئيسية</button>
-    </div>
-  </div>
-
 </div>
 
 <footer id="pageFooter" class="p-6 text-center text-slate-400 font-bold">
@@ -282,38 +208,28 @@
 <div id="feedback-toast"></div>
 
 <script>
-/* =========================
-   ✅ إعداد المواد والمعلمين
-========================= */
+/* ✅ إعداد المواد والمعلمين */
 const SUBJECTS = {
   math:    { label: "رياضيات", icon:"📐", teacher:"موسى الصبحي" },
   arabic:  { label: "لغتي",    icon:"📖", teacher:"رمزي شعيري" },
   science: { label: "علوم",    icon:"🔬", teacher:"حسين آل عباس" },
 };
 
-let selectedSubject = ""; // مهم
+let selectedSubject = "";
 
 function selectSubject(key, el){
   if(!SUBJECTS[key]) return;
-
   selectedSubject = key;
 
-  // شيل التحديد من الكل
-  document.querySelectorAll(".subject-card").forEach(card => {
-    card.classList.remove("selected");
-  });
-
-  // حط تحديد على المختار
+  document.querySelectorAll(".subject-card").forEach(card => card.classList.remove("selected"));
   if(el) el.classList.add("selected");
 
-  // اظهر سطر المعلم + المادة
   const teacherLine = document.getElementById("teacherLine");
   if(teacherLine){
     teacherLine.classList.remove("hidden");
-    teacherLine.textContent = ` ‏معلم المادة : ${SUBJECTS[key].teacher}`;
+    teacherLine.textContent = `معلم المادة : ${SUBJECTS[key].teacher}`;
   }
 }
-  
   
 /* =========================
    ✅ بيانات الأسئلة لكل مادة
