@@ -108,34 +108,34 @@
       <h1 class="text-2xl font-black text-slate-800 mb-1">منصة تدريب اختبار نافس</h1>
       <p class="text-xs text-slate-400 font-bold">الصف السادس الابتدائي</p>
 
-      <a href="./plan100.pdf" target="_blank" rel="noopener"
-         aria-label="تحميل توزيع مهارات خطة ١٠٠ يوم"
-         class="mt-4 inline-flex flex-row-reverse items-center gap-2 px-4 py-2
-                bg-green-50 text-green-700 border-2 border-green-400
-                rounded-lg text-xs font-bold
-                shadow-sm hover:shadow-md
-                hover:bg-green-100 hover:border-green-500
-                hover:scale-105 transform
-                focus:outline-none focus:ring-2 focus:ring-green-300
-                transition-all duration-300 group">
+     <!-- زر تحميل PDF -->
+<a href="./plan100.pdf" target="_blank" rel="noopener"
+   aria-label="تحميل توزيع مهارات خطة ١٠٠ يوم"
+   class="mt-4 inline-flex flex-row-reverse items-center gap-2 px-4 py-2
+          bg-green-50 text-green-700 border-2 border-green-400
+          rounded-lg text-xs font-bold
+          shadow-sm hover:shadow-md
+          hover:bg-green-100 hover:border-green-500
+          hover:scale-105 transform
+          focus:outline-none focus:ring-2 focus:ring-green-300
+          transition-all duration-300 group">
 
-        <svg xmlns="http://www.w3.org/2000/svg"
-             class="h-5 w-5 transition-transform duration-300 group-hover:translate-y-1"
-             fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-        </svg>
+  <svg xmlns="http://www.w3.org/2000/svg"
+       class="h-5 w-5 transition-transform duration-300 group-hover:translate-y-1"
+       fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+  </svg>
 
-        تحميل توزيع مهارات (خطة ١٠٠ يوم)
+  تحميل توزيع مهارات (خطة ١٠٠ يوم)
 
-        <span class="text-[10px] bg-green-600 text-white px-2 py-0.5 rounded-md font-bold">
-          PDF
-        </span>
-      </a>
-    </section>
+  <span class="text-[10px] bg-green-600 text-white px-2 py-0.5 rounded-md font-bold">
+    PDF
+  </span>
+</a>
 
-<!-- مؤقت اختبار نافس -->
-<div class="countdown">
+<!-- ✅ المؤقت (لازم يكون داخل الصفحة، خارج script) -->
+<div class="countdown mt-6">
   <div class="countdown-title">⏰ باقي على اختبار نافس</div>
 
   <div class="grid">
@@ -162,7 +162,6 @@
 </div>
 
 <script>
-
 /* 🔥 عدل تاريخ الاختبار هنا */
 const TARGET_DATE = new Date("2026-03-20T09:00:00");
 
@@ -175,12 +174,11 @@ function toArabic(num){
   const map = ["٠","١","٢","٣","٤","٥","٦","٧","٨","٩"];
   return String(num).split("").map(x => map[x] ?? x).join("");
 }
-
 function pad(n){ return n < 10 ? "0"+n : n; }
 
 function updateTimer(){
   const now = new Date();
-  let diff = TARGET_DATE - now;
+  const diff = TARGET_DATE - now;
 
   if(diff <= 0){
     d.textContent = "٠٠";
@@ -203,21 +201,25 @@ function updateTimer(){
 }
 
 updateTimer();
-setInterval(updateTimer,1000);
-    
-    <!-- القسم التفاعلي -->
-    <div id="interactiveSection" class="p-10 flex flex-col justify-center">
-      <div id="startScreen" class="space-y-6">
+setInterval(updateTimer, 1000);
+</script>
 
-        <div class="text-xl font-black welcome-text">
-          <span class="welcome-msg">أهلًا وسهلًا يا بطل</span>
-          <span class="wave">👋</span>
-        </div>
+<!-- ✅ الآن حط قسمك التفاعلي هنا (خارج script) -->
+<div id="interactiveSection" class="p-10 flex flex-col justify-center">
+  <div id="startScreen" class="space-y-6">
 
-        <p class="text-xs font-bold text-slate-400">
-          اكتب اسمك ثم اختر المادة، بعدها اختر الصف والأسبوع واضغط ابدأ 🚀
-        </p>
+    <div class="text-xl font-black welcome-text">
+      <span class="welcome-msg">أهلًا وسهلًا يا بطل</span>
+      <span class="wave">👋</span>
+    </div>
 
+    <p class="text-xs font-bold text-slate-400">
+      اكتب اسمك ثم اختر المادة، بعدها اختر الصف والأسبوع واضغط ابدأ 🚀
+    </p>
+
+  </div>
+</div>
+      
         <!-- الاسم -->
         <input id="studentName" type="text" placeholder="اكتب اسمك هنا..."
                class="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500">
