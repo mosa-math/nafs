@@ -102,41 +102,66 @@
       <p class="text-xs text-slate-400 font-bold">الصف السادس الابتدائي</p>
 
       <!-- زر تحميل PDF -->
-      <a href="./plan100.pdf" target="_blank" rel="noopener"
-         aria-label="تحميل توزيع مهارات خطة ١٠٠ يوم"
-         class="mt-4 inline-flex flex-row-reverse items-center gap-2 px-4 py-2
-                bg-green-50 text-green-700 border-2 border-green-400
-                rounded-lg text-xs font-bold
-                shadow-sm hover:shadow-md
-                hover:bg-green-100 hover:border-green-500
-                hover:scale-105 transform
-                focus:outline-none focus:ring-2 focus:ring-green-300
-                transition-all duration-300 group">
+     <a href="./plan100.pdf" ...>
+    ... تحميل توزيع مهارات ...
+</a>
 
-        <svg xmlns="http://www.w3.org/2000/svg"
-             class="h-5 w-5 transition-transform duration-300 group-hover:translate-y-1"
-             fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-        </svg>
+<div class="bg-white rounded-3xl p-6 shadow-sm border border-orange-100 max-w-md mx-auto my-6 text-center">
+  <div class="flex items-center justify-center gap-2 mb-6">
+    <h2 class="text-2xl font-black text-orange-400">باقي على اختبار نافس</h2>
+    <span class="text-2xl animate-bounce">⏰</span>
+  </div>
+  <div class="flex flex-row-reverse justify-center gap-3" id="countdown-timer">
+    <div class="flex flex-col items-center">
+      <div id="days" class="bg-orange-400 text-white w-14 h-14 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-lg shadow-orange-200">--</div>
+      <span class="text-xs font-bold text-slate-500 mt-2">يوم</span>
+    </div>
+    <div class="flex flex-col items-center">
+      <div id="hours" class="bg-orange-400 text-white w-14 h-14 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-lg shadow-orange-200">--</div>
+      <span class="text-xs font-bold text-slate-500 mt-2">ساعة</span>
+    </div>
+    <div class="flex flex-col items-center">
+      <div id="minutes" class="bg-orange-400 text-white w-14 h-14 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-lg shadow-orange-200">--</div>
+      <span class="text-xs font-bold text-slate-500 mt-2">دقيقة</span>
+    </div>
+    <div class="flex flex-col items-center">
+      <div id="seconds" class="bg-orange-400 text-white w-14 h-14 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-lg shadow-orange-200">--</div>
+      <span class="text-xs font-bold text-slate-500 mt-2">ثانية</span>
+    </div>
+  </div>
+</div>
 
-        تحميل توزيع مهارات (خطة ١٠٠ يوم)
-        <span class="text-[10px] bg-green-600 text-white px-2 py-0.5 rounded-md font-bold">PDF</span>
-      </a>
-    </section>
-
-    <!-- القسم التفاعلي -->
-    <section id="interactiveSection" class="p-10 flex flex-col justify-center">
-      <div id="startScreen" class="space-y-6">
-
+<div id="interactiveSection" class="p-10 flex flex-col justify-center">
+    <div id="startScreen" class="space-y-6">
         <div class="text-xl font-black welcome-text">
-          <span class="welcome-msg">أهلًا وسهلًا يا بطل</span>
-          <span class="wave">👋</span>
+            <span class="welcome-msg">أهلًا وسهلًا يا بطل</span>
+            <span class="wave">👋</span>
         </div>
+        </div>
+</div>
 
-        <p class="text-xs font-bold text-slate-400">
-          اكتب اسمك ثم اختر المادة، بعدها اختر الصف والأسبوع واضغط ابدأ 🚀
-        </p>
+  // تأكد من وضع هذا السكربت في الأسفل ليعمل بشكل صحيح
+  const countToDate = new Date("May 1, 2026 08:00:00").getTime();
+  const updateCountdown = setInterval(() => {
+    const now = new Date().getTime();
+    const distance = countToDate - now;
+    const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+    const toArabic = (n) => n.toLocaleString('ar-SA');
+
+    document.getElementById("days").innerText = toArabic(d);
+    document.getElementById("hours").innerText = toArabic(h);
+    document.getElementById("minutes").innerText = toArabic(m);
+    document.getElementById("seconds").innerText = toArabic(s);
+
+    if (distance < 0) {
+      clearInterval(updateCountdown);
+      document.getElementById("countdown-timer").innerHTML = "<p class='text-orange-600 font-bold'>بدأ الاختبار!</p>";
+    }
+  }, 1000);
 
         <!-- الاسم -->
         <input id="studentName" type="text" placeholder="اكتب اسمك هنا..."
