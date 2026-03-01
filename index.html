@@ -11,18 +11,38 @@
   <style>
     * { font-family: 'Tajawal', sans-serif; }
     body { background-color: #e2e8f0; min-height: 100vh; display:flex; flex-direction:column; }
-    .quiz-container{ background:#fff;border-radius:2rem;box-shadow:0 10px 25px rgba(0,0,0,0.05);width:100%;max-width:800px;padding:2.5rem;position:relative;}
+
+    .quiz-container{
+      background:#fff;border-radius:2rem;box-shadow:0 10px 25px rgba(0,0,0,0.05);
+      width:100%;max-width:800px;padding:2.5rem;position:relative;
+    }
     .pill-container{display:flex;gap:8px;position:absolute;top:-20px;left:40px;}
-    .pill-item{background:#dbeafe;color:#1e40af;padding:8px 20px;border-radius:1.5rem;font-weight:800;font-size:.9rem;display:flex;align-items:center;gap:5px;box-shadow:0 4px 6px rgba(0,0,0,0.05);}
-    .option-card{width:100%;padding:1.2rem 2rem;background:#f8fafc;border:2px solid #f1f5f9;border-radius:1.2rem;display:flex;justify-content:space-between;align-items:center;font-weight:700;color:#334155;transition:.2s;cursor:pointer;}
+    .pill-item{
+      background:#dbeafe;color:#1e40af;padding:8px 20px;border-radius:1.5rem;
+      font-weight:800;font-size:.9rem;display:flex;align-items:center;gap:5px;
+      box-shadow:0 4px 6px rgba(0,0,0,0.05);
+    }
+    .option-card{
+      width:100%;padding:1.2rem 2rem;background:#f8fafc;border:2px solid #f1f5f9;border-radius:1.2rem;
+      display:flex;justify-content:space-between;align-items:center;font-weight:700;color:#334155;
+      transition:.2s;cursor:pointer;
+    }
     .option-card:hover{border-color:#3b82f6;background:#eff6ff;}
     .option-card.correct{background:#22c55e!important;color:#fff!important;border-color:#16a34a!important;}
     .option-card.wrong{background:#ef4444!important;color:#fff!important;border-color:#dc2626!important;}
     .progress-bar{height:8px;background:#e2e8f0;border-radius:10px;overflow:hidden;margin-top:10px;}
     .progress-fill{height:100%;background:#1e3a8a;transition:width .3s;}
 
-    #feedback-toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9999;padding:1.5rem 3rem;border-radius:1.5rem;display:none;text-align:center;color:#fff;font-weight:900;font-size:1.5rem;animation:pop .4s cubic-bezier(0.175,0.885,0.32,1.275);}
-    @keyframes pop{0%{transform:translate(-50%,-50%) scale(.5);opacity:0;}100%{transform:translate(-50%,-50%) scale(1);opacity:1;}}
+    #feedback-toast{
+      position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9999;
+      padding:1.5rem 3rem;border-radius:1.5rem;display:none;text-align:center;color:#fff;
+      font-weight:900;font-size:1.5rem;animation:pop .4s cubic-bezier(0.175,0.885,0.32,1.275);
+    }
+    @keyframes pop{
+      0%{transform:translate(-50%,-50%) scale(.5);opacity:0;}
+      100%{transform:translate(-50%,-50%) scale(1);opacity:1;}
+    }
+
     .welcome-text{display:flex;align-items:center;justify-content:flex-start;gap:8px;animation:slideInLeft 1.2s ease-out;}
     .welcome-msg{text-align:right;color:#1e3a8a;}
     .wave{font-size:1.4rem;display:inline-block;animation:waveHand 1.5s infinite;}
@@ -65,14 +85,8 @@
     .subject-arabic{ border-color:#EAB308; background:#FEFCE8; }
     .subject-science{ border-color:#7C3AED; background:#F3E8FF; }
 
-    .subject-card:active{
-      transform: scale(.97);
-      box-shadow: 0 1px 6px rgba(0,0,0,.08);
-    }
-    .subject-card.selected{
-      border-color:#0B5FFF;
-      box-shadow: 0 0 0 3px rgba(11,95,255,.18);
-    }
+    .subject-card:active{ transform: scale(.97); box-shadow: 0 1px 6px rgba(0,0,0,.08); }
+    .subject-card.selected{ border-color:#0B5FFF; box-shadow: 0 0 0 3px rgba(11,95,255,.18); }
 
     @media (max-width: 360px){
       .subjects-grid{ gap: 10px; }
@@ -85,6 +99,8 @@
 <body class="bg-slate-100 p-4">
 
 <div id="app" class="flex-grow flex items-center justify-center">
+
+  <!-- ✅ الواجهة الرئيسية -->
   <div id="mainContainer" class="w-full max-w-5xl bg-white rounded-3xl shadow-xl overflow-hidden grid md:grid-cols-2">
 
     <!-- القسم التعريفي -->
@@ -102,7 +118,7 @@
       <p class="text-xs text-slate-400 font-bold">الصف السادس الابتدائي</p>
 
       <!-- زر تحميل PDF -->
-   <a href="./plan100.pdf" target="_blank" rel="noopener"
+      <a href="./plan100.pdf" target="_blank" rel="noopener"
          aria-label="تحميل توزيع مهارات خطة ١٠٠ يوم"
          class="mt-4 inline-flex flex-row-reverse items-center gap-2 px-4 py-2
                 bg-green-50 text-green-700 border-2 border-green-400
@@ -123,6 +139,34 @@
         تحميل توزيع مهارات (خطة ١٠٠ يوم)
         <span class="text-[10px] bg-green-600 text-white px-2 py-0.5 rounded-md font-bold">PDF</span>
       </a>
+
+      <!-- ✅ المؤقت تحت PDF (نفس تصميمك) -->
+      <div class="bg-white rounded-3xl p-6 shadow-sm border border-orange-100 max-w-md mx-auto my-6 text-center w-full">
+        <div class="flex items-center justify-center gap-2 mb-6">
+          <h2 class="text-2xl font-black text-orange-400">باقي على اختبار نافس</h2>
+          <span class="text-2xl animate-bounce">⏰</span>
+        </div>
+
+        <div class="flex flex-row-reverse justify-center gap-3" id="countdown-timer">
+          <div class="flex flex-col items-center">
+            <div id="days" class="bg-orange-400 text-white w-14 h-14 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-lg shadow-orange-200">--</div>
+            <span class="text-xs font-bold text-slate-500 mt-2">يوم</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <div id="hours" class="bg-orange-400 text-white w-14 h-14 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-lg shadow-orange-200">--</div>
+            <span class="text-xs font-bold text-slate-500 mt-2">ساعة</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <div id="minutes" class="bg-orange-400 text-white w-14 h-14 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-lg shadow-orange-200">--</div>
+            <span class="text-xs font-bold text-slate-500 mt-2">دقيقة</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <div id="seconds" class="bg-orange-400 text-white w-14 h-14 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-lg shadow-orange-200">--</div>
+            <span class="text-xs font-bold text-slate-500 mt-2">ثانية</span>
+          </div>
+        </div>
+      </div>
+
     </section>
 
     <!-- القسم التفاعلي -->
@@ -199,6 +243,66 @@
     </section>
 
   </div>
+
+  <!-- ✅ شاشة الاختبار (كانت ناقصة عندك) -->
+  <div id="quizScreen" class="hidden w-full flex flex-col items-center">
+    <div class="w-full max-w-3xl mb-8">
+      <div class="flex justify-between items-center mb-2">
+        <div class="flex items-center gap-2 font-bold text-slate-700">
+          <span class="bg-slate-200 p-2 rounded-full">👤</span>
+          <span id="displayStudentName"></span>
+        </div>
+        <div class="font-bold text-slate-500" id="topQIndicator"></div>
+      </div>
+
+      <!-- يظهر اسم المادة + المعلم -->
+      <div id="subjectBadge"
+           class="mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-black bg-slate-50 text-slate-800 border border-slate-200">
+      </div>
+
+      <div class="progress-bar">
+        <div id="progressFill" class="progress-fill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="quiz-container">
+      <div class="pill-container">
+        <div class="pill-item"><span>السؤال</span> <span id="currQNum">1</span> من <span id="totalQNum">0</span></div>
+        <div class="pill-item">⏱️ الوقت: <span id="timer">10:00</span></div>
+      </div>
+
+      <h2 id="questionText" class="text-2xl font-extrabold text-slate-800 text-center my-8"></h2>
+      <div id="optionsGrid" class="space-y-4"></div>
+
+      <div id="explainBox"
+           class="hidden mt-5 p-4 rounded-2xl border text-sm font-bold leading-7 bg-slate-50 text-slate-800"></div>
+
+      <button id="nextBtn" onclick="nextQuestion()"
+              class="hidden w-full py-4 bg-slate-800 text-white font-black rounded-xl mt-8 text-lg">
+        السؤال التالي ⬅️
+      </button>
+    </div>
+  </div>
+
+  <!-- ✅ شاشة النتيجة (كانت ناقصة عندك) -->
+  <div id="resultScreen" class="hidden w-full max-w-md flex flex-col items-center text-center">
+    <div class="text-6xl mb-4">🏆</div>
+    <h2 id="resStudentName" class="text-3xl font-black text-blue-900 mb-6"></h2>
+
+    <div class="bg-white w-full rounded-3xl p-8 shadow-xl space-y-6">
+      <div class="text-6xl font-black text-slate-800" id="resScoreText"></div>
+      <div class="text-2xl font-black text-blue-600" id="resPercent"></div>
+      <div class="text-xl font-bold text-slate-700">التقدير: <span id="resGrade"></span></div>
+      <div id="resMsg" class="bg-amber-50 p-3 rounded-xl text-amber-700 font-bold text-sm"></div>
+    </div>
+
+    <div class="grid grid-cols-3 gap-3 w-full mt-8">
+      <button onclick="printCertificateOnly()" class="bg-green-600 text-white p-3 rounded-xl font-bold text-sm">🖨️ طباعة الشهادة</button>
+      <button onclick="location.reload()" class="bg-blue-600 text-white p-3 rounded-xl font-bold text-sm">🔄 إعادة</button>
+      <button onclick="location.reload()" class="bg-slate-800 text-white p-3 rounded-xl font-bold text-sm">🏠 الرئيسية</button>
+    </div>
+  </div>
+
 </div>
 
 <footer id="pageFooter" class="p-6 text-center text-slate-400 font-bold">
@@ -4489,7 +4593,7 @@ function startTraining(){
   currentQuestions = DATA[keyWeek] || DATA[Number(week)] || [];
 
   if(!currentQuestions.length){
-    alert("لا توجد أسئلة لهذه المادة في هذا الأسبوع حالياً.");
+    alert("لا توجد أسئلة لهذه المادة في هذا الأسبوع حالياً.\n\n(هذا طبيعي لأننا حذفنا بيانات الأسئلة للتجربة)\nالصق بيانات الأسئلة داخل MATH_DATA / ARABIC_DATA / SCIENCE_DATA.");
     return;
   }
 
@@ -4670,7 +4774,7 @@ function endQuiz(){
 }
 
 /* =========================
-   ✅ طباعة الشهادة باسم معلم المادة
+   ✅ طباعة الشهادة (تاريخ هجري + هـ مرة واحدة)
 ========================= */
 function escapeHtml(str){
   return String(str)
@@ -4679,6 +4783,16 @@ function escapeHtml(str){
     .replaceAll(">","&gt;")
     .replaceAll('"',"&quot;")
     .replaceAll("'","&#039;");
+}
+
+function getHijriDateStr(){
+  const fmt = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura', {
+    year:'numeric', month:'long', day:'numeric'
+  });
+  let s = fmt.format(new Date());
+  // احذف أي "هـ" لو رجعها النظام
+  s = s.replace(/\s*هـ/g, '').trim();
+  return s;
 }
 
 function printCertificateOnly(){
@@ -4691,8 +4805,7 @@ function printCertificateOnly(){
   const subj = SUBJECTS[selectedSubject]?.label || '';
   const teacher = SUBJECTS[selectedSubject]?.teacher || '';
 
-  const options = { year:'numeric', month:'long', day:'numeric', calendar:'islamic-uma' };
-  const dateStr = new Date().toLocaleDateString('ar-SA', options);
+  const dateStr = getHijriDateStr();
 
   const ministryLogo="moe.png";
   const nafsLogo="nafss.png";
@@ -4751,7 +4864,8 @@ function printCertificateOnly(){
     <div class="line">بالصف: <b>${escapeHtml(cls || "__________")}</b> • الأسبوع: <b>${escapeHtml(week || "—")}</b></div>
     <div class="green">لاجتيازه تدريبات نافس بنسبة إنجاز: <span>${escapeHtml(percent || "—")}</span></div>
     <div class="line">الدرجة: <b>${escapeHtml(scoreText || "—")}</b></div>
-    <div class="date">بتاريخ: <span>${escapeHtml(dateStr)}</span></div>
+
+    <div class="date">بتاريخ: <span>${escapeHtml(dateStr)}</span> هـ</div>
 
     <div class="sign">
       <div><p>معلم المادة</p><b>${escapeHtml(teacher || "__________")}</b></div>
@@ -4774,8 +4888,48 @@ function printCertificateOnly(){
 }
 
 /* =========================
-   ✅ تصدير الدوال للـ HTML
+   ✅ مؤقت العدّ التنازلي تحت PDF
 ========================= */
+(function startCountdown(){
+  const countToDate = new Date("2026-05-01T08:00:00").getTime();
+
+  const toArabicDigits = (n) => {
+    const map = ["٠","١","٢","٣","٤","٥","٦","٧","٨","٩"];
+    return String(n).split("").map(ch => map[ch] ?? ch).join("");
+  };
+  const pad2 = (n) => (n < 10 ? "0" + n : String(n));
+
+  const tick = setInterval(() => {
+    const now = Date.now();
+    const distance = countToDate - now;
+
+    const daysEl = document.getElementById("days");
+    const hoursEl = document.getElementById("hours");
+    const minutesEl = document.getElementById("minutes");
+    const secondsEl = document.getElementById("seconds");
+    const box = document.getElementById("countdown-timer");
+
+    if(!daysEl || !hoursEl || !minutesEl || !secondsEl || !box) return;
+
+    if(distance <= 0){
+      clearInterval(tick);
+      box.innerHTML = "<p class='text-orange-600 font-bold'>بدأ الاختبار!</p>";
+      return;
+    }
+
+    const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+    daysEl.textContent = toArabicDigits(d);
+    hoursEl.textContent = toArabicDigits(pad2(h));
+    minutesEl.textContent = toArabicDigits(pad2(m));
+    secondsEl.textContent = toArabicDigits(pad2(s));
+  }, 1000);
+})();
+
+/* ✅ تصدير الدوال */
 window.selectSubject = selectSubject;
 window.startTraining = startTraining;
 window.nextQuestion = nextQuestion;
