@@ -93,6 +93,65 @@
       .subject-card .label{ font-size: 13px; }
       .subject-card .icon{ font-size: 22px; }
     }
+    /* ===== مؤقت نافس (تحفيزي رسمي) ===== */
+
+.nafs-countdown{
+  width:100%;
+  background:#fff;
+  border-radius:22px;
+  border:2px solid #FCD9A3;
+  padding:18px 14px;
+  box-shadow:0 6px 18px rgba(0,0,0,.05);
+  margin-top:18px;
+}
+
+.nafs-title{
+  font-weight:900;
+  color:#D28D00;
+  font-size:18px;
+  margin-bottom:14px;
+}
+
+.nafs-grid{
+  display:grid;
+  grid-template-columns: repeat(4,1fr);
+  gap:10px;
+}
+
+.nafs-card{
+  background:#FFF7ED;
+  border:2px solid #FCD9A3;
+  border-radius:16px;
+  padding:12px 6px;
+}
+
+.nafs-number{
+  font-size:28px;
+  font-weight:900;
+  color:#B45309;
+}
+
+.nafs-label{
+  font-size:12px;
+  font-weight:800;
+  color:#64748B;
+  margin-top:6px;
+}
+
+.nafs-motivation{
+  margin-top:14px;
+  font-size:13px;
+  font-weight:800;
+  color:#0F172A;
+}
+
+/* 📱 تصغير للجوال */
+@media (max-width:480px){
+  .nafs-number{ font-size:20px; }
+  .nafs-card{ padding:10px 4px; }
+  .nafs-label{ font-size:11px; }
+  .nafs-title{ font-size:16px; }
+}
   </style>
 </head>
 
@@ -140,32 +199,42 @@
         <span class="text-[10px] bg-green-600 text-white px-2 py-0.5 rounded-md font-bold">PDF</span>
       </a>
 
-      <!-- ✅ المؤقت تحت PDF (نفس تصميمك) -->
-      <div class="bg-white rounded-3xl p-6 shadow-sm border border-orange-100 max-w-md mx-auto my-6 text-center w-full">
-        <div class="flex items-center justify-center gap-2 mb-6">
-          <h2 class="text-2xl font-black text-orange-400">باقي على اختبار نافس</h2>
-          <span class="text-2xl animate-bounce">⏰</span>
-        </div>
+      <!-- ✅ المؤقت تحت PDF (نفس تصميمك) --><!-- 🎯 مؤقت نافس - تحفيزي رسمي -->
+<div class="nafs-countdown mt-6">
 
-        <div class="flex flex-row-reverse justify-center gap-3" id="countdown-timer">
-          <div class="flex flex-col items-center">
-            <div id="days" class="bg-orange-400 text-white w-14 h-14 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-lg shadow-orange-200">--</div>
-            <span class="text-xs font-bold text-slate-500 mt-2">يوم</span>
-          </div>
-          <div class="flex flex-col items-center">
-            <div id="hours" class="bg-orange-400 text-white w-14 h-14 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-lg shadow-orange-200">--</div>
-            <span class="text-xs font-bold text-slate-500 mt-2">ساعة</span>
-          </div>
-          <div class="flex flex-col items-center">
-            <div id="minutes" class="bg-orange-400 text-white w-14 h-14 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-lg shadow-orange-200">--</div>
-            <span class="text-xs font-bold text-slate-500 mt-2">دقيقة</span>
-          </div>
-          <div class="flex flex-col items-center">
-            <div id="seconds" class="bg-orange-400 text-white w-14 h-14 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-lg shadow-orange-200">--</div>
-            <span class="text-xs font-bold text-slate-500 mt-2">ثانية</span>
-          </div>
-        </div>
-      </div>
+  <div class="nafs-title">
+    ⏰ باقي على اختبار نافس
+  </div>
+
+  <div class="nafs-grid" id="countdown-timer">
+
+    <div class="nafs-card">
+      <div class="nafs-number" id="days">٠</div>
+      <div class="nafs-label">يوم</div>
+    </div>
+
+    <div class="nafs-card">
+      <div class="nafs-number" id="hours">٠٠</div>
+      <div class="nafs-label">ساعة</div>
+    </div>
+
+    <div class="nafs-card">
+      <div class="nafs-number" id="minutes">٠٠</div>
+      <div class="nafs-label">دقيقة</div>
+    </div>
+
+    <div class="nafs-card">
+      <div class="nafs-number" id="seconds">٠٠</div>
+      <div class="nafs-label">ثانية</div>
+    </div>
+
+  </div>
+
+  <div class="nafs-motivation">
+    استعد جيدًا… كل يوم يقربك من التميز 🌟
+  </div>
+
+</div>
 
     </section>
 
@@ -4865,7 +4934,7 @@ function printCertificateOnly(){
     <div class="green">لاجتيازه تدريبات نافس بنسبة إنجاز: <span>${escapeHtml(percent || "—")}</span></div>
     <div class="line">الدرجة: <b>${escapeHtml(scoreText || "—")}</b></div>
 
-    <div class="date">بتاريخ: <span>${escapeHtml(dateStr)}</span> هـ</div>
+    <div class="date">بتاريخ: <span>${escapeHtml(dateStr)}</span></div>
 
     <div class="sign">
       <div><p>معلم المادة</p><b>${escapeHtml(teacher || "__________")}</b></div>
