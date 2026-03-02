@@ -152,7 +152,26 @@
   .nafs-label{ font-size:11px; }
   .nafs-title{ font-size:16px; }
 }
-  </style>
+ 
+.countdown-title{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+}
+
+.clock-icon{
+  font-size:32px;
+  animation: floatUpDown 2s ease-in-out infinite;
+}
+
+@keyframes floatUpDown{
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+  
+   </style>
 </head>
 
 <body class="bg-slate-100 p-4">
@@ -202,11 +221,12 @@
       <!-- ✅ المؤقت تحت PDF (نفس تصميمك) --><!-- 🎯 مؤقت نافس - تحفيزي رسمي -->
 <div class="nafs-countdown mt-6">
 
-  <div class="nafs-title">
-    ⏰ باقي على اختبار نافس
-  </div>
+  <div class="countdown-title">
+  <span class="clock-icon">⏰</span>
+  <h2>باقي على اختبار نافس</h2>
+</div>
 
-  <div class="nafs-grid" id="countdown-timer">
+  <div class="flex justify-center gap-3" id="countdown-timer">
 
     <div class="nafs-card">
       <div class="nafs-number" id="days">٠</div>
