@@ -221,34 +221,38 @@
       <!-- ✅ المؤقت تحت PDF (نفس تصميمك) --><!-- 🎯 مؤقت نافس - تحفيزي رسمي -->
 <div class="nafs-countdown mt-6">
 
-  <div class="countdown-title">
-  <span class="clock-icon">⏰</span>
-  <h2>باقي على اختبار نافس</h2>
+<div class="flex items-center justify-center gap-2 mb-6">
+  <h2 class="text-2xl font-black text-orange-400">باقي على اختبار نافس</h2>
+  <span class="text-2xl animate-bounce">⏰</span>
 </div>
 
   <div class="flex justify-center gap-3" id="countdown-timer">
 
-    <div class="nafs-card">
-      <div class="nafs-number" id="days">٠</div>
-      <div class="nafs-label">يوم</div>
-    </div>
-
-    <div class="nafs-card">
-      <div class="nafs-number" id="hours">٠٠</div>
-      <div class="nafs-label">ساعة</div>
-    </div>
-
-    <div class="nafs-card">
-      <div class="nafs-number" id="minutes">٠٠</div>
-      <div class="nafs-label">دقيقة</div>
-    </div>
-
-    <div class="nafs-card">
-      <div class="nafs-number" id="seconds">٠٠</div>
-      <div class="nafs-label">ثانية</div>
-    </div>
-
+  <!-- ثانية (تكون يمين) -->
+  <div class="flex flex-col items-center">
+    <div id="seconds" class="...">--</div>
+    <span class="...">ثانية</span>
   </div>
+
+  <!-- دقيقة -->
+  <div class="flex flex-col items-center">
+    <div id="minutes" class="...">--</div>
+    <span class="...">دقيقة</span>
+  </div>
+
+  <!-- ساعة -->
+  <div class="flex flex-col items-center">
+    <div id="hours" class="...">--</div>
+    <span class="...">ساعة</span>
+  </div>
+
+  <!-- يوم (تكون يسار) -->
+  <div class="flex flex-col items-center">
+    <div id="days" class="...">--</div>
+    <span class="...">يوم</span>
+  </div>
+
+</div>
 
   <div class="nafs-motivation">
     استعد جيدًا… كل يوم يقربك من التميز 🌟
