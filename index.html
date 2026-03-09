@@ -93,83 +93,97 @@
       .subject-card .label{ font-size: 13px; }
       .subject-card .icon{ font-size: 22px; }
     }
-    /* ===== مؤقت نافس (تحفيزي رسمي) ===== */
+    
+    /* غلاف المؤقت */
+  .nafs-countdown-wrap{ width:100%; margin-top:14px; }
+  .nafs-countdown-card{
+    background:#fff;
+    border:2px solid rgba(251,146,60,.25);
+    border-radius:22px;
+    padding:16px 14px;
+    box-shadow:0 6px 16px rgba(0,0,0,.06);
+    text-align:center;
+  }
 
-.nafs-countdown{
-  width:100%;
-  background:#fff;
-  border-radius:22px;
-  border:2px solid #FCD9A3;
-  padding:18px 14px;
-  box-shadow:0 6px 18px rgba(0,0,0,.05);
-  margin-top:18px;
-}
+  /* العنوان + أيقونة الساعة (الأيقونة يسار مع حركة) */
+  .nafs-countdown-head{
+    display:flex;
+    flex-direction:row;            /* مهم: يخلي الأيقونة يسار العنوان */
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .nafs-countdown-title{
+    margin:0;
+    font-weight:900;
+    color:#fb923c;
+    letter-spacing:.2px;
+    font-size:20px;
+  }
+  .nafs-countdown-icon{
+    font-size:22px;
+    animation:nafsUpDown 1.2s ease-in-out infinite;
+  }
+  @keyframes nafsUpDown{
+    0%,100%{ transform:translateY(0); }
+    50%{ transform:translateY(-6px); }
+  }
 
-.nafs-title{
-  font-weight:900;
-  color:#D28D00;
-  font-size:18px;
-  margin-bottom:14px;
-}
+  /* شبكة الأرقام: من اليمين لليسار (ثانية/دقيقة/ساعة/يوم) */
+  .nafs-countdown-grid{
+    display:grid;
+    grid-template-columns:repeat(4, minmax(0,1fr));
+    gap:10px;
+    direction:rtl;                 /* مهم */
+    justify-items:center;
+    align-items:start;
+    margin-bottom:14px;
+  }
 
-.nafs-grid{
-  display:grid;
-  grid-template-columns: repeat(4,1fr);
-  gap:10px;
-}
+  .nafs-time-item{ width:100%; max-width:92px; }
+  .nafs-time-box{
+    width:100%;
+    aspect-ratio:1 / 1;
+    border-radius:18px;
+    background:#fff7ed;
+    border:3px solid rgba(251,146,60,.35);
+    color:#c2410c;
+    font-weight:900;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 8px 20px rgba(251,146,60,.18);
+    font-size:30px;
+  }
+  .nafs-time-label{
+    margin-top:8px;
+    font-weight:800;
+    color:#64748b;
+    font-size:14px;
+  }
 
-.nafs-card{
-  background:#FFF7ED;
-  border:2px solid #FCD9A3;
-  border-radius:16px;
-  padding:12px 6px;
-}
+  .nafs-countdown-motivation{
+    font-weight:900;
+    color:#0f172a;
+    font-size:18px;
+  }
+  .nafs-star{ margin-left:6px; }
 
-.nafs-number{
-  font-size:28px;
-  font-weight:900;
-  color:#B45309;
-}
+  /* ✅ الجوال يصغّر تلقائيًا */
+  @media (max-width: 520px){
+    .nafs-countdown-title{ font-size:18px; }
+    .nafs-time-box{ font-size:24px; border-radius:16px; }
+    .nafs-time-label{ font-size:12px; }
+    .nafs-countdown-motivation{ font-size:16px; }
+    .nafs-time-item{ max-width:78px; }
+    .nafs-countdown-grid{ gap:8px; }
+  }
 
-.nafs-label{
-  font-size:12px;
-  font-weight:800;
-  color:#64748B;
-  margin-top:6px;
-}
-
-.nafs-motivation{
-  margin-top:14px;
-  font-size:13px;
-  font-weight:800;
-  color:#0F172A;
-}
-
-/* 📱 تصغير للجوال */
-@media (max-width:480px){
-  .nafs-number{ font-size:20px; }
-  .nafs-card{ padding:10px 4px; }
-  .nafs-label{ font-size:11px; }
-  .nafs-title{ font-size:16px; }
-}
- 
-.countdown-title{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:12px;
-}
-
-.clock-icon{
-  font-size:32px;
-  animation: floatUpDown 2s ease-in-out infinite;
-}
-
-@keyframes floatUpDown{
-  0%   { transform: translateY(0); }
-  50%  { transform: translateY(-6px); }
-  100% { transform: translateY(0); }
-}
+  @media (max-width: 360px){
+    .nafs-time-item{ max-width:70px; }
+    .nafs-time-box{ font-size:22px; }
+  }
   
    </style>
 </head>
@@ -218,46 +232,42 @@
         <span class="text-[10px] bg-green-600 text-white px-2 py-0.5 rounded-md font-bold">PDF</span>
       </a>
 
-      <!-- ✅ المؤقت تحت PDF (نفس تصميمك) --><!-- 🎯 مؤقت نافس - تحفيزي رسمي -->
-<div class="nafs-countdown mt-6">
+      <!-- ✅ مؤقت اختبار نافس (حطه تحت زر PDF مباشرة) -->
+<div class="nafs-countdown-wrap">
+  <div class="nafs-countdown-card">
+    <div class="nafs-countdown-head">
+      <span class="nafs-countdown-icon" aria-hidden="true">⏰</span>
+      <h3 class="nafs-countdown-title">باقي على اختبار نافس</h3>
+    </div>
 
-<div class="flex items-center justify-center gap-2 mb-6">
-  <h2 class="text-2xl font-black text-orange-400">باقي على اختبار نافس</h2>
-  <span class="text-2xl animate-bounce">⏰</span>
-</div>
+    <!-- ✅ الترتيب المطلوب من اليمين: ثانية ثم دقيقة ثم ساعة ثم يوم -->
+    <div class="nafs-countdown-grid" id="countdown-timer">
+      <div class="nafs-time-item">
+        <div class="nafs-time-box" id="seconds">--</div>
+        <div class="nafs-time-label">ثانية</div>
+      </div>
 
-  <div class="flex justify-center gap-3" id="countdown-timer">
+      <div class="nafs-time-item">
+        <div class="nafs-time-box" id="minutes">--</div>
+        <div class="nafs-time-label">دقيقة</div>
+      </div>
 
-  <!-- ثانية (تكون يمين) -->
-  <div class="flex flex-col items-center">
-    <div id="seconds" class="...">--</div>
-    <span class="...">ثانية</span>
+      <div class="nafs-time-item">
+        <div class="nafs-time-box" id="hours">--</div>
+        <div class="nafs-time-label">ساعة</div>
+      </div>
+
+      <div class="nafs-time-item">
+        <div class="nafs-time-box" id="days">--</div>
+        <div class="nafs-time-label">يوم</div>
+      </div>
+    </div>
+
+    <div class="nafs-countdown-motivation">
+      <span class="nafs-star" aria-hidden="true">🌟</span>
+      استعد جيدًا … كل يوم يقربك من التميز
+    </div>
   </div>
-
-  <!-- دقيقة -->
-  <div class="flex flex-col items-center">
-    <div id="minutes" class="...">--</div>
-    <span class="...">دقيقة</span>
-  </div>
-
-  <!-- ساعة -->
-  <div class="flex flex-col items-center">
-    <div id="hours" class="...">--</div>
-    <span class="...">ساعة</span>
-  </div>
-
-  <!-- يوم (تكون يسار) -->
-  <div class="flex flex-col items-center">
-    <div id="days" class="...">--</div>
-    <span class="...">يوم</span>
-  </div>
-
-</div>
-
-  <div class="nafs-motivation">
-    استعد جيدًا… كل يوم يقربك من التميز 🌟
-  </div>
-
 </div>
 
     </section>
@@ -4980,11 +4990,8 @@ function printCertificateOnly(){
   }, 400);
 }
 
-/* =========================
-   ✅ مؤقت العدّ التنازلي تحت PDF
-========================= */
-(function startCountdown(){
-  const countToDate = new Date("2026-04-12T08:00:00").getTime();
+ /* ✅ عدّل تاريخ الاختبار هنا فقط */
+  const COUNTDOWN_TARGET = new Date("2026-04-12T08:00:00").getTime();
 
   const toArabicDigits = (n) => {
     const map = ["٠","١","٢","٣","٤","٥","٦","٧","٨","٩"];
@@ -4992,9 +4999,9 @@ function printCertificateOnly(){
   };
   const pad2 = (n) => (n < 10 ? "0" + n : String(n));
 
-  const tick = setInterval(() => {
+  function updateCountdown(){
     const now = Date.now();
-    const distance = countToDate - now;
+    const distance = COUNTDOWN_TARGET - now;
 
     const daysEl = document.getElementById("days");
     const hoursEl = document.getElementById("hours");
@@ -5005,8 +5012,7 @@ function printCertificateOnly(){
     if(!daysEl || !hoursEl || !minutesEl || !secondsEl || !box) return;
 
     if(distance <= 0){
-      clearInterval(tick);
-      box.innerHTML = "<p class='text-orange-600 font-bold'>بدأ الاختبار!</p>";
+      box.innerHTML = "<div style='grid-column:1/-1;font-weight:900;color:#fb923c'>بدأ الاختبار! ✅</div>";
       return;
     }
 
@@ -5019,7 +5025,10 @@ function printCertificateOnly(){
     hoursEl.textContent = toArabicDigits(pad2(h));
     minutesEl.textContent = toArabicDigits(pad2(m));
     secondsEl.textContent = toArabicDigits(pad2(s));
-  }, 1000);
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
 })();
 
 /* ✅ تصدير الدوال */
