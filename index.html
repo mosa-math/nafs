@@ -279,6 +279,30 @@
       .nafs-time-item{ max-width:70px; }
       .nafs-time-box{ font-size:22px; }
     }
+
+    /* 🎉 مؤثر قصاصات احتفالية */
+.confetti-piece{
+  position: fixed;
+  top: -12px;
+  width: 10px;
+  height: 16px;
+  border-radius: 2px;
+  opacity: .95;
+  z-index: 99999;
+  pointer-events: none;
+  animation: confettiFall linear forwards;
+}
+
+@keyframes confettiFall{
+  0%{
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100%{
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0;
+  }
+}
   </style>
 </head>
 
@@ -5011,7 +5035,7 @@ function renderExplain(text, type = "wrong"){
     <div>${text || "التوضيح غير متوفر."}</div>
   `;
 }
-
+  
 function checkAnswer(idx, card){
   const q = currentQuestions[currentIdx];
   const allCards = Array.from(document.querySelectorAll(".option-card"));
@@ -5025,6 +5049,33 @@ function checkAnswer(idx, card){
     if(!gotPointThisQ){ score++; gotPointThisQ = true; }
     card.classList.add("correct");
     showToast("ممتاز! 🥳", "#22c55e");
+function launchConfetti(count = 28){
+  const colors = ["#3B82F6", "#22C55E", "#F59E0B", "#EF4444", "#8B5CF6", "#14B8A6"];
+
+  for(let i = 0; i < count; i++){
+    const piece = document.createElement("div");
+    piece.className = "confetti-piece";
+
+    const left = Math.random() * 100;
+    const size = 8 + Math.random() * 8;
+    const duration = 1.8 + Math.random() * 1.6;
+    const delay = Math.random() * 0.3;
+    const color = colors[Math.floor(Math.random() * colors.length)];
+
+    piece.style.left = left + "vw";
+    piece.style.width = size + "px";
+    piece.style.height = size * 1.4 + "px";
+    piece.style.background = color;
+    piece.style.animationDuration = duration + "s";
+    piece.style.animationDelay = delay + "s";
+
+    document.body.appendChild(piece);
+
+    setTimeout(() => {
+      piece.remove();
+    }, (duration + delay) * 1000 + 300);
+  }
+}
 
 if(q.explain) renderExplain(q.explain, "correct");
 
