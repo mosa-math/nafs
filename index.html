@@ -4995,13 +4995,21 @@ function showToast(msg,bg){
   setTimeout(()=> t.style.display="none", 1100);
 }
 
-function renderExplain(text){
+function renderExplain(text, type = "wrong"){
   const box = $("explainBox");
+
+  const isCorrect = type === "correct";
+
+  box.className = isCorrect
+  ? "mt-5 p-4 rounded-2xl border text-sm font-bold leading-7 bg-blue-50 text-blue-900 border-blue-200"
+  : "mt-5 p-4 rounded-2xl border text-sm font-bold leading-7 bg-red-50 text-red-900 border-red-200";
+
   box.innerHTML = `
-    <div class="explain-title">💡 لماذا هذه الإجابة؟</div>
+<div class="explain-title ${isCorrect ? 'text-blue-700' : 'text-red-600'}">
+      💡 لماذا هذه الإجابة؟
+    </div>
     <div>${text || "التوضيح غير متوفر."}</div>
   `;
-  box.classList.remove("hidden");
 }
 
 function checkAnswer(idx, card){
@@ -5018,7 +5026,7 @@ function checkAnswer(idx, card){
     card.classList.add("correct");
     showToast("ممتاز! 🥳", "#22c55e");
 
-    if(q.explain) renderExplain(q.explain);
+if(q.explain) renderExplain(q.explain, "correct");
 
     allCards.forEach(c=> c.style.pointerEvents="none");
     $("nextBtn").classList.remove("hidden");
@@ -5038,7 +5046,7 @@ function checkAnswer(idx, card){
 
   showToast("خاطئة 💔", "#ef4444");
 
-  renderExplain(q.explain || "التوضيح غير متوفر.");
+  renderExplain(q.explain || "التوضيح غير متوفر.", "wrong");
 
   const correctCard = allCards[q.correct];
   if(correctCard) correctCard.classList.add("correct");
