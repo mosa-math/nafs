@@ -4991,44 +4991,45 @@ function printCertificateOnly(){
 }
 
  /* ✅ عدّل تاريخ الاختبار هنا فقط */
-  const COUNTDOWN_TARGET = new Date("2026-04-12T08:00:00").getTime();
+ 
+const COUNTDOWN_TARGET =
+  new Date("2026-04-12T08:00:00+03:00").getTime();
 
-  const toArabicDigits = (n) => {
-    const map = ["٠","١","٢","٣","٤","٥","٦","٧","٨","٩"];
-    return String(n).split("").map(ch => map[ch] ?? ch).join("");
-  };
-  const pad2 = (n) => (n < 10 ? "0" + n : String(n));
+const daysEl = document.getElementById("days");
+const hoursEl = document.getElementById("hours");
+const minutesEl = document.getElementById("minutes");
+const secondsEl = document.getElementById("seconds");
+const box = document.getElementById("countdown-timer");
 
-  function updateCountdown(){
-    const now = Date.now();
-    const distance = COUNTDOWN_TARGET - now;
+const toArabicDigits = (n) => {
+  const map = ["٠","١","٢","٣","٤","٥","٦","٧","٨","٩"];
+  return String(n).split("").map(ch => map[ch] ?? ch).join("");
+};
 
-    const daysEl = document.getElementById("days");
-    const hoursEl = document.getElementById("hours");
-    const minutesEl = document.getElementById("minutes");
-    const secondsEl = document.getElementById("seconds");
-    const box = document.getElementById("countdown-timer");
+const pad2 = (n) => (n < 10 ? "0" + n : String(n));
 
-    if(!daysEl || !hoursEl || !minutesEl || !secondsEl || !box) return;
+function updateCountdown(){
+  const distance = COUNTDOWN_TARGET - Date.now();
 
-    if(distance <= 0){
-      box.innerHTML = "<div style='grid-column:1/-1;font-weight:900;color:#fb923c'>بدأ الاختبار! ✅</div>";
-      return;
-    }
-
-    const d = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const s = Math.floor((distance % (1000 * 60)) / 1000);
-
-    daysEl.textContent = toArabicDigits(d);
-    hoursEl.textContent = toArabicDigits(pad2(h));
-    minutesEl.textContent = toArabicDigits(pad2(m));
-    secondsEl.textContent = toArabicDigits(pad2(s));
+  if(distance <= 0){
+    box.innerHTML =
+      "<div style='grid-column:1/-1;font-weight:900;color:#fb923c'>بدأ الاختبار! ✅</div>";
+    return;
   }
 
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
+  const d = Math.floor(distance / 86400000);
+  const h = Math.floor((distance % 86400000) / 3600000);
+  const m = Math.floor((distance % 3600000) / 60000);
+  const s = Math.floor((distance % 60000) / 1000);
+
+  daysEl.textContent = toArabicDigits(d);
+  hoursEl.textContent = toArabicDigits(pad2(h));
+  minutesEl.textContent = toArabicDigits(pad2(m));
+  secondsEl.textContent = toArabicDigits(pad2(s));
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
 })();
 
 /* ✅ تصدير الدوال */
