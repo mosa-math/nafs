@@ -112,9 +112,7 @@
       box-shadow:0 0 0 3px rgba(239,68,68,.12);
     }
 
-    .shake{
-      animation: shakeX .35s linear;
-    }
+    .shake{ animation: shakeX .35s linear; }
     @keyframes shakeX{
       0%,100%{transform:translateX(0)}
       20%{transform:translateX(6px)}
@@ -155,6 +153,28 @@
       font-size:12px;
       font-weight:800;
       color:#0f172a;
+    }
+
+    .student-stats-card{
+      margin-top:12px;
+      border:1px solid #dbeafe;
+      background:#f8fbff;
+      border-radius:16px;
+      padding:12px;
+      text-align:right;
+      box-shadow:0 2px 8px rgba(0,0,0,.04);
+    }
+    .student-stats-title{
+      font-size:12px;
+      font-weight:900;
+      color:#1d4ed8;
+      margin-bottom:8px;
+    }
+    .student-stats-item{
+      font-size:12px;
+      font-weight:800;
+      color:#334155;
+      margin-top:5px;
     }
 
     .nafs-countdown-wrap{ width:100%; margin-top:14px; }
@@ -250,16 +270,20 @@
       margin:4px;
     }
 
-    .quote-box{
-      margin-top:16px;
-      background:#eff6ff;
-      color:#1e3a8a;
-      border:1px solid #bfdbfe;
-      padding:12px 14px;
-      border-radius:16px;
-      font-size:14px;
-      font-weight:800;
-      line-height:1.8;
+    .confetti-piece{
+      position: fixed;
+      top: -12px;
+      width: 10px;
+      height: 16px;
+      border-radius: 2px;
+      opacity: .95;
+      z-index: 99999;
+      pointer-events: none;
+      animation: confettiFall linear forwards;
+    }
+    @keyframes confettiFall{
+      0%{ transform: translateY(0) rotate(0deg); opacity: 1; }
+      100%{ transform: translateY(110vh) rotate(720deg); opacity: 0; }
     }
 
     @media (max-width: 520px){
@@ -279,353 +303,228 @@
       .nafs-time-item{ max-width:70px; }
       .nafs-time-box{ font-size:22px; }
     }
-
-    /* 🎉 مؤثر قصاصات احتفالية */
-.confetti-piece{
-  position: fixed;
-  top: -12px;
-  width: 10px;
-  height: 16px;
-  border-radius: 2px;
-  opacity: .95;
-  z-index: 99999;
-  pointer-events: none;
-  animation: confettiFall linear forwards;
-}
-
-@keyframes confettiFall{
-  0%{
-    transform: translateY(0) rotate(0deg);
-    opacity: 1;
-  }
-  100%{
-    transform: translateY(110vh) rotate(720deg);
-    opacity: 0;
-  }
-}
   </style>
 </head>
 
 <body class="bg-slate-100 p-4">
+  <div id="app" class="flex-grow flex items-center justify-center">
+    <div id="mainContainer" class="w-full max-w-5xl bg-white rounded-3xl shadow-xl overflow-hidden grid md:grid-cols-2">
 
-<div id="app" class="flex-grow flex items-center justify-center">
+      <section id="heroSection" class="p-8 bg-slate-50 flex flex-col items-center text-center border-l">
+        <div class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-bold mb-4">⭐ تدريب تفاعلي</div>
 
-  <div id="mainContainer" class="w-full max-w-5xl bg-white rounded-3xl shadow-xl overflow-hidden grid md:grid-cols-2">
-
-    <section id="heroSection" class="p-8 bg-slate-50 flex flex-col items-center text-center border-l">
-      <div class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-bold mb-4">⭐ تدريب تفاعلي</div>
-
-      <div class="flex items-center justify-center gap-4 mb-4">
-        <img src="nafss.png" class="w-32" alt="نافس">
-      </div>
-
-      <p class="text-slate-500 font-bold text-xs uppercase">الإدارة العامة للتعليم بمنطقة نجران</p>
-      <p class="text-green-800 font-bold text-sm mb-6">مدرسة علي بن أبي طالب الابتدائية</p>
-
-      <h1 class="text-2xl font-black text-slate-800 mb-1">منصة تدريب اختبار نافس</h1>
-      <p class="text-xs text-slate-400 font-bold">الصف السادس الابتدائي</p>
-
-      <a href="./plan100.pdf" target="_blank" rel="noopener"
-         aria-label="تحميل توزيع مهارات خطة ١٠٠ يوم"
-         class="mt-4 inline-flex flex-row-reverse items-center gap-2 px-4 py-2
-                bg-green-50 text-green-700 border-2 border-green-400
-                rounded-lg text-xs font-bold
-                shadow-sm hover:shadow-md
-                hover:bg-green-100 hover:border-green-500
-                hover:scale-105 transform
-                focus:outline-none focus:ring-2 focus:ring-green-300
-                transition-all duration-300 group">
-        <svg xmlns="http://www.w3.org/2000/svg"
-             class="h-5 w-5 transition-transform duration-300 group-hover:translate-y-1"
-             fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-        </svg>
-        تحميل توزيع مهارات (خطة ١٠٠ يوم)
-        <span class="text-[10px] bg-green-600 text-white px-2 py-0.5 rounded-md font-bold">PDF</span>
-      </a>
-
-      <div class="week-progress-card w-full">
-        <div class="week-progress-label">تقدّمك العام في المنصة</div>
-        <div class="week-progress-bar">
-          <div id="homeProgressFill" class="week-progress-fill"></div>
+        <div class="flex items-center justify-center gap-4 mb-4">
+          <img src="nafss.png" class="w-32" alt="نافس">
         </div>
-        <div id="homeProgressText" class="week-progress-text">لا يوجد تدريب مكتمل بعد</div>
-      </div>
 
-      <div class="nafs-countdown-wrap">
-        <div class="nafs-countdown-card">
-          <div class="nafs-countdown-head">
-            <span class="nafs-countdown-icon" aria-hidden="true">⏰</span>
-            <h3 class="nafs-countdown-title">باقي على اختبار نافس</h3>
+        <p class="text-slate-500 font-bold text-xs uppercase">الإدارة العامة للتعليم بمنطقة نجران</p>
+        <p class="text-green-800 font-bold text-sm mb-6">مدرسة علي بن أبي طالب الابتدائية</p>
+
+        <h1 class="text-2xl font-black text-slate-800 mb-1">منصة تدريب اختبار نافس</h1>
+        <p class="text-xs text-slate-400 font-bold">الصف السادس الابتدائي</p>
+
+        <a href="./plan100.pdf" target="_blank" rel="noopener"
+           aria-label="تحميل توزيع مهارات خطة ١٠٠ يوم"
+           class="mt-4 inline-flex flex-row-reverse items-center gap-2 px-4 py-2 bg-green-50 text-green-700 border-2 border-green-400 rounded-lg text-xs font-bold shadow-sm hover:shadow-md hover:bg-green-100 hover:border-green-500 hover:scale-105 transform focus:outline-none focus:ring-2 focus:ring-green-300 transition-all duration-300 group">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform duration-300 group-hover:translate-y-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          تحميل توزيع مهارات (خطة ١٠٠ يوم)
+          <span class="text-[10px] bg-green-600 text-white px-2 py-0.5 rounded-md font-bold">PDF</span>
+        </a>
+
+        <div class="week-progress-card w-full">
+          <div class="week-progress-label">تقدّمك العام في المنصة</div>
+          <div class="week-progress-bar">
+            <div id="homeProgressFill" class="week-progress-fill"></div>
           </div>
+          <div id="homeProgressText" class="week-progress-text">لا يوجد تدريب مكتمل بعد</div>
+        </div>
 
-          <div class="nafs-countdown-grid" id="countdown-timer">
-            <div class="nafs-time-item">
-              <div class="nafs-time-box" id="seconds">--</div>
-              <div class="nafs-time-label">ثانية</div>
+        <div class="student-stats-card w-full">
+          <div class="student-stats-title">📊 بطاقة الطالب</div>
+          <div id="studentStatsBest" class="student-stats-item">أفضل نتيجة: —</div>
+          <div id="studentStatsLast" class="student-stats-item">آخر تدريب: —</div>
+          <div id="studentStatsCount" class="student-stats-item">عدد التدريبات: ٠</div>
+        </div>
+
+        <div class="nafs-countdown-wrap">
+          <div class="nafs-countdown-card">
+            <div class="nafs-countdown-head">
+              <span class="nafs-countdown-icon" aria-hidden="true">⏰</span>
+              <h3 class="nafs-countdown-title">باقي على اختبار نافس</h3>
             </div>
-            <div class="nafs-time-item">
-              <div class="nafs-time-box" id="minutes">--</div>
-              <div class="nafs-time-label">دقيقة</div>
+
+            <div class="nafs-countdown-grid" id="countdown-timer">
+              <div class="nafs-time-item">
+                <div class="nafs-time-box" id="seconds">--</div>
+                <div class="nafs-time-label">ثانية</div>
+              </div>
+              <div class="nafs-time-item">
+                <div class="nafs-time-box" id="minutes">--</div>
+                <div class="nafs-time-label">دقيقة</div>
+              </div>
+              <div class="nafs-time-item">
+                <div class="nafs-time-box" id="hours">--</div>
+                <div class="nafs-time-label">ساعة</div>
+              </div>
+              <div class="nafs-time-item">
+                <div class="nafs-time-box" id="days">--</div>
+                <div class="nafs-time-label">يوم</div>
+              </div>
             </div>
-            <div class="nafs-time-item">
-              <div class="nafs-time-box" id="hours">--</div>
-              <div class="nafs-time-label">ساعة</div>
-            </div>
-            <div class="nafs-time-item">
-              <div class="nafs-time-box" id="days">--</div>
-              <div class="nafs-time-label">يوم</div>
-            </div>
+
+      </section>
+
+      <section id="interactiveSection" class="p-10 flex flex-col justify-center">
+        <div id="startScreen" class="space-y-6">
+          <div class="text-xl font-black welcome-text">
+            <span class="welcome-msg">أهلًا وسهلًا يا بطل</span>
+            <span class="wave">👋</span>
           </div>
 
-          <div class="nafs-countdown-motivation">
-            <span class="nafs-star" aria-hidden="true">🌟</span>
-            استعد جيدًا … كل يوم يقربك من التميز
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="interactiveSection" class="p-10 flex flex-col justify-center">
-      <div id="startScreen" class="space-y-6">
-
-        <div class="text-xl font-black welcome-text">
-          <span class="welcome-msg">أهلًا وسهلًا يا بطل</span>
-          <span class="wave">👋</span>
-        </div>
-
-        <p class="text-xs font-bold text-slate-400">
-          اكتب اسمك ثم اختر المادة، بعدها اختر الصف والأسبوع واضغط ابدأ 🚀
-        </p>
-
-        <div>
-          <input id="studentName" type="text" placeholder="اكتب اسمك هنا..."
-                 class="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500">
-          <div id="nameError" class="field-error">الرجاء كتابة اسم الطالب.</div>
-        </div>
-
-        <div id="subjectsWrap">
-          <div class="subjects-grid">
-            <button type="button" class="subject-card subject-math" data-subject="math" onclick="selectSubject('math', this)">
-              <div class="icon">📐</div>
-              <div class="label">رياضيات</div>
-            </button>
-
-            <button type="button" class="subject-card subject-arabic" data-subject="arabic" onclick="selectSubject('arabic', this)">
-              <div class="icon">📖</div>
-              <div class="label">لغتي</div>
-            </button>
-
-            <button type="button" class="subject-card subject-science" data-subject="science" onclick="selectSubject('science', this)">
-              <div class="icon">🔬</div>
-              <div class="label">علوم</div>
-            </button>
-          </div>
-          <div id="subjectError" class="field-error">الرجاء اختيار المادة أولًا.</div>
-        </div>
-
-        <div id="teacherLine" class="hidden text-xs font-bold rounded-xl px-4 py-3 border bg-slate-50 text-slate-700"></div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <select id="gradeSelect" class="w-full px-4 py-3 rounded-xl border border-slate-200 font-bold">
-              <option value="">اختر الصف</option>
-              <option value="سادس ( أ )">سادس ( أ )</option>
-              <option value="سادس ( ب )">سادس ( ب )</option>
-            </select>
-            <div id="gradeError" class="field-error">الرجاء اختيار الصف.</div>
-          </div>
+          <p class="text-xs font-bold text-slate-400">
+            اكتب اسمك ثم اختر المادة، بعدها اختر الصف والأسبوع واضغط ابدأ 🚀
+          </p>
 
           <div>
-            <select id="weekSelect" class="w-full px-4 py-3 rounded-xl border border-slate-200 font-bold">
-              <option value="">اختر الأسبوع</option>
-              <option value="1">الأسبوع ١</option>
-              <option value="2">الأسبوع ٢</option>
-              <option value="3">الأسبوع ٣</option>
-              <option value="4">الأسبوع ٤</option>
-              <option value="5">⭐ الأسبوع ٥ (مراجعة ١–٢)</option>
-              <option value="6">⭐ الأسبوع ٦ (مراجعة ٣–٤)</option>
-              <option value="7">الأسبوع ٧</option>
-              <option value="8">الأسبوع ٨</option>
-              <option value="9">الأسبوع ٩</option>
-              <option value="10">الأسبوع ١٠</option>
-              <option value="11">الأسبوع ١١</option>
-              <option value="12">الأسبوع ١٢</option>
-              <option value="13">الأسبوع ١٣</option>
-            </select>
-            <div id="weekError" class="field-error">الرجاء اختيار الأسبوع.</div>
+            <input id="studentName" type="text" placeholder="اكتب اسمك هنا..."
+                   class="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500">
+            <div id="nameError" class="field-error">الرجاء كتابة اسم الطالب.</div>
           </div>
+
+          <div id="subjectsWrap">
+            <div class="subjects-grid">
+              <button type="button" class="subject-card subject-math" data-subject="math" onclick="selectSubject('math', this)">
+                <div class="icon">📐</div>
+                <div class="label">رياضيات</div>
+              </button>
+
+              <button type="button" class="subject-card subject-arabic" data-subject="arabic" onclick="selectSubject('arabic', this)">
+                <div class="icon">📖</div>
+                <div class="label">لغتي</div>
+              </button>
+
+              <button type="button" class="subject-card subject-science" data-subject="science" onclick="selectSubject('science', this)">
+                <div class="icon">🔬</div>
+                <div class="label">علوم</div>
+              </button>
+            </div>
+            <div id="subjectError" class="field-error">الرجاء اختيار المادة أولًا.</div>
+          </div>
+
+          <div id="teacherLine" class="hidden text-xs font-bold rounded-xl px-4 py-3 border bg-slate-50 text-slate-700"></div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <select id="gradeSelect" class="w-full px-4 py-3 rounded-xl border border-slate-200 font-bold">
+                <option value="">اختر الصف</option>
+                <option value="سادس ( أ )">سادس ( أ )</option>
+                <option value="سادس ( ب )">سادس ( ب )</option>
+              </select>
+              <div id="gradeError" class="field-error">الرجاء اختيار الصف.</div>
+            </div>
+
+            <div>
+              <select id="weekSelect" class="w-full px-4 py-3 rounded-xl border border-slate-200 font-bold">
+                <option value="">اختر الأسبوع</option>
+                <option value="1">الأسبوع ١</option>
+                <option value="2">الأسبوع ٢</option>
+                <option value="3">الأسبوع ٣</option>
+                <option value="4">الأسبوع ٤</option>
+                <option value="5">⭐ الأسبوع ٥ (مراجعة ١–٢)</option>
+                <option value="6">⭐ الأسبوع ٦ (مراجعة ٣–٤)</option>
+                <option value="7">الأسبوع ٧</option>
+                <option value="8">الأسبوع ٨</option>
+                <option value="9">الأسبوع ٩</option>
+                <option value="10">الأسبوع ١٠</option>
+                <option value="11">الأسبوع ١١</option>
+                <option value="12">الأسبوع ١٢</option>
+                <option value="13">الأسبوع ١٣</option>
+              </select>
+              <div id="weekError" class="field-error">الرجاء اختيار الأسبوع.</div>
+            </div>
+          </div>
+
+          <button onclick="startTraining()" class="w-full py-4 bg-blue-600 text-white font-black rounded-xl text-lg shadow-lg">
+            ابدأ التدريب 🚀
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <div id="quizScreen" class="hidden w-full flex flex-col items-center">
+      <div class="w-full max-w-3xl mb-8">
+        <div class="flex justify-between items-center mb-2 gap-3 flex-wrap">
+          <div class="flex items-center gap-2 font-bold text-slate-700">
+            <span class="bg-slate-200 p-2 rounded-full">👤</span>
+            <span id="displayStudentName"></span>
+          </div>
+          <div class="font-bold text-slate-500" id="topQIndicator"></div>
         </div>
 
-        <button onclick="startTraining()"
-                class="w-full py-4 bg-blue-600 text-white font-black rounded-xl text-lg shadow-lg">
-          ابدأ التدريب 🚀
+        <div id="subjectBadge" class="mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-black bg-slate-50 text-slate-800 border border-slate-200"></div>
+
+        <div class="progress-bar">
+          <div id="progressFill" class="progress-fill" style="width:0%"></div>
+        </div>
+      </div>
+
+      <div class="quiz-container">
+        <div class="pill-container">
+          <div class="pill-item"><span>السؤال</span> <span id="currQNum">1</span> من <span id="totalQNum">0</span></div>
+          <div class="pill-item">⏱️ الوقت: <span id="timer">10:00</span></div>
+        </div>
+
+        <h2 id="questionText" class="text-2xl font-extrabold text-slate-800 text-center my-8"></h2>
+        <div id="optionsGrid" class="space-y-4"></div>
+
+        <div id="explainBox" class="hidden mt-5 p-4 rounded-2xl border text-sm font-bold leading-7 bg-slate-50 text-slate-800"></div>
+
+        <button id="nextBtn" onclick="nextQuestion()" class="hidden w-full py-4 bg-slate-800 text-white font-black rounded-xl mt-8 text-lg">
+          السؤال التالي ⬅️
         </button>
-
-      </div>
-    </section>
-  </div>
-
-  <div id="quizScreen" class="hidden w-full flex flex-col items-center">
-    <div class="w-full max-w-3xl mb-8">
-      <div class="flex justify-between items-center mb-2 gap-3 flex-wrap">
-        <div class="flex items-center gap-2 font-bold text-slate-700">
-          <span class="bg-slate-200 p-2 rounded-full">👤</span>
-          <span id="displayStudentName"></span>
-        </div>
-        <div class="font-bold text-slate-500" id="topQIndicator"></div>
-      </div>
-
-      <div id="subjectBadge"
-           class="mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-black bg-slate-50 text-slate-800 border border-slate-200">
-      </div>
-
-      <div class="progress-bar">
-        <div id="progressFill" class="progress-fill" style="width:0%"></div>
       </div>
     </div>
 
-    <div class="quiz-container">
-      <div class="pill-container">
-        <div class="pill-item"><span>السؤال</span> <span id="currQNum">1</span> من <span id="totalQNum">0</span></div>
-        <div class="pill-item">⏱️ الوقت: <span id="timer">10:00</span></div>
+    <div id="resultScreen" class="hidden w-full max-w-md flex flex-col items-center text-center">
+      <div class="text-6xl mb-4">🏆</div>
+      <h2 id="resStudentName" class="text-3xl font-black text-blue-900 mb-3"></h2>
+
+      <div class="bg-white w-full rounded-3xl p-8 shadow-xl space-y-6">
+        <div class="text-6xl font-black text-slate-800" id="resScoreText"></div>
+        <div class="text-2xl font-black text-blue-600" id="resPercent"></div>
+        <div class="text-xl font-bold text-slate-700">التقدير: <span id="resGrade"></span></div>
+        <div id="resMsg" class="bg-amber-50 p-3 rounded-xl text-amber-700 font-bold text-sm"></div>
+        <div id="badgesBox" class="pt-2"></div>
       </div>
 
-      <h2 id="questionText" class="text-2xl font-extrabold text-slate-800 text-center my-8"></h2>
-      <div id="optionsGrid" class="space-y-4"></div>
-
-      <div id="explainBox"
-           class="hidden mt-5 p-4 rounded-2xl border text-sm font-bold leading-7 bg-slate-50 text-slate-800"></div>
-
-      <button id="nextBtn" onclick="nextQuestion()"
-              class="hidden w-full py-4 bg-slate-800 text-white font-black rounded-xl mt-8 text-lg">
-        السؤال التالي ⬅️
-      </button>
+      <div class="grid grid-cols-2 gap-3 w-full mt-8">
+        <button onclick="printCertificateOnly()" class="bg-green-600 text-white p-3 rounded-xl font-bold text-sm">🖨️ طباعة الشهادة</button>
+        <button id="reviewMistakesBtn" onclick="reviewMistakes()" class="bg-orange-500 text-white p-3 rounded-xl font-bold text-sm hidden">💡 راجع أخطائي</button>
+        <button onclick="location.reload()" class="bg-blue-600 text-white p-3 rounded-xl font-bold text-sm">🔄 إعادة</button>
+        <button onclick="location.reload()" class="bg-slate-800 text-white p-3 rounded-xl font-bold text-sm">🏠 الرئيسية</button>
+      </div>
     </div>
   </div>
 
-  <div id="resultScreen" class="hidden w-full max-w-md flex flex-col items-center text-center">
-    <div class="text-6xl mb-4">🏆</div>
-    <h2 id="resStudentName" class="text-3xl font-black text-blue-900 mb-3"></h2>
+  <footer id="pageFooter" class="p-6 text-center text-slate-400 font-bold">
+    ‏ إعداد : <span class="text-blue-900">موسى الصبحي</span>
+  </footer>
 
-    <div class="bg-white w-full rounded-3xl p-8 shadow-xl space-y-6">
-      <div class="text-6xl font-black text-slate-800" id="resScoreText"></div>
-      <div class="text-2xl font-black text-blue-600" id="resPercent"></div>
-      <div class="text-xl font-bold text-slate-700">التقدير: <span id="resGrade"></span></div>
-      <div id="resMsg" class="bg-amber-50 p-3 rounded-xl text-amber-700 font-bold text-sm"></div>
-      <div id="badgesBox" class="pt-2"></div>
-    </div>
+  <div id="feedback-toast"></div>
 
-    <div class="grid grid-cols-2 gap-3 w-full mt-8">
-      <button onclick="printCertificateOnly()" class="bg-green-600 text-white p-3 rounded-xl font-bold text-sm">🖨️ طباعة الشهادة</button>
-      <button id="reviewMistakesBtn" onclick="reviewMistakes()" class="bg-orange-500 text-white p-3 rounded-xl font-bold text-sm hidden">💡 راجع أخطائي</button>
-      <button onclick="location.reload()" class="bg-blue-600 text-white p-3 rounded-xl font-bold text-sm">🔄 إعادة</button>
-      <button onclick="location.reload()" class="bg-slate-800 text-white p-3 rounded-xl font-bold text-sm">🏠 الرئيسية</button>
-    </div>
-  </div>
-</div>
+  <script>
+    /* =========================
+       ✅ بيانات المواد
+    ========================= */
+    const SUBJECTS = {
+      math:    { label: "رياضيات", icon:"📐", teacher:"موسى الصبحي" },
+      arabic:  { label: "لغتي",    icon:"📖", teacher:"رمزي شعيري" },
+      science: { label: "علوم",    icon:"🔬", teacher:"حسين آل عباس" },
+    };
 
-<footer id="pageFooter" class="p-6 text-center text-slate-400 font-bold">
-  ‏ إعداد : <span class="text-blue-900">موسى الصبحي</span>
-</footer>
-
-<div id="feedback-toast"></div>
-
-<script>
-/* =========================
-   ✅ بيانات المواد
-========================= */
-const SUBJECTS = {
-  math:    { label: "رياضيات", icon:"📐", teacher:"موسى الصبحي" },
-  arabic:  { label: "لغتي",    icon:"📖", teacher:"رمزي شعيري" },
-  science: { label: "علوم",    icon:"🔬", teacher:"حسين آل عباس" },
-};
-
-let selectedSubject = "";
-
-/* =========================
-   ✅ أدوات مساعدة
-========================= */
-function $(id){ return document.getElementById(id); }
-
-function showFieldError(id, msg){
-  const el = $(id);
-  if(!el) return;
-  if(msg) el.textContent = msg;
-  el.classList.add("show");
-}
-function hideFieldError(id){
-  const el = $(id);
-  if(!el) return;
-  el.classList.remove("show");
-}
-
-function markInvalid(el, invalid=true){
-  if(!el) return;
-  el.classList.toggle("field-invalid", invalid);
-}
-
-function shakeElement(el){
-  if(!el) return;
-  el.classList.remove("shake");
-  void el.offsetWidth;
-  el.classList.add("shake");
-}
-
-function saveFormState(){
-  localStorage.setItem("nafs_name", $("studentName")?.value || "");
-  localStorage.setItem("nafs_grade", $("gradeSelect")?.value || "");
-  localStorage.setItem("nafs_week", $("weekSelect")?.value || "");
-  localStorage.setItem("nafs_subject", selectedSubject || "");
-}
-
-function loadFormState(){
-  const name = localStorage.getItem("nafs_name") || "";
-  const grade = localStorage.getItem("nafs_grade") || "";
-  const week = localStorage.getItem("nafs_week") || "";
-  const subject = localStorage.getItem("nafs_subject") || "";
-
-  if ($("studentName")) $("studentName").value = name;
-  if ($("gradeSelect")) $("gradeSelect").value = grade;
-  if ($("weekSelect")) $("weekSelect").value = week;
-
-  if(subject && SUBJECTS[subject]){
-    const btn = document.querySelector(`.subject-card[data-subject="${subject}"]`);
-    selectSubject(subject, btn, false);
-  }
-}
-
-function updateHomeProgress(){
-  const completed = Number(localStorage.getItem("nafs_completed_count") || 0);
-  const max = 10;
-  const percent = Math.min(100, Math.round((completed / max) * 100));
-  $("homeProgressFill").style.width = percent + "%";
-  $("homeProgressText").textContent =
-    completed > 0
-      ? `أنجزت ${completed} تدريب${completed > 1 ? "ات" : ""} — ${percent}%`
-      : "لا يوجد تدريب مكتمل بعد";
-}
-
-function setScrollLock(lock){
-  document.body.classList.toggle("lock-scroll", !!lock);
-}
-
-function selectSubject(key, el, save=true){
-  if(!SUBJECTS[key]) return;
-  selectedSubject = key;
-
-  document.querySelectorAll(".subject-card").forEach(card => card.classList.remove("selected"));
-  if(el) el.classList.add("selected");
-
-  const teacherLine = $("teacherLine");
-  teacherLine.classList.remove("hidden");
-  teacherLine.textContent = `معلم المادة : ${SUBJECTS[key].teacher}`;
-
-  hideFieldError("subjectError");
-
-  if(save) saveFormState();
-}
+    let selectedSubject = "";
   
 /* =========================
    ✅ بيانات الأسئلة لكل مادة
@@ -4826,440 +4725,600 @@ const SCIENCE_DATA = {
   
 };  
 
-function getDataBySubject(){
-  if(selectedSubject === "math") return MATH_DATA;
-  if(selectedSubject === "arabic") return ARABIC_DATA;
-  if(selectedSubject === "science") return SCIENCE_DATA;
-  return {};
-}
-
-/* =========================
-   ✅ ربط Google Apps Script
-========================= */
-const SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzDByVy1lcqU7z0zf4UA-hAY3YWiaRSe7b0d4SgPDvLGKCp4NJ5oSjFdIzgMOK1-zfb/exec";
-
-function logToSheet(payload){
-  try{
-    payload.subject = selectedSubject;
-    payload.subject_label = SUBJECTS[selectedSubject]?.label || "";
-    payload.teacher = SUBJECTS[selectedSubject]?.teacher || "";
-
-    fetch(SHEET_WEB_APP_URL, {
-      method:"POST",
-      mode:"no-cors",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify(payload)
-    });
-  } catch(e){}
-}
-
-/* =========================
-   ✅ متغيرات الاختبار
-========================= */
-let currentQuestions = [];
-let currentIdx = 0;
-let score = 0;
-let timeLeft = 0;
-let timerId = null;
-let studentData = {};
-let answerClicks = 0;
-let attemptsLeft = 2;
-let gotPointThisQ = false;
-let wrongQuestions = [];
-let reviewMode = false;
-let startTimeMs = 0;
-
-/* =========================
-   ✅ بدء التدريب
-========================= */
-function startTraining(){
-  const name = $("studentName").value.trim();
-  const grade = $("gradeSelect").value;
-  const week = $("weekSelect").value;
-
-  hideFieldError("nameError");
-  hideFieldError("subjectError");
-  hideFieldError("gradeError");
-  hideFieldError("weekError");
-  markInvalid($("studentName"), false);
-  markInvalid($("gradeSelect"), false);
-  markInvalid($("weekSelect"), false);
-
-  let hasError = false;
-
-  if(!name){
-    showFieldError("nameError", "الرجاء كتابة اسم الطالب.");
-    markInvalid($("studentName"), true);
-    hasError = true;
-  }
-
-  if(!selectedSubject){
-    showFieldError("subjectError", "الرجاء اختيار المادة أولًا.");
-    shakeElement($("subjectsWrap"));
-    hasError = true;
-  }
-
-  if(!grade){
-    showFieldError("gradeError", "الرجاء اختيار الصف.");
-    markInvalid($("gradeSelect"), true);
-    hasError = true;
-  }
-
-  if(!week){
-    showFieldError("weekError", "الرجاء اختيار الأسبوع.");
-    markInvalid($("weekSelect"), true);
-    hasError = true;
-  }
-
-  if(hasError) return;
-
-  const DATA = getDataBySubject();
-  const keyWeek = String(week);
-  currentQuestions = DATA[keyWeek] || DATA[Number(week)] || [];
-
-  if(!currentQuestions.length){
-    showToast("لا توجد أسئلة لهذه المادة في هذا الأسبوع حالياً.", "#f59e0b");
-    return;
-  }
-
-  reviewMode = false;
-  wrongQuestions = [];
-  currentIdx = 0;
-  score = 0;
-  answerClicks = 0;
-  startTimeMs = Date.now();
-
-  studentData = {
-    name, grade, week,
-    subject: selectedSubject,
-    teacher: SUBJECTS[selectedSubject].teacher
-  };
-
-  const weekNum = Number(week);
-  timeLeft = (weekNum === 10) ? 1800 : 600;
-
-  if(timerId) clearInterval(timerId);
-
-  saveFormState();
-
-  logToSheet({
-    action: "start",
-    name, grade, week: String(week),
-    ts: new Date().toISOString()
-  });
-
-  $("mainContainer").classList.add("hidden");
-  $("pageFooter").classList.add("hidden");
-  $("resultScreen").classList.add("hidden");
-  $("quizScreen").classList.remove("hidden");
-  $("displayStudentName").innerText = name;
-
-  const s = SUBJECTS[selectedSubject];
-  $("subjectBadge").innerHTML = `${s.icon} ${s.label} — معلم المادة: <span class="font-black">${s.teacher}</span> • الأسبوع ${week}`;
-
-  setScrollLock(true);
-  startTimer();
-  loadQuestion();
-}
-
-/* =========================
-   ✅ التايمر
-========================= */
-function startTimer(){
-  updateTimerDisplay();
-  timerId = setInterval(()=>{
-    timeLeft--;
-    updateTimerDisplay();
-    if(timeLeft <= 0) endQuiz();
-  },1000);
-}
-
-function updateTimerDisplay(){
-  const mins = Math.floor(timeLeft/60);
-  const secs = timeLeft%60;
-  $("timer").innerText = `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
-}
-
-/* =========================
-   ✅ عرض السؤال
-========================= */
-function loadQuestion(){
-  const q = currentQuestions[currentIdx];
-  attemptsLeft = 2;
-  gotPointThisQ = false;
-
-  $("currQNum").innerText = currentIdx + 1;
-  $("totalQNum").innerText = currentQuestions.length;
-  $("topQIndicator").innerText = `السؤال ${currentIdx+1} من ${currentQuestions.length}`;
-  $("questionText").innerText = q.q;
-
-  $("progressFill").style.width = `${((currentIdx+1)/currentQuestions.length)*100}%`;
-
-  const grid = $("optionsGrid");
-  grid.innerHTML = "";
-  const letters = ['أ','ب','ج','د'];
-
-  q.c.forEach((choice,i)=>{
-    const card = document.createElement("div");
-    card.className = "option-card";
-    card.innerHTML = `<span>${choice}</span><span class="text-slate-300 font-black">${letters[i]||""}</span>`;
-    card.onclick = ()=> checkAnswer(i, card);
-    grid.appendChild(card);
-  });
-
-  $("nextBtn").classList.add("hidden");
-  const box = $("explainBox");
-  box.classList.add("hidden");
-  box.innerHTML = "";
-}
-
-function showToast(msg,bg){
-  const t=$("feedback-toast");
-  t.innerText=msg; t.style.background=bg; t.style.display="block";
-  setTimeout(()=> t.style.display="none", 1100);
-}
-
-function renderExplain(text, type = "wrong"){
-  const box = $("explainBox");
-
-  const isCorrect = type === "correct";
-
-  box.className = isCorrect
-  ? "mt-5 p-4 rounded-2xl border text-sm font-bold leading-7 bg-blue-50 text-blue-900 border-blue-200"
-  : "mt-5 p-4 rounded-2xl border text-sm font-bold leading-7 bg-red-50 text-red-900 border-red-200";
-
-  box.innerHTML = `
-<div class="explain-title ${isCorrect ? 'text-blue-700' : 'text-red-600'}">
-      💡 لماذا هذه الإجابة؟
-    </div>
-    <div>${text || "التوضيح غير متوفر."}</div>
-  `;
-}
-  
-function checkAnswer(idx, card){
-  const q = currentQuestions[currentIdx];
-  const allCards = Array.from(document.querySelectorAll(".option-card"));
-
-  answerClicks++;
-
-  if(card.dataset.locked === "1") return;
-  card.dataset.locked = "1";
-
-  if(idx === q.correct){
-    if(!gotPointThisQ){ score++; gotPointThisQ = true; }
-    card.classList.add("correct");
-    showToast("ممتاز! 🥳", "#22c55e");
-function launchConfetti(count = 28){
-  const colors = ["#3B82F6", "#22C55E", "#F59E0B", "#EF4444", "#8B5CF6", "#14B8A6"];
-
-  for(let i = 0; i < count; i++){
-    const piece = document.createElement("div");
-    piece.className = "confetti-piece";
-
-    const left = Math.random() * 100;
-    const size = 8 + Math.random() * 8;
-    const duration = 1.8 + Math.random() * 1.6;
-    const delay = Math.random() * 0.3;
-    const color = colors[Math.floor(Math.random() * colors.length)];
-
-    piece.style.left = left + "vw";
-    piece.style.width = size + "px";
-    piece.style.height = size * 1.4 + "px";
-    piece.style.background = color;
-    piece.style.animationDuration = duration + "s";
-    piece.style.animationDelay = delay + "s";
-
-    document.body.appendChild(piece);
-
-    setTimeout(() => {
-      piece.remove();
-    }, (duration + delay) * 1000 + 300);
-  }
-}
-
-if(q.explain) renderExplain(q.explain, "correct");
-
-    allCards.forEach(c=> c.style.pointerEvents="none");
-    $("nextBtn").classList.remove("hidden");
-    return;
-  }
-
-  attemptsLeft--;
-  card.classList.add("wrong");
-
-  if(attemptsLeft > 0){
-    showToast("خاطئة.. جرّب مرة ثانية 👀", "#f59e0b");
-    card.style.pointerEvents = "none";
-    $("explainBox").classList.add("hidden");
-    $("explainBox").innerHTML = "";
-    return;
-  }
-
-  showToast("خاطئة 💔", "#ef4444");
-
-  renderExplain(q.explain || "التوضيح غير متوفر.", "wrong");
-
-  const correctCard = allCards[q.correct];
-  if(correctCard) correctCard.classList.add("correct");
-
-  const exists = wrongQuestions.some(item => item.q === q.q);
-  if(!exists) wrongQuestions.push(q);
-
-  allCards.forEach(c=> c.style.pointerEvents="none");
-  $("nextBtn").classList.remove("hidden");
-}
-
-function nextQuestion(){
-  currentIdx++;
-  if(currentIdx < currentQuestions.length) loadQuestion();
-  else endQuiz();
-}
-
-/* =========================
-   ✅ الأوسمة
-========================= */
-function getBadges(percent, finishedEarly){
-  const badges = [];
-  const completed = Number(localStorage.getItem("nafs_completed_count") || 0);
-
-  if(completed === 1) badges.push("🥇 أول تدريب");
-  if(percent === 100) badges.push("🎯 نتيجة كاملة");
-  if(finishedEarly) badges.push("⏱️ إنهاء قبل الوقت");
-  if(reviewMode) badges.push("💡 مراجعة الأخطاء");
-
-  return badges;
-}
-
-/* =========================
-   ✅ إنهاء الاختبار
-========================= */
-function endQuiz(){
-  if(timerId) clearInterval(timerId);
-
-  setScrollLock(false);
-
-  $("quizScreen").classList.add("hidden");
-  $("resultScreen").classList.remove("hidden");
-
-  const total = currentQuestions.length || 1;
-  const p = Math.round((score / total) * 100);
-  const elapsedSec = Math.floor((Date.now() - startTimeMs) / 1000);
-  const finishedEarly = elapsedSec < Math.max(60, (reviewMode ? 999999 : 600));
-
-  $("resStudentName").innerText = studentData.name;
-  $("resScoreText").innerText = `${score} من ${total}`;
-  $("resPercent").innerText = `${p}%`;
-  $("resGrade").innerText = p>=90 ? "ممتاز" : p>=75 ? "جيد جداً" : "يحتاج تحسين";
-
-  const personalMsg =
-    p>=90
-      ? `أحسنت يا ${studentData.name}، مستواك في هذا الأسبوع ممتاز جدًا 🌟`
-      : p>=75
-      ? `رائع يا ${studentData.name}، مستواك جميل جدًا وواصل التقدم 👏`
-      : `يا ${studentData.name} أنت قادر تتحسن أكثر، وراجعة أخطائك هي الخطوة الأهم 💪`;
-
-  $("resMsg").innerText = personalMsg;
-
-  const badges = getBadges(p, finishedEarly);
-  $("badgesBox").innerHTML = badges.length
-    ? badges.map(b => `<span class="badge-chip">${b}</span>`).join("")
-    : "";
-
-  $("reviewMistakesBtn").classList.toggle("hidden", wrongQuestions.length === 0 || reviewMode);
-
-  if(!reviewMode){
-    const prevCompleted = Number(localStorage.getItem("nafs_completed_count") || 0);
-    localStorage.setItem("nafs_completed_count", String(prevCompleted + 1));
-    updateHomeProgress();
-  }
-
-  logToSheet({
-    action:"finish",
-    name: studentData.name,
-    grade: studentData.grade,
-    week: String(studentData.week),
-    score, total,
-    percent: p,
-    attempts: answerClicks,
-    review_mode: reviewMode ? 1 : 0,
-    ts: new Date().toISOString()
-  });
-}
-
-/* =========================
-   ✅ مراجعة الأخطاء
-========================= */
-function reviewMistakes(){
-  if(!wrongQuestions.length) return;
-
-  currentQuestions = [...wrongQuestions];
-  currentIdx = 0;
-  score = 0;
-  answerClicks = 0;
-  reviewMode = true;
-  wrongQuestions = [];
-
-  $("resultScreen").classList.add("hidden");
-  $("quizScreen").classList.remove("hidden");
-  $("subjectBadge").innerHTML = `💡 مراجعة الأخطاء — ${SUBJECTS[selectedSubject]?.label || ""}`;
-  setScrollLock(true);
-
-  if(timerId) clearInterval(timerId);
-  timeLeft = 900;
-  startTimeMs = Date.now();
-  startTimer();
-  loadQuestion();
-}
-
-/* =========================
-   ✅ الطباعة
-========================= */
-function escapeHtml(str){
-  return String(str)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-}
-
-function getHijriDateStr(){
-  const fmt = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura', {
-    year:'numeric', month:'long', day:'numeric'
-  });
-  let s = fmt.format(new Date());
-  s = s.replace(/\s*هـ/g, '').trim();
-  return s;
-}
-
-function printCertificateOnly(){
-  const name = ($("resStudentName")?.innerText || '').trim();
-  const percent = ($("resPercent")?.innerText || '').trim();
-  const scoreText = ($("resScoreText")?.innerText || '').trim();
-
-  const cls = studentData.grade || '';
-  const week = studentData.week || '';
-  const subj = SUBJECTS[selectedSubject]?.label || '';
-  const teacher = SUBJECTS[selectedSubject]?.teacher || '';
-
-  const dateStr = getHijriDateStr();
-
-  const ministryLogo="moe.png";
-  const nafsLogo="nafss.png";
-  const schoolLogo="مدرسة.png";
-
-  const iframe=document.createElement('iframe');
-  iframe.style.position='fixed';
-  iframe.style.right='0';
-  iframe.style.bottom='0';
-  iframe.style.width='0';
-  iframe.style.height='0';
-  iframe.style.border='0';
-  document.body.appendChild(iframe);
-
-  const doc=iframe.contentWindow.document;
-  doc.open();
-  doc.write(`<!doctype html>
+function $(id){ return document.getElementById(id); }
+
+    function showFieldError(id, msg){
+      const el = $(id);
+      if(!el) return;
+      if(msg) el.textContent = msg;
+      el.classList.add("show");
+    }
+
+    function hideFieldError(id){
+      const el = $(id);
+      if(!el) return;
+      el.classList.remove("show");
+    }
+
+    function markInvalid(el, invalid=true){
+      if(!el) return;
+      el.classList.toggle("field-invalid", invalid);
+    }
+
+    function shakeElement(el){
+      if(!el) return;
+      el.classList.remove("shake");
+      void el.offsetWidth;
+      el.classList.add("shake");
+    }
+
+    function saveFormState(){
+      localStorage.setItem("nafs_name", $("studentName")?.value || "");
+      localStorage.setItem("nafs_grade", $("gradeSelect")?.value || "");
+      localStorage.setItem("nafs_week", $("weekSelect")?.value || "");
+      localStorage.setItem("nafs_subject", selectedSubject || "");
+    }
+
+    function loadFormState(){
+      const name = localStorage.getItem("nafs_name") || "";
+      const grade = localStorage.getItem("nafs_grade") || "";
+      const week = localStorage.getItem("nafs_week") || "";
+      const subject = localStorage.getItem("nafs_subject") || "";
+
+      if ($("studentName")) $("studentName").value = name;
+      if ($("gradeSelect")) $("gradeSelect").value = grade;
+      if ($("weekSelect")) $("weekSelect").value = week;
+
+      if(subject && SUBJECTS[subject]){
+        const btn = document.querySelector(`.subject-card[data-subject="${subject}"]`);
+        selectSubject(subject, btn, false);
+      }
+    }
+
+    function updateHomeProgress(){
+      const completed = Number(localStorage.getItem("nafs_completed_count") || 0);
+      const max = 10;
+      const percent = Math.min(100, Math.round((completed / max) * 100));
+      $("homeProgressFill").style.width = percent + "%";
+      $("homeProgressText").textContent =
+        completed > 0
+          ? `أنجزت ${completed} تدريب${completed > 1 ? "ات" : ""} — ${percent}%`
+          : "لا يوجد تدريب مكتمل بعد";
+    }
+
+    function setScrollLock(lock){
+      document.body.classList.toggle("lock-scroll", !!lock);
+    }
+
+    function selectSubject(key, el, save=true){
+      if(!SUBJECTS[key]) return;
+      selectedSubject = key;
+
+      document.querySelectorAll(".subject-card").forEach(card => card.classList.remove("selected"));
+      if(el) el.classList.add("selected");
+
+      const teacherLine = $("teacherLine");
+      teacherLine.classList.remove("hidden");
+      teacherLine.textContent = `معلم المادة : ${SUBJECTS[key].teacher}`;
+
+      hideFieldError("subjectError");
+      if(save) saveFormState();
+      updateStudentStats();
+    }
+
+    function shuffleArray(arr){
+      const a = [...arr];
+      for(let i = a.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    function shuffleQuestionChoices(question){
+      const choices = question.c.map((text, index) => ({ text, isCorrect: index === question.correct }));
+      const shuffled = shuffleArray(choices);
+      return {
+        ...question,
+        c: shuffled.map(item => item.text),
+        correct: shuffled.findIndex(item => item.isCorrect)
+      };
+    }
+
+    function normalizeQuestions(list){
+      return shuffleArray(list).map(shuffleQuestionChoices);
+    }
+
+    function showToast(msg,bg){
+      const t=$("feedback-toast");
+      t.innerText=msg;
+      t.style.background=bg;
+      t.style.display="block";
+      setTimeout(()=> t.style.display="none", 1100);
+    }
+
+    function renderExplain(text, type = "wrong"){
+      const box = $("explainBox");
+      const isCorrect = type === "correct";
+      box.className = isCorrect
+        ? "mt-5 p-4 rounded-2xl border text-sm font-bold leading-7 bg-blue-50 text-blue-900 border-blue-200"
+        : "mt-5 p-4 rounded-2xl border text-sm font-bold leading-7 bg-red-50 text-red-900 border-red-200";
+
+      box.innerHTML = `
+        <div class="explain-title ${isCorrect ? 'text-blue-700' : 'text-red-600'}">💡 لماذا هذه الإجابة؟</div>
+        <div>${text || "التوضيح غير متوفر."}</div>
+      `;
+      box.classList.remove("hidden");
+    }
+
+    function launchConfetti(count = 28){
+      const colors = ["#3B82F6", "#22C55E", "#F59E0B", "#EF4444", "#8B5CF6", "#14B8A6"];
+      for(let i = 0; i < count; i++){
+        const piece = document.createElement("div");
+        piece.className = "confetti-piece";
+        const left = Math.random() * 100;
+        const size = 8 + Math.random() * 8;
+        const duration = 1.8 + Math.random() * 1.6;
+        const delay = Math.random() * 0.3;
+        const color = colors[Math.floor(Math.random() * colors.length)];
+
+        piece.style.left = left + "vw";
+        piece.style.width = size + "px";
+        piece.style.height = size * 1.4 + "px";
+        piece.style.background = color;
+        piece.style.animationDuration = duration + "s";
+        piece.style.animationDelay = delay + "s";
+
+        document.body.appendChild(piece);
+        setTimeout(() => piece.remove(), (duration + delay) * 1000 + 300);
+      }
+    }
+
+    function toArabicDigits(n){
+      const map = ["٠","١","٢","٣","٤","٥","٦","٧","٨","٩"];
+      return String(n).split("").map(ch => map[ch] ?? ch).join("");
+    }
+
+    function pad2(n){ return (n < 10 ? "0" + n : String(n)); }
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function getHijriDateStr(){
+      const fmt = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura', {
+        year:'numeric', month:'long', day:'numeric'
+      });
+      let s = fmt.format(new Date());
+      s = s.replace(/\s*هـ/g, '').trim();
+      return s;
+    }
+
+    function getDataBySubject(){
+      if(selectedSubject === "math") return MATH_DATA;
+      if(selectedSubject === "arabic") return ARABIC_DATA;
+      if(selectedSubject === "science") return SCIENCE_DATA;
+      return {};
+    }
+
+    /* =========================
+       ✅ ربط Google Apps Script
+    ========================= */
+    const SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzDByVy1lcqU7z0zf4UA-hAY3YWiaRSe7b0d4SgPDvLGKCp4NJ5oSjFdIzgMOK1-zfb/exec";
+
+    function logToSheet(payload){
+      try{
+        payload.subject = selectedSubject;
+        payload.subject_label = SUBJECTS[selectedSubject]?.label || "";
+        payload.teacher = SUBJECTS[selectedSubject]?.teacher || "";
+
+        fetch(SHEET_WEB_APP_URL, {
+          method:"POST",
+          mode:"no-cors",
+          headers: {"Content-Type":"application/json"},
+          body: JSON.stringify(payload)
+        });
+      } catch(e){}
+    }
+
+    /* =========================
+       ✅ متغيرات الاختبار
+    ========================= */
+    let currentQuestions = [];
+    let currentIdx = 0;
+    let score = 0;
+    let timeLeft = 0;
+    let timerId = null;
+    let studentData = {};
+    let answerClicks = 0;
+    let attemptsLeft = 2;
+    let gotPointThisQ = false;
+    let wrongQuestions = [];
+    let reviewMode = false;
+    let startTimeMs = 0;
+    let quizActive = false;
+
+    /* =========================
+       ✅ نتائج الطالب
+    ========================= */
+    function getBestResultKey(name, subject, week){
+      return `nafs_best_${name}_${subject}_${week}`;
+    }
+
+    function saveBestResult(studentName, percent, subject, week){
+      const key = getBestResultKey(studentName, subject, week);
+      const prev = Number(localStorage.getItem(key) || 0);
+      if(percent > prev){
+        localStorage.setItem(key, String(percent));
+      }
+    }
+
+    function saveLastTrainingInfo(name, subject, week, percent){
+      localStorage.setItem("nafs_last_training", JSON.stringify({
+        name, subject, week, percent
+      }));
+    }
+
+    function updateStudentStats(){
+      const name = $("studentName")?.value.trim() || localStorage.getItem("nafs_name") || "";
+      const completed = Number(localStorage.getItem("nafs_completed_count") || 0);
+      const lastTrainingRaw = localStorage.getItem("nafs_last_training");
+      let lastTraining = null;
+
+      try { lastTraining = JSON.parse(lastTrainingRaw || "null"); }
+      catch(e){ lastTraining = null; }
+
+      let bestText = "أفضل نتيجة: —";
+      if(name){
+        let best = 0;
+        for(const subjectKey of Object.keys(SUBJECTS)){
+          for(let week = 1; week <= 13; week++){
+            const val = Number(localStorage.getItem(getBestResultKey(name, subjectKey, String(week))) || 0);
+            if(val > best) best = val;
+          }
+        }
+        if(best > 0) bestText = `أفضل نتيجة: ${toArabicDigits(best)}%`;
+      }
+
+      let lastText = "آخر تدريب: —";
+      if(lastTraining && lastTraining.name === name){
+        const label = SUBJECTS[lastTraining.subject]?.label || "—";
+        lastText = `آخر تدريب: ${label} - الأسبوع ${toArabicDigits(lastTraining.week)}`;
+      }
+
+      $("studentStatsBest").textContent = bestText;
+      $("studentStatsLast").textContent = lastText;
+      $("studentStatsCount").textContent = `عدد التدريبات: ${toArabicDigits(completed)}`;
+    }
+
+    /* =========================
+       ✅ بدء التدريب
+    ========================= */
+    function startTraining(){
+      const name = $("studentName").value.trim();
+      const grade = $("gradeSelect").value;
+      const week = $("weekSelect").value;
+
+      hideFieldError("nameError");
+      hideFieldError("subjectError");
+      hideFieldError("gradeError");
+      hideFieldError("weekError");
+      markInvalid($("studentName"), false);
+      markInvalid($("gradeSelect"), false);
+      markInvalid($("weekSelect"), false);
+
+      let hasError = false;
+
+      if(!name || name.length < 2 || !/[\u0600-\u06FFa-zA-Z]/.test(name)){
+        showFieldError("nameError", "الرجاء كتابة اسم الطالب بشكل صحيح.");
+        markInvalid($("studentName"), true);
+        hasError = true;
+      }
+
+      if(!selectedSubject){
+        showFieldError("subjectError", "الرجاء اختيار المادة أولًا.");
+        shakeElement($("subjectsWrap"));
+        hasError = true;
+      }
+
+      if(!grade){
+        showFieldError("gradeError", "الرجاء اختيار الصف.");
+        markInvalid($("gradeSelect"), true);
+        hasError = true;
+      }
+
+      if(!week){
+        showFieldError("weekError", "الرجاء اختيار الأسبوع.");
+        markInvalid($("weekSelect"), true);
+        hasError = true;
+      }
+
+      if(hasError) return;
+
+      const DATA = getDataBySubject();
+      const keyWeek = String(week);
+      const weekQuestions = DATA[keyWeek] || DATA[Number(week)] || [];
+      currentQuestions = normalizeQuestions(weekQuestions);
+
+      if(!currentQuestions.length){
+        showToast("لا توجد أسئلة لهذه المادة في هذا الأسبوع حالياً.", "#f59e0b");
+        return;
+      }
+
+      reviewMode = false;
+      wrongQuestions = [];
+      currentIdx = 0;
+      score = 0;
+      answerClicks = 0;
+      startTimeMs = Date.now();
+      quizActive = true;
+
+      studentData = {
+        name, grade, week,
+        subject: selectedSubject,
+        teacher: SUBJECTS[selectedSubject].teacher
+      };
+
+      const weekNum = Number(week);
+      timeLeft = (weekNum === 10) ? 1800 : 600;
+      if(timerId) clearInterval(timerId);
+
+      saveFormState();
+
+      logToSheet({
+        action: "start",
+        name, grade, week: String(week),
+        ts: new Date().toISOString()
+      });
+
+      $("mainContainer").classList.add("hidden");
+      $("pageFooter").classList.add("hidden");
+      $("resultScreen").classList.add("hidden");
+      $("quizScreen").classList.remove("hidden");
+      $("displayStudentName").innerText = name;
+
+      const s = SUBJECTS[selectedSubject];
+      $("subjectBadge").innerHTML = `${s.icon} ${s.label} — معلم المادة: <span class="font-black">${s.teacher}</span> • الأسبوع ${week}`;
+
+      setScrollLock(true);
+      startTimer();
+      loadQuestion();
+    }
+
+    /* =========================
+       ✅ التايمر
+    ========================= */
+    function startTimer(){
+      updateTimerDisplay();
+      timerId = setInterval(()=>{
+        timeLeft--;
+        updateTimerDisplay();
+        if(timeLeft <= 0) endQuiz();
+      },1000);
+    }
+
+    function updateTimerDisplay(){
+      const mins = Math.floor(timeLeft/60);
+      const secs = timeLeft%60;
+      $("timer").innerText = `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+    }
+
+    /* =========================
+       ✅ عرض السؤال
+    ========================= */
+    function loadQuestion(){
+      const q = currentQuestions[currentIdx];
+      attemptsLeft = 2;
+      gotPointThisQ = false;
+
+      $("currQNum").innerText = currentIdx + 1;
+      $("totalQNum").innerText = currentQuestions.length;
+      $("topQIndicator").innerText = `السؤال ${currentIdx+1} من ${currentQuestions.length}`;
+      $("questionText").innerText = q.q;
+      $("progressFill").style.width = `${((currentIdx+1)/currentQuestions.length)*100}%`;
+
+      const grid = $("optionsGrid");
+      grid.innerHTML = "";
+      const letters = ['أ','ب','ج','د'];
+
+      q.c.forEach((choice,i)=>{
+        const card = document.createElement("div");
+        card.className = "option-card";
+        card.innerHTML = `<span>${choice}</span><span class="text-slate-300 font-black">${letters[i]||""}</span>`;
+        card.onclick = ()=> checkAnswer(i, card);
+        grid.appendChild(card);
+      });
+
+      $("nextBtn").classList.add("hidden");
+      const box = $("explainBox");
+      box.classList.add("hidden");
+      box.innerHTML = "";
+    }
+
+    function checkAnswer(idx, card){
+      const q = currentQuestions[currentIdx];
+      const allCards = Array.from(document.querySelectorAll(".option-card"));
+      answerClicks++;
+
+      if(card.dataset.locked === "1") return;
+      card.dataset.locked = "1";
+
+      if(idx === q.correct){
+        if(!gotPointThisQ){ score++; gotPointThisQ = true; }
+        card.classList.add("correct");
+        showToast("ممتاز! 🥳", "#22c55e");
+        launchConfetti();
+        if(q.explain) renderExplain(q.explain, "correct");
+        allCards.forEach(c=> c.style.pointerEvents="none");
+        $("nextBtn").classList.remove("hidden");
+        return;
+      }
+
+      attemptsLeft--;
+      card.classList.add("wrong");
+
+      if(attemptsLeft > 0){
+        showToast("خاطئة.. جرّب مرة ثانية 👀", "#f59e0b");
+        card.style.pointerEvents = "none";
+        $("explainBox").classList.add("hidden");
+        $("explainBox").innerHTML = "";
+        return;
+      }
+
+      showToast("خاطئة 💔", "#ef4444");
+      renderExplain(q.explain || "التوضيح غير متوفر.", "wrong");
+
+      const correctCard = allCards[q.correct];
+      if(correctCard) correctCard.classList.add("correct");
+
+      const exists = wrongQuestions.some(item => item.q === q.q);
+      if(!exists) wrongQuestions.push(q);
+
+      allCards.forEach(c=> c.style.pointerEvents="none");
+      $("nextBtn").classList.remove("hidden");
+    }
+
+    function nextQuestion(){
+      currentIdx++;
+      if(currentIdx < currentQuestions.length) loadQuestion();
+      else endQuiz();
+    }
+
+    /* =========================
+       ✅ الأوسمة
+    ========================= */
+    function getBadges(percent, finishedEarly){
+      const badges = [];
+      const completed = Number(localStorage.getItem("nafs_completed_count") || 0);
+
+      if(completed === 1) badges.push("🥇 أول تدريب");
+      if(percent === 100) badges.push("🎯 نتيجة كاملة");
+      if(finishedEarly) badges.push("⏱️ إنهاء قبل الوقت");
+      if(reviewMode) badges.push("💡 مراجعة الأخطاء");
+
+      return badges;
+    }
+
+    /* =========================
+       ✅ إنهاء الاختبار
+    ========================= */
+    function endQuiz(){
+      if(timerId) clearInterval(timerId);
+      timerId = null;
+      quizActive = false;
+      setScrollLock(false);
+
+      $("quizScreen").classList.add("hidden");
+      $("resultScreen").classList.remove("hidden");
+
+      const total = currentQuestions.length || 1;
+      const p = Math.round((score / total) * 100);
+      const elapsedSec = Math.floor((Date.now() - startTimeMs) / 1000);
+      const finishedEarly = elapsedSec < Math.max(60, (reviewMode ? 999999 : 600));
+
+      $("resStudentName").innerText = studentData.name;
+      $("resScoreText").innerText = `${score} من ${total}`;
+      $("resPercent").innerText = `${p}%`;
+      $("resGrade").innerText = p>=90 ? "ممتاز" : p>=75 ? "جيد جداً" : "يحتاج تحسين";
+
+      const personalMsg =
+        p>=90
+          ? `أحسنت يا ${studentData.name}، مستواك في هذا الأسبوع ممتاز جدًا 🌟`
+          : p>=75
+          ? `رائع يا ${studentData.name}، مستواك جميل جدًا واصل التقدم 👏`
+          : `يا ${studentData.name} أنت قادر تتحسن أكثر، ومراجعة أخطائك هي الخطوة الأهم 💪`;
+
+      $("resMsg").innerText = personalMsg;
+
+      const badges = getBadges(p, finishedEarly);
+      $("badgesBox").innerHTML = badges.length
+        ? badges.map(b => `<span class="badge-chip">${b}</span>`).join("")
+        : "";
+
+      $("reviewMistakesBtn").classList.toggle("hidden", wrongQuestions.length === 0 || reviewMode);
+
+      if(!reviewMode){
+        const prevCompleted = Number(localStorage.getItem("nafs_completed_count") || 0);
+        localStorage.setItem("nafs_completed_count", String(prevCompleted + 1));
+        saveBestResult(studentData.name, p, selectedSubject, String(studentData.week));
+        saveLastTrainingInfo(studentData.name, selectedSubject, String(studentData.week), p);
+        updateHomeProgress();
+        updateStudentStats();
+      }
+
+      logToSheet({
+        action:"finish",
+        name: studentData.name,
+        grade: studentData.grade,
+        week: String(studentData.week),
+        score, total,
+        percent: p,
+        attempts: answerClicks,
+        review_mode: reviewMode ? 1 : 0,
+        ts: new Date().toISOString()
+      });
+    }
+
+    /* =========================
+       ✅ مراجعة الأخطاء
+    ========================= */
+    function reviewMistakes(){
+      if(!wrongQuestions.length) return;
+
+      currentQuestions = normalizeQuestions([...wrongQuestions]);
+      currentIdx = 0;
+      score = 0;
+      answerClicks = 0;
+      reviewMode = true;
+      wrongQuestions = [];
+      quizActive = true;
+
+      $("resultScreen").classList.add("hidden");
+      $("quizScreen").classList.remove("hidden");
+      $("subjectBadge").innerHTML = `💡 مراجعة الأخطاء — ${SUBJECTS[selectedSubject]?.label || ""}`;
+      setScrollLock(true);
+
+      if(timerId) clearInterval(timerId);
+      timeLeft = 900;
+      startTimeMs = Date.now();
+      startTimer();
+      loadQuestion();
+    }
+
+    /* =========================
+       ✅ الطباعة
+    ========================= */
+    function printCertificateOnly(){
+      const name = ($("resStudentName")?.innerText || '').trim();
+      const percent = ($("resPercent")?.innerText || '').trim();
+      const scoreText = ($("resScoreText")?.innerText || '').trim();
+      const cls = studentData.grade || '';
+      const week = studentData.week || '';
+      const subj = SUBJECTS[selectedSubject]?.label || '';
+      const teacher = SUBJECTS[selectedSubject]?.teacher || '';
+      const dateStr = getHijriDateStr();
+
+      const ministryLogo="moe.png";
+      const nafsLogo="nafss.png";
+      const schoolLogo="مدرسة.png";
+
+      const iframe=document.createElement('iframe');
+      iframe.style.position='fixed';
+      iframe.style.right='0';
+      iframe.style.bottom='0';
+      iframe.style.width='0';
+      iframe.style.height='0';
+      iframe.style.border='0';
+      document.body.appendChild(iframe);
+
+      const doc=iframe.contentWindow.document;
+      doc.open();
+      doc.write(`<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
@@ -5292,18 +5351,13 @@ function printCertificateOnly(){
     </div>
 
     <h1>شهادة شكر وتقدير</h1>
-
     <div class="line">المادة: <b>${escapeHtml(subj)}</b></div>
-
     <p>يتقدم معلم المادة بخالص الشكر للطالب:</p>
     <h2>${escapeHtml(name || "__________")}</h2>
-
     <div class="line">بالصف: <b>${escapeHtml(cls || "__________")}</b> • الأسبوع: <b>${escapeHtml(week || "—")}</b></div>
     <div class="green">لاجتيازه تدريبات نافس بنسبة إنجاز: <span>${escapeHtml(percent || "—")}</span></div>
     <div class="line">الدرجة: <b>${escapeHtml(scoreText || "—")}</b></div>
-
     <div class="date">بتاريخ: <span>${escapeHtml(dateStr)}</span></div>
-
     <div class="sign">
       <div><p>معلم المادة</p><b>${escapeHtml(teacher || "__________")}</b></div>
       <div><p>مدير المدرسة</p><b>أ/ نواف آل جافلة</b></div>
@@ -5315,89 +5369,103 @@ function printCertificateOnly(){
   <\/script>
 </body>
 </html>`);
-  doc.close();
+      doc.close();
 
-  setTimeout(()=>{
-    iframe.contentWindow.focus();
-    iframe.contentWindow.print();
-    setTimeout(()=> document.body.removeChild(iframe), 1200);
-  }, 400);
-}
+      setTimeout(()=>{
+        iframe.contentWindow.focus();
+        iframe.contentWindow.print();
+        setTimeout(()=> document.body.removeChild(iframe), 1200);
+      }, 400);
+    }
 
-/* =========================
-   ✅ مؤقت نافس الرئيسي
-========================= */
-const COUNTDOWN_TARGET = new Date("2026-04-12T08:00:00+03:00").getTime();
+    /* =========================
+       ✅ مؤقت نافس الرئيسي
+    ========================= */
+    const COUNTDOWN_TARGET = new Date("2026-04-12T08:00:00+03:00").getTime();
 
-const toArabicDigits = (n) => {
-  const map = ["٠","١","٢","٣","٤","٥","٦","٧","٨","٩"];
-  return String(n).split("").map(ch => map[ch] ?? ch).join("");
-};
+    function updateCountdown(){
+      const daysEl = $("days");
+      const hoursEl = $("hours");
+      const minutesEl = $("minutes");
+      const secondsEl = $("seconds");
+      const box = $("countdown-timer");
+      if (!daysEl || !hoursEl || !minutesEl || !secondsEl || !box) return;
 
-const pad2 = (n) => (n < 10 ? "0" + n : String(n));
+      const distance = COUNTDOWN_TARGET - Date.now();
+      if(distance <= 0){
+        box.innerHTML = "<div style='grid-column:1/-1;font-weight:900;color:#fb923c'>بدأ الاختبار! ✅</div>";
+        return;
+      }
 
-function updateCountdown(){
-  const daysEl = $("days");
-  const hoursEl = $("hours");
-  const minutesEl = $("minutes");
-  const secondsEl = $("seconds");
-  const box = $("countdown-timer");
+      const d = Math.floor(distance / 86400000);
+      const h = Math.floor((distance % 86400000) / 3600000);
+      const m = Math.floor((distance % 3600000) / 60000);
+      const s = Math.floor((distance % 60000) / 1000);
 
-  if (!daysEl || !hoursEl || !minutesEl || !secondsEl || !box) return;
+      daysEl.textContent = toArabicDigits(d);
+      hoursEl.textContent = toArabicDigits(pad2(h));
+      minutesEl.textContent = toArabicDigits(pad2(m));
+      secondsEl.textContent = toArabicDigits(pad2(s));
+    }
 
-  const distance = COUNTDOWN_TARGET - Date.now();
+    /* =========================
+       ✅ التنبيه عند مغادرة الصفحة أثناء الاختبار
+    ========================= */
+    window.addEventListener("beforeunload", function (e) {
+      if (!quizActive) return;
+      e.preventDefault();
+      e.returnValue = "";
+    });
 
-  if(distance <= 0){
-    box.innerHTML = "<div style='grid-column:1/-1;font-weight:900;color:#fb923c'>بدأ الاختبار! ✅</div>";
-    return;
-  }
+    document.addEventListener("visibilitychange", () => {
+      if(document.hidden && quizActive){
+        logToSheet({
+          action:"visibility_hidden",
+          name: studentData.name || "",
+          grade: studentData.grade || "",
+          week: String(studentData.week || ""),
+          ts: new Date().toISOString()
+        });
+      }
+    });
 
-  const d = Math.floor(distance / 86400000);
-  const h = Math.floor((distance % 86400000) / 3600000);
-  const m = Math.floor((distance % 3600000) / 60000);
-  const s = Math.floor((distance % 60000) / 1000);
+    /* =========================
+       ✅ تهيئة أولية
+    ========================= */
+    document.addEventListener("DOMContentLoaded", () => {
+      loadFormState();
+      updateHomeProgress();
+      updateStudentStats();
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
 
-  daysEl.textContent = toArabicDigits(d);
-  hoursEl.textContent = toArabicDigits(pad2(h));
-  minutesEl.textContent = toArabicDigits(pad2(m));
-  secondsEl.textContent = toArabicDigits(pad2(s));
-}
+      $("studentName")?.addEventListener("input", () => {
+        hideFieldError("nameError");
+        markInvalid($("studentName"), false);
+        saveFormState();
+        updateStudentStats();
+      });
 
-/* =========================
-   ✅ تهيئة أولية
-========================= */
-document.addEventListener("DOMContentLoaded", () => {
-  loadFormState();
-  updateHomeProgress();
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
+      $("gradeSelect")?.addEventListener("change", () => {
+        hideFieldError("gradeError");
+        markInvalid($("gradeSelect"), false);
+        saveFormState();
+      });
 
-  $("studentName")?.addEventListener("input", () => {
-    hideFieldError("nameError");
-    markInvalid($("studentName"), false);
-    saveFormState();
-  });
+      $("weekSelect")?.addEventListener("change", () => {
+        hideFieldError("weekError");
+        markInvalid($("weekSelect"), false);
+        saveFormState();
+        updateStudentStats();
+      });
+    });
 
-  $("gradeSelect")?.addEventListener("change", () => {
-    hideFieldError("gradeError");
-    markInvalid($("gradeSelect"), false);
-    saveFormState();
-  });
-
-  $("weekSelect")?.addEventListener("change", () => {
-    hideFieldError("weekError");
-    markInvalid($("weekSelect"), false);
-    saveFormState();
-  });
-});
-
-/* ✅ تصدير الدوال */
-window.selectSubject = selectSubject;
-window.startTraining = startTraining;
-window.nextQuestion = nextQuestion;
-window.reviewMistakes = reviewMistakes;
-window.printCertificateOnly = printCertificateOnly;
-</script>
-
+    /* ✅ تصدير الدوال */
+    window.selectSubject = selectSubject;
+    window.startTraining = startTraining;
+    window.nextQuestion = nextQuestion;
+    window.reviewMistakes = reviewMistakes;
+    window.printCertificateOnly = printCertificateOnly;
+  </script>
 </body>
 </html>
